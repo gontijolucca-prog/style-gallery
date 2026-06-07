@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@300;400;700&family=Sora:wght@300;800&display=swap');
+:root{--pink:#ff9ee6;--blue:#9be7ff;--yellow:#fff7ad;--lilac:#c9a7ff;--ink:#5b4b8a;--chrome:linear-gradient(180deg,#fff,#c9d6ff 45%,#9be7ff 55%,#fff)}
+body{font-family:'Chivo Mono',monospace;color:var(--ink);
+  background:linear-gradient(135deg,#ffd6f5 0%,#d6e4ff 35%,#c9fff4 70%,#fff7ad 100%);min-height:100vh}
+.back{background:var(--lilac);color:#fff;border-radius:999px;opacity:1}
+.nav{margin:16px;background:rgba(255,255,255,.5);backdrop-filter:blur(10px);border:2px solid #fff;border-radius:18px;padding:16px 26px;box-shadow:0 8px 30px rgba(201,167,255,.4)}
+.brand{font-family:'Sora';font-weight:800;font-size:1.5rem;background:linear-gradient(90deg,var(--pink),var(--lilac));-webkit-background-clip:text;background-clip:text;color:transparent}.brand-dot{color:var(--blue)}
+.nav-links a{font-size:.85rem}.nav-cta{background:#fff;padding:8px 16px;border-radius:999px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.badge{display:inline-block;background:rgba(255,255,255,.6);padding:8px 18px;border-radius:999px;letter-spacing:.2em;text-transform:uppercase;font-size:.72rem;border:1px solid #fff}
+.h1{font-family:'Sora';font-weight:800;font-size:clamp(2.8rem,8vw,6rem);line-height:1;letter-spacing:-.02em;
+  background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(2px 2px 0 var(--pink)) drop-shadow(-1px -1px 0 var(--blue))}
+.h1 em{font-style:italic}
+.lead{font-size:1.1rem;max-width:520px;font-weight:400}
+.btn{font-family:'Sora';font-weight:800;border-radius:999px;padding:15px 32px}
+.btn-primary{background:linear-gradient(90deg,var(--pink),var(--lilac));color:#fff;box-shadow:0 8px 24px rgba(255,158,230,.6)}
+.btn-ghost{background:rgba(255,255,255,.7);color:var(--ink);border:2px solid #fff}
+.stat{flex:1;min-width:120px;background:rgba(255,255,255,.55);backdrop-filter:blur(8px);border:2px solid #fff;border-radius:20px;padding:24px;box-shadow:0 8px 24px rgba(155,231,255,.4)}
+.stat-num{font-family:'Sora';font-weight:800;background:linear-gradient(90deg,var(--lilac),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}.stat-label{text-transform:uppercase;letter-spacing:.12em;font-size:.72rem}
+.card{background:rgba(255,255,255,.5);backdrop-filter:blur(10px);border:2px solid #fff;border-radius:26px;padding:30px;box-shadow:0 10px 30px rgba(201,167,255,.35);transition:transform .3s}
+.card:hover{transform:translateY(-6px)}.card-icon{font-size:1.8rem;color:var(--pink)}.card h3{font-family:'Sora';font-weight:800;margin:0 0 8px}.card p{margin:0}
+.quote{background:rgba(255,255,255,.5);backdrop-filter:blur(10px);border:2px solid #fff;border-radius:30px;margin:6vh auto;max-width:780px;padding:56px 36px;box-shadow:0 12px 36px rgba(255,158,230,.4)}
+.quote blockquote{font-family:'Sora';font-weight:300}.quote cite{color:var(--lilac)}
+.cta h2{font-family:'Sora';font-weight:800;background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(2px 2px 0 var(--pink));font-size:clamp(2rem,5vw,3.6rem)}
+.footer{text-transform:uppercase;letter-spacing:.1em}
+
+/* layout */
+.hero{text-align:center;max-width:880px}.actions{justify-content:center}.lead{margin:0 auto}
+.features .card:nth-child(2){transform:translateY(-26px)}

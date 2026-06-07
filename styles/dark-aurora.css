@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Manrope:wght@300;500;800&display=swap');
+:root{--bg:#070b14;--violet:#7c5cff;--teal:#21e6c1;--pink:#ff5c8a;--text:#dfe6f5;--card:rgba(255,255,255,.04);--stroke:rgba(255,255,255,.09)}
+body{font-family:'Manrope',sans-serif;color:var(--text);background:var(--bg);position:relative;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;filter:blur(80px);opacity:.6;
+  background:radial-gradient(40% 40% at 20% 20%,var(--violet),transparent),radial-gradient(35% 35% at 80% 25%,var(--teal),transparent),radial-gradient(45% 45% at 60% 85%,var(--pink),transparent);
+  animation:drift 18s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(-6%,4%) scale(1.1)}}
+.back{background:var(--violet);border-radius:999px;opacity:1}
+.nav{margin:16px 4vw;border:1px solid var(--stroke);background:var(--card);backdrop-filter:blur(16px);border-radius:18px;padding:16px 28px}
+.brand{font-family:'Syne';font-weight:700;font-size:1.3rem}.brand-dot{color:var(--teal)}
+.nav-links a{font-size:.92rem;opacity:.8}.nav-cta{background:linear-gradient(120deg,var(--violet),var(--pink));color:#fff;padding:9px 18px;border-radius:999px}
+.badge{display:inline-block;border:1px solid var(--stroke);background:var(--card);padding:7px 16px;border-radius:999px;font-size:.78rem;letter-spacing:.04em}
+.badge::before{content:"●  ";color:var(--teal)}
+.h1{font-family:'Syne';font-weight:300;font-size:clamp(2.8rem,7.5vw,5.6rem);line-height:1.04;letter-spacing:-.03em}
+.h1 em{font-style:normal;font-weight:700;background:linear-gradient(120deg,var(--teal),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:1.2rem;font-weight:300;max-width:560px;opacity:.85}
+.btn{font-family:'Syne';font-weight:500;padding:15px 30px;border-radius:12px}
+.btn-primary{background:linear-gradient(120deg,var(--violet),var(--teal));color:#070b14;font-weight:700;box-shadow:0 10px 40px rgba(124,92,255,.4)}
+.btn-ghost{border:1px solid var(--stroke);background:var(--card);color:var(--text)}
+.stat{flex:1;min-width:120px;border:1px solid var(--stroke);background:var(--card);backdrop-filter:blur(10px);border-radius:16px;padding:24px}
+.stat-num{font-family:'Syne';font-weight:700;background:linear-gradient(120deg,var(--teal),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}.stat-label{opacity:.65;font-size:.85rem}
+.card{border:1px solid var(--stroke);background:var(--card);backdrop-filter:blur(12px);border-radius:20px;padding:30px;transition:transform .35s,border-color .35s}
+.card:hover{transform:translateY(-6px);border-color:rgba(124,92,255,.5)}
+.card-icon{color:var(--teal)}.card h3{font-family:'Syne';font-weight:700;margin:0 0 8px}.card p{margin:0;opacity:.78}
+.quote{border:1px solid var(--stroke);background:var(--card);backdrop-filter:blur(12px);border-radius:24px;margin:6vh auto;max-width:800px;padding:7vh 5vw}
+.quote blockquote{font-family:'Syne';font-weight:300}.quote cite{color:var(--teal)}
+.cta h2{font-family:'Syne';font-weight:300;letter-spacing:-.03em;font-size:clamp(2rem,5vw,3.6rem)}
+.footer{border-top:1px solid var(--stroke)}
+
+/* layout */
+.hero{text-align:center;max-width:900px}.actions{justify-content:center}.lead{margin:0 auto}
+.features{grid-template-columns:2fr 1fr 1fr}.features .card:nth-child(1){grid-row:span 1}

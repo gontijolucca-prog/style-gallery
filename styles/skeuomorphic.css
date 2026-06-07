@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Pathway+Gothic+One&family=Source+Sans+3:wght@400;600;700&display=swap');
+:root{--felt:#caa86d;--wood:#6b4a2b;--green:#5a7d2a;--text:#3a2c1a;--panel:#e8dcc4}
+body{font-family:'Source Sans 3',sans-serif;color:var(--text);
+  background:#b89a63;background-image:radial-gradient(rgba(0,0,0,.12) 1px,transparent 1px),radial-gradient(rgba(255,255,255,.1) 1px,transparent 1px);background-size:4px 4px,4px 4px;background-position:0 0,2px 2px}
+.back{background:linear-gradient(#7a5630,#5a3e20);color:#fff;border:1px solid #3a2812;border-radius:8px;opacity:1;box-shadow:0 2px 3px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3)}
+.nav{margin:14px;background:linear-gradient(#f0e6d0,#d8c8a8);border:1px solid #9a8050;border-radius:14px;padding:16px 26px;box-shadow:0 4px 8px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.7)}
+.brand{font-family:'Pathway Gothic One';font-size:1.7rem;color:var(--wood);text-shadow:0 1px 0 rgba(255,255,255,.6)}.brand-dot{color:var(--green)}
+.nav-links a{font-weight:600;text-shadow:0 1px 0 rgba(255,255,255,.5)}
+.nav-cta{background:linear-gradient(#7fae3a,#5a7d2a);color:#fff;padding:9px 18px;border-radius:8px;border:1px solid #3e5a18;box-shadow:0 2px 4px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.4)}
+.badge{display:inline-block;background:linear-gradient(#fff6e0,#e3d4ac);border:1px solid #9a8050;padding:7px 16px;border-radius:8px;font-weight:700;box-shadow:0 2px 4px rgba(0,0,0,.25),inset 0 1px 0 #fff;color:var(--wood)}
+.h1{font-family:'Pathway Gothic One';font-size:clamp(3rem,9vw,6.5rem);line-height:.95;color:#f3e9d2;text-shadow:0 2px 0 #6b4a2b,0 3px 6px rgba(0,0,0,.5),0 1px 0 rgba(255,255,255,.2)}
+.h1 em{font-style:normal;color:#9fd44a;text-shadow:0 2px 0 #3e5a18,0 3px 5px rgba(0,0,0,.4)}
+.lead{font-size:1.15rem;max-width:540px;text-shadow:0 1px 0 rgba(255,255,255,.4)}
+.btn{font-family:'Pathway Gothic One';font-size:1.2rem;letter-spacing:.03em;border-radius:12px;padding:14px 30px;border:1px solid rgba(0,0,0,.3);text-shadow:0 1px 1px rgba(0,0,0,.3)}
+.btn-primary{background:linear-gradient(#8fc046,#5a7d2a);color:#fff;box-shadow:0 4px 8px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.5)}
+.btn-ghost{background:linear-gradient(#f0e6d0,#cdb98e);color:var(--wood);box-shadow:0 4px 8px rgba(0,0,0,.3),inset 0 1px 0 #fff;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.stat{flex:1;min-width:130px;background:linear-gradient(#ede2c8,#d4c096);border:1px solid #9a8050;border-radius:14px;padding:22px;box-shadow:0 4px 8px rgba(0,0,0,.3),inset 0 1px 0 #fff}
+.stat-num{font-family:'Pathway Gothic One';color:var(--green);text-shadow:0 1px 0 rgba(255,255,255,.6)}.stat-label{font-weight:600}
+.card{background:linear-gradient(#f0e6d0,#d8c8a8);border:1px solid #9a8050;border-radius:18px;padding:30px;box-shadow:0 6px 14px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.7)}
+.card-icon{font-size:2rem;color:var(--green);text-shadow:0 1px 0 #fff}.card h3{font-family:'Pathway Gothic One';font-size:1.5rem;color:var(--wood);margin:8px 0 8px;text-shadow:0 1px 0 #fff}.card p{margin:0;text-shadow:0 1px 0 rgba(255,255,255,.4)}
+.quote{background:linear-gradient(#5a7d2a,#456020);border:1px solid #3e5a18;border-radius:20px;margin:6vh auto;max-width:800px;padding:7vh 5vw;box-shadow:0 8px 18px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3);color:#f3f8e8}
+.quote blockquote{font-family:'Pathway Gothic One';font-size:clamp(1.5rem,3.4vw,2.4rem);text-shadow:0 1px 2px rgba(0,0,0,.4)}.quote cite{color:#cfe0a0}
+.cta{margin:6vh 14px;background:linear-gradient(#f0e6d0,#cdb98e);border:1px solid #9a8050;border-radius:20px;padding:8vh 20px;box-shadow:0 8px 18px rgba(0,0,0,.35),inset 0 1px 0 #fff}
+.cta h2{font-family:'Pathway Gothic One';color:var(--wood);font-size:clamp(2.4rem,6vw,4.4rem);text-shadow:0 1px 0 #fff}
+.footer{text-shadow:0 1px 0 rgba(255,255,255,.4);font-weight:600}
+
+/* layout */
+.hero{text-align:center;max-width:880px}.actions{justify-content:center}.lead{margin:0 auto}

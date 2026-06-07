@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;900&family=Archivo+Narrow:wght@400;700&display=swap');
+:root{--bg:#fff;--ink:#111;--red:#e8482b;--line:#111}
+body{font-family:'Archivo',sans-serif;color:var(--ink);background:var(--bg)}
+.back{background:var(--red);border-radius:0;opacity:1;font-weight:600}
+.nav{border-bottom:2px solid var(--line);padding:20px 5vw;align-items:baseline}
+.brand{font-weight:900;font-size:1.4rem;letter-spacing:-.02em;text-transform:uppercase}.brand-dot{color:var(--red)}
+.nav-links a{font-family:'Archivo Narrow';font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.8rem}
+.nav-cta{color:var(--red)}
+.hero{display:grid;grid-template-columns:1fr 3fr;gap:0;border-bottom:2px solid var(--line);padding:0;max-width:none}
+.badge{grid-column:1;border-right:2px solid var(--line);padding:40px 30px;margin:0;font-family:'Archivo Narrow';font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:.8rem;writing-mode:vertical-rl;color:var(--red)}
+.h1{grid-column:2;font-weight:900;font-size:clamp(3rem,9vw,7rem);line-height:.92;letter-spacing:-.03em;text-transform:uppercase;padding:50px 5vw 0}
+.h1 em{font-style:normal;color:var(--red)}
+.lead{grid-column:2;font-size:1.2rem;max-width:520px;padding:20px 5vw 0;font-weight:400}
+.actions{grid-column:2;padding:0 5vw 50px}
+.btn{border-radius:0;font-family:'Archivo Narrow';font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:15px 28px}
+.btn-primary{background:var(--red);color:#fff}.btn-ghost{background:none;color:var(--ink);border:2px solid var(--ink)}
+.stats{border-bottom:2px solid var(--line);padding:0;max-width:none;gap:0}
+.stat{flex:1;border-right:2px solid var(--line);padding:34px 30px}.stat:last-child{border:none}
+.stat-num{font-weight:900;letter-spacing:-.03em}.stat-label{font-family:'Archivo Narrow';text-transform:uppercase;letter-spacing:.1em;font-size:.75rem;color:var(--red)}
+.features{gap:0;border-bottom:2px solid var(--line);padding:0;max-width:none}
+.card{border-right:2px solid var(--line);padding:40px 30px}.card:last-child{border:none}
+.card-icon{color:var(--red)}.card h3{font-weight:900;text-transform:uppercase;letter-spacing:-.01em;margin:0 0 10px}.card p{margin:0}
+.quote{border-bottom:2px solid var(--line);max-width:none;text-align:left;padding:8vh 5vw}
+.quote blockquote{font-weight:400;letter-spacing:-.02em}.quote cite{font-family:'Archivo Narrow';text-transform:uppercase;color:var(--red)}
+.cta{text-align:left;padding:8vh 5vw;border-bottom:2px solid var(--line)}
+.cta h2{font-weight:900;text-transform:uppercase;font-size:clamp(2.2rem,6vw,4.5rem);letter-spacing:-.03em}
+.footer{font-family:'Archivo Narrow';text-transform:uppercase;letter-spacing:.08em}
+@media(max-width:760px){.hero{grid-template-columns:1fr}.badge{writing-mode:horizontal-tb;border-right:none;border-bottom:2px solid var(--line)}.h1,.lead,.actions{grid-column:1}}

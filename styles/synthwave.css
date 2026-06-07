@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@400;600;700&display=swap');
+:root{--bg:#1a0033;--pink:#ff2e97;--cyan:#00e5ff;--purple:#7b2ff7;--text:#ffd9f5;--sun:#ff8b3d}
+body{font-family:'Rajdhani',sans-serif;color:var(--text);
+  background:linear-gradient(180deg,#2d0a4e 0%,#5a1170 40%,#c5286b 70%,#ff8b3d 100%);min-height:100vh;position:relative;overflow-x:hidden}
+body::before{content:"";position:fixed;left:0;right:0;bottom:0;height:50vh;z-index:-1;
+  background-image:linear-gradient(rgba(0,229,255,.5) 2px,transparent 2px),linear-gradient(90deg,rgba(0,229,255,.5) 2px,transparent 2px);
+  background-size:60px 60px;transform:perspective(300px) rotateX(62deg);transform-origin:bottom}
+.back{background:var(--pink);color:#fff;border-radius:0;opacity:1}
+.nav{border-bottom:2px solid var(--cyan);box-shadow:0 4px 30px rgba(0,229,255,.4)}
+.brand{font-family:'Audiowide';font-size:1.4rem;color:var(--cyan);text-shadow:0 0 12px var(--cyan)}.brand-dot{color:var(--pink)}
+.nav-links a{text-transform:uppercase;font-weight:600;letter-spacing:.08em}.nav-cta{color:var(--pink);text-shadow:0 0 8px var(--pink)}
+.badge{display:inline-block;font-family:'Audiowide';border:2px solid var(--cyan);color:var(--cyan);padding:7px 18px;text-shadow:0 0 8px var(--cyan);box-shadow:0 0 18px rgba(0,229,255,.4);letter-spacing:.1em}
+.h1{font-family:'Audiowide';font-size:clamp(2.4rem,7.5vw,5.6rem);line-height:1.05;
+  background:linear-gradient(180deg,#fff,var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 40px rgba(255,46,151,.6)}
+.h1 em{font-style:normal;background:linear-gradient(180deg,var(--cyan),#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:1.3rem;font-weight:600;max-width:540px}
+.btn{font-family:'Audiowide';border-radius:6px;padding:15px 30px;text-transform:uppercase;letter-spacing:.05em}
+.btn-primary{background:linear-gradient(90deg,var(--pink),var(--purple));color:#fff;box-shadow:0 0 30px var(--pink)}
+.btn-ghost{background:none;border:2px solid var(--cyan);color:var(--cyan);box-shadow:0 0 20px rgba(0,229,255,.5)}
+.stat{flex:1;min-width:120px;border:2px solid var(--pink);padding:22px;background:rgba(123,47,247,.2);box-shadow:0 0 25px rgba(255,46,151,.3)}
+.stat-num{font-family:'Audiowide';color:var(--cyan);text-shadow:0 0 14px var(--cyan)}.stat-label{text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+.card{border:2px solid var(--cyan);padding:28px;background:rgba(45,10,78,.6);backdrop-filter:blur(6px);box-shadow:0 0 25px rgba(0,229,255,.25);transition:transform .3s}
+.card:hover{transform:translateY(-6px) scale(1.02)}
+.card-icon{color:var(--pink);text-shadow:0 0 10px var(--pink)}.card h3{font-family:'Audiowide';color:var(--cyan);margin:0 0 10px;font-size:1.15rem}.card p{margin:0}
+.quote{margin:6vh auto;max-width:800px;padding:60px 36px;border:2px solid var(--pink);background:rgba(45,10,78,.5);backdrop-filter:blur(6px);box-shadow:0 0 40px rgba(255,46,151,.3)}
+.quote blockquote{font-family:'Audiowide';font-size:clamp(1.2rem,2.6vw,1.9rem);color:#fff;text-shadow:0 0 14px var(--cyan)}.quote cite{color:var(--cyan)}
+.cta h2{font-family:'Audiowide';color:#fff;text-shadow:0 0 24px var(--pink);font-size:clamp(2rem,5vw,3.6rem)}
+.footer{border-top:2px solid var(--cyan);text-transform:uppercase;letter-spacing:.1em}
+
+/* layout */
+.hero{text-align:center;max-width:900px}.actions{justify-content:center}.lead{margin:0 auto}

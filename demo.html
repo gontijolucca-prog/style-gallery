@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo — Style Gallery</title>
+<link rel="stylesheet" href="styles/base.css">
+<script src="styles.js"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('style') || 'liquid-glass';
+  const meta = (window.STYLES || []).find(s => s.slug === slug) || { slug, name: slug };
+  document.documentElement.setAttribute('data-style', slug);
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'styles/' + slug + '.css';
+  document.head.appendChild(link);
+  document.title = meta.name + ' — Style Gallery';
+</script>
+</head>
+<body>
+  <a class="back" href="index.html">← galeria</a>
+
+  <header class="nav">
+    <div class="brand">Nimbus<span class="brand-dot">.</span></div>
+    <nav class="nav-links">
+      <a href="#">Produto</a>
+      <a href="#">Preços</a>
+      <a href="#">Sobre</a>
+      <a href="#" class="nav-cta">Entrar</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="badge">Novo · v2.0</p>
+      <h1 class="h1">Constrói coisas que <em>respiram</em>.</h1>
+      <p class="lead">A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção. Desenhada para quem não se contenta com o genérico.</p>
+      <div class="actions">
+        <a href="#" class="btn btn-primary">Começar agora</a>
+        <a href="#" class="btn btn-ghost">Ver demo →</a>
+      </div>
+    </section>
+
+    <section class="stats">
+      <div class="stat"><span class="stat-num">12k</span><span class="stat-label">criadores</span></div>
+      <div class="stat"><span class="stat-num">99.9%</span><span class="stat-label">uptime</span></div>
+      <div class="stat"><span class="stat-num">48ms</span><span class="stat-label">latência</span></div>
+      <div class="stat"><span class="stat-num">∞</span><span class="stat-label">possibilidades</span></div>
+    </section>
+
+    <section class="features">
+      <article class="card">
+        <div class="card-icon">◆</div>
+        <h3>Rápido por defeito</h3>
+        <p>Renderização instantânea. Zero espera, zero desculpas.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">◈</div>
+        <h3>Feito à medida</h3>
+        <p>Cada peça moldável ao milímetro. O controlo é teu.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">❖</div>
+        <h3>Escala contigo</h3>
+        <p>De protótipo a produção sem reescrever uma linha.</p>
+      </article>
+    </section>
+
+    <section class="quote">
+      <blockquote>“Nunca um produto me fez sentir tão em casa. Isto não parece software — parece arte que funciona.”</blockquote>
+      <cite>— Maria L., designer</cite>
+    </section>
+
+    <section class="cta">
+      <h2>Pronto para começar?</h2>
+      <p>Junta-te a milhares de criadores hoje.</p>
+      <a href="#" class="btn btn-primary">Criar conta grátis</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 Nimbus</span>
+    <span class="footer-style" id="styleName"></span>
+  </footer>
+
+  <script>
+    document.getElementById('styleName').textContent = meta.name;
+  </script>
+</body>
+</html>

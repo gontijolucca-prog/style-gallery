@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Style Gallery — provador de estilos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@300;400;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="styles.js"></script>
+<style>
+  :root{
+    --bg:#0a0a0c;--panel:#121217;--stroke:#23232c;--text:#e7e7ee;--mid:#8a8a9a;
+    --accent:#c6ff3a;--accent2:#7c5cff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Manrope',sans-serif;
+    background-image:radial-gradient(700px 500px at 85% -5%,rgba(124,92,255,.18),transparent 60%),
+                     radial-gradient(600px 500px at 0% 100%,rgba(198,255,58,.1),transparent 55%);}
+  a{color:inherit;text-decoration:none}
+  header{padding:64px 6vw 30px;max-width:1500px;margin:0 auto}
+  .kicker{font-family:'JetBrains Mono',monospace;font-size:.78rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+  h1{font-family:'Syne';font-weight:800;font-size:clamp(2.6rem,7vw,5.2rem);line-height:.98;letter-spacing:-.03em;margin:0;max-width:14ch}
+  h1 em{font-style:normal;color:var(--accent2)}
+  .sub{color:var(--mid);font-size:1.15rem;font-weight:300;max-width:560px;margin:22px 0 0;line-height:1.6}
+  .meta{font-family:'JetBrains Mono',monospace;color:var(--mid);font-size:.8rem;margin-top:26px;display:flex;gap:24px;flex-wrap:wrap}
+  .meta b{color:var(--text)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:26px;padding:30px 6vw 90px;max-width:1500px;margin:0 auto}
+  .card{position:relative;border:1px solid var(--stroke);border-radius:18px;overflow:hidden;background:var(--panel);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s;display:block}
+  .card:hover{transform:translateY(-6px);border-color:var(--accent2);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .preview{position:relative;height:300px;overflow:hidden;background:#000;border-bottom:1px solid var(--stroke)}
+  .preview iframe{position:absolute;top:0;left:0;width:1400px;height:1500px;border:0;
+    transform:scale(.302);transform-origin:top left;pointer-events:none;background:#fff}
+  .preview .shade{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,transparent 60%,rgba(10,10,12,.6))}
+  .swatches{position:absolute;top:12px;left:12px;z-index:3;display:flex;gap:6px}
+  .swatches span{width:16px;height:16px;border-radius:50%;border:1.5px solid rgba(255,255,255,.5);box-shadow:0 2px 6px rgba(0,0,0,.4)}
+  .open{position:absolute;top:12px;right:12px;z-index:3;font-family:'JetBrains Mono',monospace;font-size:.68rem;
+    background:rgba(10,10,12,.7);backdrop-filter:blur(6px);border:1px solid var(--stroke);padding:6px 10px;border-radius:8px;color:var(--text);opacity:0;transition:opacity .25s}
+  .card:hover .open{opacity:1}
+  .body{padding:18px 20px 20px}
+  .body h3{font-family:'Syne';font-weight:700;font-size:1.3rem;margin:0}
+  .body p{font-family:'JetBrains Mono',monospace;color:var(--mid);font-size:.74rem;letter-spacing:.02em;margin:7px 0 0;text-transform:uppercase}
+  footer{padding:40px 6vw 60px;max-width:1500px;margin:0 auto;border-top:1px solid var(--stroke);color:var(--mid);font-family:'JetBrains Mono',monospace;font-size:.78rem}
+  footer b{color:var(--text)}
+</style>
+</head>
+<body>
+  <header>
+    <p class="kicker">// provador de estilos</p>
+    <h1>Um conteúdo. <em>Dezoito</em> peles.</h1>
+    <p class="sub">A mesma landing page renderizada em estilos radicalmente diferentes. Passa o rato, clica para abrir em ecrã inteiro, rouba o que precisares para projetos futuros.</p>
+    <div class="meta">
+      <span><b id="count">0</b> estilos</span>
+      <span>mesmo markup · CSS isolado por estilo</span>
+      <span><b>clica</b> num cartão → página completa</span>
+    </div>
+  </header>
+
+  <main class="grid" id="grid"></main>
+
+  <footer>
+    <b>Style Gallery</b> — cada estilo é um único ficheiro em <b>styles/&lt;slug&gt;.css</b>. Copia o ficheiro, aponta o teu HTML às mesmas classes (.hero / .h1 / .btn-primary / .card / .cta…) e tens o estilo aplicado. Markup partilhado em <b>demo.html</b>.
+  </footer>
+
+  <script>
+    const grid = document.getElementById('grid');
+    document.getElementById('count').textContent = STYLES.length;
+    STYLES.forEach(s => {
+      const a = document.createElement('a');
+      a.className = 'card';
+      a.href = 'demo.html?style=' + s.slug;
+      a.innerHTML = `
+        <div class="preview">
+          <div class="swatches">${(s.sw||[]).map(c=>`<span style="background:${c}"></span>`).join('')}</div>
+          <span class="open">abrir ↗</span>
+          <div class="shade"></div>
+          <iframe loading="lazy" src="demo.html?style=${s.slug}" tabindex="-1" scrolling="no"></iframe>
+        </div>
+        <div class="body">
+          <h3>${s.name}</h3>
+          <p>${s.tag||''}</p>
+        </div>`;
+      grid.appendChild(a);
+    });
+  </script>
+</body>
+</html>

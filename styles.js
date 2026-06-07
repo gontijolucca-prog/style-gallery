@@ -1,0 +1,20 @@
+window.STYLES = [
+  { slug: 'liquid-glass',       name: 'Liquid Glass',        tag: 'glassmorphism · blur · depth',        sw: ['#0a1a3f','#6ea8ff','#ffffff'] },
+  { slug: 'neobrutalism',       name: 'Neobrutalismo',       tag: 'bordas duras · sombras sólidas',       sw: ['#ffde00','#000000','#ff5470'] },
+  { slug: 'swiss',              name: 'Swiss / Internacional',tag: 'grelha · tipografia · vermelho',       sw: ['#ffffff','#e8482b','#111111'] },
+  { slug: 'claymorphism',       name: 'Claymorphism',        tag: 'soft 3D · pastel · puffy',             sw: ['#ede9fe','#a78bfa','#fbcfe8'] },
+  { slug: 'cyberpunk',          name: 'Cyberpunk Terminal',  tag: 'neon · scanlines · mono',             sw: ['#05060a','#00ffd5','#ff003c'] },
+  { slug: 'editorial',          name: 'Editorial Serif',     tag: 'revista · serifa · contraste',         sw: ['#faf7f2','#1a1a1a','#b03a2e'] },
+  { slug: 'synthwave',          name: 'Synthwave 80s',       tag: 'grid · sunset · glow',                sw: ['#1a0033','#ff2e97','#00e5ff'] },
+  { slug: 'bauhaus',            name: 'Bauhaus',             tag: 'primárias · formas · geometria',       sw: ['#f4f1e8','#e63946','#1d3557'] },
+  { slug: 'memphis',            name: 'Memphis 80s',         tag: 'padrões · caos · cor',                sw: ['#fdf6e3','#ff6b9d','#4ecdc4'] },
+  { slug: 'minimal-mono',       name: 'Minimal Mono',        tag: 'monocromático · espaço · calma',       sw: ['#fafafa','#171717','#999999'] },
+  { slug: 'art-deco',           name: 'Art Déco',            tag: 'dourado · simetria · luxo',           sw: ['#0d1b2a','#d4af37','#f5f0e1'] },
+  { slug: 'vaporwave',          name: 'Vaporwave Y2K',       tag: 'pastel · chrome · nostalgia',         sw: ['#ff9ee6','#9be7ff','#fff7ad'] },
+  { slug: 'organic',            name: 'Orgânico / Blob',     tag: 'curvas · terroso · suave',            sw: ['#f4f0e6','#6b8e5a','#d98e5a'] },
+  { slug: 'blueprint',          name: 'Blueprint Industrial',tag: 'técnico · grelha · cyan',             sw: ['#0a2240','#4da3ff','#e6f0ff'] },
+  { slug: 'maximalist',         name: 'Maximalista',         tag: 'denso · vibrante · excesso',          sw: ['#1b0033','#ffe600','#ff2d95'] },
+  { slug: 'skeuomorphic',       name: 'Skeuomorfismo',       tag: 'realista · texturas · relevo',        sw: ['#d8cfc0','#5a7d2a','#3a2c1a'] },
+  { slug: 'dark-aurora',        name: 'Dark Aurora',         tag: 'malha · gradiente · profundo',        sw: ['#070b14','#7c5cff','#21e6c1'] },
+  { slug: 'paper-print',        name: 'Paper Print',         tag: 'risografia · grão · 2 cores',          sw: ['#f3ede0','#2b2d42','#ef6f53'] }
+];

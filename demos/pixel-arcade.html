@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pixel Arcade — Style Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323:wght@400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --nes-black: #0b0014;
+  --nes-white: #e8e8d8;
+  --nes-red: #ff0000;
+  --nes-cyan: #00ffff;
+  --nes-magenta: #ff00ff;
+  --nes-green: #00ff00;
+  --nes-yellow: #ffff00;
+  --bezel-dark: #1a0a2e;
+  --dur-blink: 0.6s;
+  --dur-fast: 0.4s;
+  --dur-med: 0.8s;
+  --ease-arcade: steps(1, end);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'VT323', monospace;
+  background: var(--nes-black);
+  color: var(--nes-white);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* CRT Scanlines overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 900;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  animation: scanlineFlicker var(--dur-med) linear infinite;
+}
+
+@keyframes scanlineFlicker {
+  0% { opacity: 1; }
+  50% { opacity: 0.98; }
+  100% { opacity: 1; }
+}
+
+/* Screen bezel/vignette — arcade cabinet feel */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 800;
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(255, 0, 255, 0.1);
+  border: 12px solid var(--bezel-dark);
+}
+
+.back {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.5rem;
+  text-decoration: none;
+  color: var(--nes-cyan);
+  z-index: 200;
+  opacity: 0;
+  animation: pixelFadeIn var(--dur-fast) var(--ease-arcade) 0.1s forwards;
+  letter-spacing: 0.1em;
+  padding: 8px 8px;
+  border: 2px solid var(--nes-cyan);
+  background: transparent;
+  transition: all 0.2s steps(1);
+  cursor: pointer;
+  text-shadow: 2px 2px 0 var(--nes-magenta);
+}
+
+.back:hover {
+  background: var(--nes-cyan);
+  color: var(--nes-black);
+  transform: translate(-2px, -2px);
+  text-shadow: 4px 4px 0 var(--nes-magenta);
+}
+
+main {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+/* ========== HUD BAR (Top Screen Status) ========== */
+.hud {
+  background: var(--nes-black);
+  border-bottom: 4px solid var(--nes-white);
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6rem;
+  color: var(--nes-white);
+  opacity: 0;
+  animation: pixelFadeIn var(--dur-fast) var(--ease-arcade) 0s forwards;
+  box-shadow: 0 4px 0 rgba(255, 255, 255, 0.2);
+}
+
+.hud-score {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hud-label {
+  color: var(--nes-cyan);
+  font-size: 0.45rem;
+  letter-spacing: 0.1em;
+}
+
+.hud-value {
+  color: var(--nes-red);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 8px var(--nes-red);
+}
+
+.hud-lives {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.heart {
+  width: 16px;
+  height: 16px;
+  background: var(--nes-red);
+  position: relative;
+}
+
+.heart::before,
+.heart::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--nes-red);
+}
+
+.heart::before {
+  top: 0;
+  left: -4px;
+}
+
+.heart::after {
+  top: 0;
+  right: -4px;
+}
+
+/* ========== GAME CONTAINER ========== */
+.game-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 32px;
+  max-width: 1000px;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 5;
+}
+
+/* ========== HERO / TITLE SCREEN ========== */
+.title-screen {
+  text-align: center;
+  padding: 40px 24px;
+  border: 4px solid var(--nes-white);
+  background: var(--nes-black);
+  position: relative;
+  opacity: 0;
+  animation: pixelSlideUp var(--dur-med) var(--ease-arcade) 0.2s forwards;
+  box-shadow: inset 0 0 16px rgba(255, 0, 255, 0.1);
+}
+
+.title-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--nes-magenta);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.hero-tagline {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.55rem;
+  color: var(--nes-cyan);
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  color: var(--nes-yellow);
+  margin: 20px 0;
+  line-height: 1.2;
+  text-wrap: balance;
+  text-shadow: 4px 4px 0 var(--nes-magenta), 8px 8px 0 var(--nes-cyan);
+  letter-spacing: 0.05em;
+}
+
+.hero-subtitle {
+  font-family: 'VT323', monospace;
+  font-size: 0.9rem;
+  color: var(--nes-white);
+  margin: 20px 0 32px;
+  text-wrap: pretty;
+  line-height: 1.4;
+}
+
+.pixel-sprite {
+  width: 64px;
+  height: 64px;
+  margin: 16px auto;
+  background: var(--nes-cyan);
+  position: relative;
+  opacity: 0;
+  animation: pixelBounce var(--dur-med) var(--ease-arcade) 0.4s forwards;
+}
+
+/* Pixel cloud shape with box-shadow */
+.sprite-cloud {
+  width: 48px;
+  height: 24px;
+  background: var(--nes-white);
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  box-shadow:
+    8px 0 0 var(--nes-white),
+    16px 0 0 var(--nes-white),
+    -8px 8px 0 var(--nes-white),
+    0 8px 0 var(--nes-white),
+    8px 8px 0 var(--nes-white),
+    16px 8px 0 var(--nes-white),
+    24px 8px 0 var(--nes-white);
+}
+
+.press-start-cta {
+  display: inline-block;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.5rem;
+  color: var(--nes-black);
+  background: var(--nes-white);
+  padding: 12px 24px;
+  text-decoration: none;
+  border: 4px solid var(--nes-black);
+  cursor: pointer;
+  margin-top: 24px;
+  transition: all 0.1s steps(1);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  position: relative;
+  opacity: 0;
+  animation: pixelFadeIn var(--dur-fast) var(--ease-arcade) 0.6s forwards, blink var(--dur-blink) steps(2) 0.6s infinite;
+  box-shadow: 4px 4px 0 var(--nes-magenta), 8px 8px 0 var(--nes-cyan);
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.4; }
+}
+
+.press-start-cta:hover {
+  background: var(--nes-magenta);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--nes-cyan), 12px 12px 0 var(--nes-yellow);
+}
+
+/* ========== LEVEL SELECT (Features as Game Levels) ========== */
+.level-select {
+  margin: 20px 0;
+}
+
+.level-select h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.65rem;
+  color: var(--nes-yellow);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  animation: pixelFadeIn var(--dur-fast) var(--ease-arcade) 0.8s forwards;
+}
+
+.level-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  opacity: 0;
+  animation: pixelFadeIn var(--dur-fast) var(--ease-arcade) 1s forwards;
+}
+
+.level-tile {
+  aspect-ratio: 1;
+  background: var(--nes-black);
+  border: 8px solid var(--nes-white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.1s steps(1);
+  position: relative;
+  font-family: 'VT323', monospace;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--nes-white);
+  text-align: center;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.level-tile:nth-child(1) {
+  animation: tileBounce 0.4s var(--ease-arcade) 1.2s forwards;
+  opacity: 0;
+  border-color: var(--nes-magenta);
+  box-shadow: inset 0 0 0 2px var(--nes-magenta);
+}
+
+.level-tile:nth-child(1)::before {
+  content: '';
+  width: 32px;
+  height: 32px;
+  background:
+    linear-gradient(45deg, var(--nes-magenta) 0%, var(--nes-magenta) 25%, transparent 25%, transparent 75%, var(--nes-magenta) 75%),
+    linear-gradient(45deg, var(--nes-magenta) 0%, var(--nes-magenta) 25%, transparent 25%, transparent 75%, var(--nes-magenta) 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+  background-repeat: repeat;
+  box-shadow: inset 0 0 0 2px var(--nes-magenta);
+}
+
+.level-tile:nth-child(2) {
+  animation: tileBounce 0.4s var(--ease-arcade) 1.3s forwards;
+  opacity: 0;
+  border-color: var(--nes-cyan);
+  box-shadow: inset 0 0 0 2px var(--nes-cyan);
+}
+
+.level-tile:nth-child(2)::before {
+  content: '';
+  width: 32px;
+  height: 32px;
+  background:
+    linear-gradient(0deg, var(--nes-cyan) 0%, var(--nes-cyan) 20%, transparent 20%, transparent 40%, var(--nes-cyan) 40%, var(--nes-cyan) 60%, transparent 60%, transparent 80%, var(--nes-cyan) 80%),
+    linear-gradient(90deg, var(--nes-cyan) 0%, var(--nes-cyan) 20%, transparent 20%, transparent 40%, var(--nes-cyan) 40%, var(--nes-cyan) 60%, transparent 60%, transparent 80%, var(--nes-cyan) 80%);
+  background-size: 8px 8px;
+  box-shadow: inset 0 0 0 2px var(--nes-cyan);
+}
+
+.level-tile:nth-child(3) {
+  animation: tileBounce 0.4s var(--ease-arcade) 1.4s forwards;
+  opacity: 0;
+  border-color: var(--nes-green);
+  box-shadow: inset 0 0 0 2px var(--nes-green);
+}
+
+.level-tile:nth-child(3)::before {
+  content: '';
+  width: 32px;
+  height: 32px;
+  position: relative;
+  box-shadow:
+    0 0 0 2px var(--nes-green),
+    4px 4px 0 2px var(--nes-green),
+    8px 8px 0 2px var(--nes-green),
+    12px 12px 0 2px var(--nes-green),
+    4px 0 0 2px var(--nes-green),
+    8px 0 0 2px var(--nes-green),
+    12px 0 0 2px var(--nes-green);
+  background: var(--nes-green);
+}
+
+.level-tile:nth-child(4) {
+  animation: tileBounce 0.4s var(--ease-arcade) 1.5s forwards;
+  opacity: 0;
+  border-color: var(--nes-red);
+  box-shadow: inset 0 0 0 2px var(--nes-red);
+}
+
+.level-tile:nth-child(4)::before {
+  content: '';
+  width: 32px;
+  height: 32px;
+  box-shadow:
+    0 0 0 4px var(--nes-red),
+    4px 4px 0 4px var(--nes-red),
+    8px 4px 0 4px var(--nes-red),
+    12px 0 0 4px var(--nes-red);
+  background: var(--nes-red);
+}
+
+@keyframes tileBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.level-tile:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--nes-black);
+}
+
+.level-num {
+  font-size: 1.4rem;
+  font-weight: bold;
+  font-family: 'Press Start 2P', cursive;
+  letter-spacing: 0.1em;
+}
+
+.level-status {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  font-family: 'VT323', monospace;
+}
+
+/* ========== HIGH SCORE TABLE ========== */
+.high-scores {
+  margin: 20px 0;
+}
+
+.high-scores h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.65rem;
+  color: var(--nes-yellow);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0;
+  animation: pixelFadeIn var(--dur-fast) var(--ease-arcade) 1.6s forwards;
+}
+
+.scoreboard {
+  border: 4px solid var(--nes-white);
+  background: var(--nes-black);
+  overflow: hidden;
+  opacity: 0;
+  animation: pixelFadeIn var(--dur-fast) var(--ease-arcade) 1.7s forwards;
+  font-family: 'VT323', monospace;
+  font-size: 1.1rem;
+}
+
+.score-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr;
+  padding: 16px 20px;
+  border-bottom: 2px solid var(--nes-white);
+  gap: 16px;
+}
+
+.score-row:last-child {
+  border-bottom: none;
+}
+
+.score-row.header {
+  background: var(--nes-cyan);
+  color: var(--nes-black);
+  font-weight: bold;
+  padding: 16px 20px;
+  font-family: 'VT323', monospace;
+  font-size: 1rem;
+}
+
+.score-rank {
+  color: var(--nes-yellow);
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+}
+
+.score-name {
+  color: var(--nes-cyan);
+  letter-spacing: 0.1em;
+  font-weight: bold;
+}
+
+.score-value {
+  color: var(--nes-green);
+  text-align: right;
+  text-shadow: 0 0 4px var(--nes-green);
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+/* ========== GAME PITCH (Dialog Box) ========== */
+.game-dialog {
+  border: 6px solid var(--nes-white);
+  background: var(--nes-black);
+  padding: 24px;
+  position: relative;
+  opacity: 0;
+  animation: pixelFadeIn var(--dur-fast) var(--ease-arcade) 1.8s forwards;
+  box-shadow: inset 0 0 0 2px var(--nes-magenta);
+}
+
+.game-dialog::before,
+.game-dialog::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--nes-white);
+  z-index: 10;
+}
+
+.game-dialog::before {
+  top: -6px;
+  right: 20px;
+  box-shadow: -20px 0 0 var(--nes-white), -40px 0 0 var(--nes-white);
+}
+
+.game-dialog::after {
+  bottom: -6px;
+  left: 20px;
+  box-shadow: 20px 0 0 var(--nes-white), 40px 0 0 var(--nes-white);
+}
+
+.game-dialog h2 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.6rem;
+  color: var(--nes-yellow);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.game-dialog p {
+  font-family: 'VT323', monospace;
+  font-size: 0.9rem;
+  color: var(--nes-white);
+  line-height: 1.5;
+  margin-bottom: 16px;
+  text-wrap: pretty;
+}
+
+.game-cta {
+  display: inline-block;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.45rem;
+  color: var(--nes-black);
+  background: var(--nes-cyan);
+  padding: 12px 20px;
+  text-decoration: none;
+  border: 3px solid var(--nes-black);
+  cursor: pointer;
+  transition: all 0.1s steps(1);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  box-shadow: 3px 3px 0 var(--nes-magenta);
+}
+
+.game-cta:hover {
+  background: var(--nes-magenta);
+  color: var(--nes-white);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--nes-cyan);
+}
+
+/* ========== FOOTER / CHEAT CODE ========== */
+footer {
+  background: var(--nes-black);
+  border-top: 4px solid var(--nes-white);
+  padding: 16px 24px;
+  font-family: 'VT323', monospace;
+  font-size: 0.75rem;
+  color: var(--nes-white);
+  text-align: center;
+  opacity: 0;
+  animation: pixelFadeIn var(--dur-fast) var(--ease-arcade) 2s forwards;
+  letter-spacing: 0.05em;
+  box-shadow: inset 0 4px 0 rgba(255, 255, 255, 0.2);
+}
+
+.cheat-code {
+  color: var(--nes-cyan);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.45rem;
+  margin-bottom: 8px;
+  letter-spacing: 0.1em;
+}
+
+@keyframes pixelFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pixelSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pixelBounce {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .hud {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .game-screen {
+    padding: 16px;
+    gap: 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(1.2rem, 4vw, 2rem);
+  }
+
+  .level-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .press-start-cta {
+    font-size: 0.4rem;
+    padding: 10px 16px;
+  }
+
+  .back {
+    font-size: 0.4rem;
+    padding: 6px 6px;
+    top: 12px;
+    left: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .press-start-cta {
+    animation: none;
+    opacity: 1;
+  }
+
+  body::before {
+    animation: none;
+  }
+}
+</style>
+</head>
+<body>
+  <a class="back" href="../index.html">← galeria</a>
+
+  <div class="hud">
+    <div class="hud-score">
+      <span class="hud-label">SCORE</span>
+      <span class="hud-value">0012450</span>
+    </div>
+    <div class="hud-score">
+      <span class="hud-label">HI-SCORE</span>
+      <span class="hud-value">9999999</span>
+    </div>
+    <div class="hud-lives">
+      <span class="hud-label" style="display: block; width: 100%; margin-bottom: 4px;">VIDAS</span>
+      <div class="heart"></div>
+      <div class="heart"></div>
+      <div class="heart"></div>
+    </div>
+  </div>
+
+  <main class="game-screen">
+    <!-- Title Screen Hero -->
+    <section class="title-screen">
+      <p class="hero-tagline">nimbus</p>
+      <h1>Constrói coisas que respiram</h1>
+      <p class="hero-subtitle">Uma plataforma para criadores que exigem mais.</p>
+      <div class="pixel-sprite">
+        <div class="sprite-cloud"></div>
+      </div>
+      <a href="#" class="press-start-cta">Press Start</a>
+    </section>
+
+    <!-- Level Select (Features) -->
+    <section class="level-select">
+      <h2>Escolhe o Teu Nível</h2>
+      <div class="level-grid">
+        <div class="level-tile">
+          <div class="level-num">LV1</div>
+          <div class="level-status">Speed Mode</div>
+        </div>
+        <div class="level-tile">
+          <div class="level-num">LV2</div>
+          <div class="level-status">Custom</div>
+        </div>
+        <div class="level-tile">
+          <div class="level-num">LV3</div>
+          <div class="level-status">Scale Up</div>
+        </div>
+        <div class="level-tile">
+          <div class="level-num">LV4</div>
+          <div class="level-status">Boss</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- High Score Table -->
+    <section class="high-scores">
+      <h2>Recordes</h2>
+      <div class="scoreboard">
+        <div class="score-row header">
+          <div class="score-rank">Pos</div>
+          <div class="score-name">Jogador</div>
+          <div class="score-value">Pontos</div>
+        </div>
+        <div class="score-row">
+          <div class="score-rank">1.</div>
+          <div class="score-name">AAA</div>
+          <div class="score-value">9999999</div>
+        </div>
+        <div class="score-row">
+          <div class="score-rank">2.</div>
+          <div class="score-name">JFC</div>
+          <div class="score-value">8765432</div>
+        </div>
+        <div class="score-row">
+          <div class="score-rank">3.</div>
+          <div class="score-name">MLS</div>
+          <div class="score-value">7654321</div>
+        </div>
+        <div class="score-row">
+          <div class="score-rank">4.</div>
+          <div class="score-name">RMG</div>
+          <div class="score-value">6543210</div>
+        </div>
+        <div class="score-row">
+          <div class="score-rank">5.</div>
+          <div class="score-name">LSG</div>
+          <div class="score-value">5432100</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Game Dialog Box / CTA -->
+    <section class="game-dialog">
+      <h2>Boss Final — A Tua Criação Espera-te</h2>
+      <p>Dezenas de milhares de criadores já começaram. O teu turno: faz login agora e desbloqueie o potencial infinito. Sem ficção, sem atrasos. Apenas criação pura.</p>
+      <a href="#" class="game-cta">Insert Coin</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="cheat-code">↑↑↓↓←→←→BA</div>
+    <span>© 2026 Nimbus · Pixel Arcade Edition</span>
+  </footer>
+
+  <script>
+    // Respect reduced motion preference
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Optional: Add arcade cabinet beep on button hover (visual only, no sound)
+    if (!prefersReduced) {
+      document.querySelectorAll('.level-tile, .press-start-cta, .game-cta').forEach(btn => {
+        btn.addEventListener('mouseenter', function() {
+          this.style.filter = 'brightness(1.2)';
+        });
+        btn.addEventListener('mouseleave', function() {
+          this.style.filter = 'brightness(1)';
+        });
+      });
+    }
+  </script>
+</body>
+</html>

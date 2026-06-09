@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orgânico / Blob — Style Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,800&family=Mulish:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --terra: #c67c4e;
+      --leaf: #6b8e5a;
+      --soil: #4a3929;
+      --sand: #f4f0e6;
+      --clay: #e8ddc7;
+      --light-mist: rgba(107, 142, 90, 0.08);
+      --dark-mist: rgba(74, 57, 41, 0.06);
+      --dur-slow: 1.2s;
+      --dur-med: 0.7s;
+      --dur-fast: 0.4s;
+      --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-ease-out: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Mulish', sans-serif;
+      color: var(--soil);
+      background: linear-gradient(135deg, var(--sand) 0%, #faf8f3 50%, var(--clay) 100%);
+      background-attachment: fixed;
+      line-height: 1.7;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      animation: page-breathe 0.9s var(--ease-smooth) both;
+    }
+
+    @keyframes page-breathe {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body {
+        animation: none;
+      }
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* ========== BLOBS & BACKGROUND ========== */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 5%;
+      left: -15%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle at 30% 40%, rgba(198, 124, 78, 0.25), transparent 70%);
+      border-radius: 42% 58% 63% 37% / 52% 48% 52% 48%;
+      animation: blob-float 8s var(--ease-smooth) infinite;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      bottom: 10%;
+      right: -10%;
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle at 40% 60%, rgba(107, 142, 90, 0.2), transparent 65%);
+      border-radius: 38% 62% 48% 52% / 48% 52% 48% 52%;
+      animation: blob-drift 12s var(--ease-smooth) infinite reverse;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    @keyframes blob-float {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+        border-radius: 42% 58% 63% 37% / 52% 48% 52% 48%;
+      }
+      33% {
+        transform: translate(30px, -60px) scale(1.05);
+        border-radius: 58% 42% 48% 52% / 45% 52% 48% 55%;
+      }
+      66% {
+        transform: translate(-20px, 40px) scale(0.98);
+        border-radius: 52% 48% 42% 58% / 52% 45% 55% 48%;
+      }
+    }
+
+    @keyframes blob-drift {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+        border-radius: 38% 62% 48% 52% / 48% 52% 48% 52%;
+      }
+      33% {
+        transform: translate(-40px, 50px) scale(1.03);
+        border-radius: 62% 38% 52% 48% / 52% 48% 52% 48%;
+      }
+      66% {
+        transform: translate(25px, -35px) scale(0.97);
+        border-radius: 48% 52% 38% 62% / 48% 52% 45% 55%;
+      }
+    }
+
+    /* ========== NAVIGATION & BACK ========== */
+    .back {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      background: var(--leaf);
+      color: var(--sand);
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      z-index: 100;
+      transition: all var(--dur-fast) var(--ease-smooth);
+      box-shadow: 0 4px 16px rgba(107, 142, 90, 0.15);
+    }
+
+    .back:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(107, 142, 90, 0.25);
+      background: var(--terra);
+    }
+
+    /* ========== CONTAINER & FLOW ========== */
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========== HERO SECTION ========== */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      padding-top: 2rem;
+      animation: hero-stagger 0.8s var(--ease-smooth) both;
+    }
+
+    @keyframes hero-stagger {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-left {
+      grid-column: 1;
+      z-index: 2;
+    }
+
+    .hero-right {
+      grid-column: 2;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Organic shapes in hero-right */
+    .hero-right::after {
+      content: "";
+      position: absolute;
+      top: 10%;
+      right: 5%;
+      width: 280px;
+      height: 280px;
+      background: linear-gradient(135deg, var(--terra) 0%, rgba(198, 124, 78, 0.7) 100%);
+      border-radius: 65% 35% 40% 60% / 35% 65% 60% 40%;
+      opacity: 0.75;
+      animation: blob-drift 10s var(--ease-smooth) infinite;
+      pointer-events: none;
+      z-index: 1;
+      box-shadow: 0 20px 60px rgba(198, 124, 78, 0.25);
+    }
+
+    /* Hero left decorative blob */
+    .hero-right::before {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -80px;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle at 35% 50%, rgba(198, 124, 78, 0.35), transparent 65%);
+      border-radius: 45% 55% 52% 48% / 48% 52% 48% 52%;
+      animation: blob-float 7s var(--ease-smooth) infinite;
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--clay);
+      color: var(--terra);
+      padding: 0.6rem 1.3rem;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      animation: float-up 0.8s var(--ease-smooth) 0.1s both;
+    }
+
+    @keyframes float-up {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--soil);
+      text-wrap: balance;
+      margin-bottom: 1.5rem;
+      animation: float-up 0.8s var(--ease-smooth) 0.2s both;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--terra);
+    }
+
+    .lead {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: var(--soil);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      text-wrap: pretty;
+      opacity: 0.85;
+      animation: float-up 0.8s var(--ease-smooth) 0.3s both;
+    }
+
+    .actions {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      animation: float-up 0.8s var(--ease-smooth) 0.4s both;
+    }
+
+    .btn {
+      font-family: 'Fraunces', serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 1rem 1.8rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--dur-fast) var(--ease-smooth);
+      text-wrap: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--leaf);
+      color: white;
+      box-shadow: 0 6px 18px rgba(107, 142, 90, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(107, 142, 90, 0.3);
+      background: var(--terra);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 2.5px solid var(--terra);
+      color: var(--terra);
+    }
+
+    .btn-ghost:hover {
+      background: var(--terra);
+      color: white;
+      transform: translateY(-4px);
+    }
+
+    /* ========== RIVER SVG PATH — HERO ========== */
+    .hero-river {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 350px;
+      height: 500px;
+      z-index: 0;
+      opacity: 0.8;
+      animation: river-appear 1.2s var(--ease-smooth) 0.3s both;
+    }
+
+    @keyframes river-appear {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 0.8;
+      }
+    }
+
+    .hero-river {
+      position: absolute;
+    }
+
+    .hero-river::before {
+      content: "";
+      position: absolute;
+      bottom: 15%;
+      left: -20px;
+      width: 160px;
+      height: 160px;
+      background: linear-gradient(120deg, var(--leaf) 0%, rgba(107, 142, 90, 0.5) 100%);
+      border-radius: 75% 25% 60% 40% / 30% 70% 30% 70%;
+      opacity: 0.6;
+      animation: float-up 6s var(--ease-smooth) 0.5s infinite;
+      box-shadow: 0 12px 30px rgba(107, 142, 90, 0.15);
+    }
+
+    .hero-river::after {
+      content: "";
+      position: absolute;
+      top: 35%;
+      right: -30px;
+      width: 140px;
+      height: 140px;
+      background: linear-gradient(150deg, var(--terra) 10%, rgba(198, 124, 78, 0.4) 100%);
+      border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%;
+      opacity: 0.65;
+      animation: blob-drift 8s var(--ease-smooth) infinite;
+      box-shadow: 0 10px 25px rgba(198, 124, 78, 0.2);
+    }
+
+    .hero-river svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .hero-river svg path {
+      fill: none;
+      stroke: var(--leaf);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.5;
+    }
+
+    .hero-river svg .river-glow {
+      fill: none;
+      stroke: var(--terra);
+      stroke-width: 5;
+      opacity: 0.15;
+      filter: blur(1.5px);
+    }
+
+    /* ========== RIVER SVG PATH — DIVIDER ========== */
+    .river-container {
+      position: relative;
+      margin: 4rem 0;
+      height: 320px;
+      z-index: 0;
+    }
+
+    svg.river {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    svg.river path {
+      fill: none;
+      stroke: var(--leaf);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.4;
+    }
+
+    svg.river .river-glow {
+      fill: none;
+      stroke: var(--terra);
+      stroke-width: 6;
+      opacity: 0.12;
+      filter: blur(2px);
+    }
+
+    /* ========== STATS SECTION ========== */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2rem;
+      margin: 5rem 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .stat {
+      position: relative;
+      padding: 2.2rem;
+      background: var(--clay);
+      border-radius: 45% 55% 50% 50% / 50% 50% 50% 50%;
+      text-align: center;
+      animation: stat-pop 0.6s var(--ease-ease-out) both;
+      transition: all var(--dur-med) var(--ease-smooth);
+    }
+
+    .stat:nth-child(1) { animation-delay: 0s; border-radius: 52% 48% 48% 52% / 48% 52% 52% 48%; }
+    .stat:nth-child(2) { animation-delay: 0.1s; border-radius: 48% 52% 52% 48% / 52% 48% 48% 52%; }
+    .stat:nth-child(3) { animation-delay: 0.2s; border-radius: 50% 50% 48% 52% / 52% 48% 50% 50%; }
+    .stat:nth-child(4) { animation-delay: 0.3s; border-radius: 48% 52% 50% 50% / 50% 50% 52% 48%; }
+
+    @keyframes stat-pop {
+      from {
+        opacity: 0;
+        transform: scale(0.85) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .stat:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 12px 32px rgba(107, 142, 90, 0.15);
+    }
+
+    .stat-num {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      color: var(--terra);
+      display: block;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      color: var(--soil);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      opacity: 0.7;
+    }
+
+    /* ========== RIVER DIVIDER & FEATURES ========== */
+    .features-section {
+      position: relative;
+      margin: 6rem 0;
+      z-index: 2;
+    }
+
+    .river-divider {
+      position: relative;
+      height: 280px;
+      margin: 3rem 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .river-divider svg {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .river-divider svg path {
+      fill: none;
+      stroke: var(--leaf);
+      stroke-width: 2.5;
+      opacity: 0.3;
+    }
+
+    .river-divider .river-glow {
+      fill: none;
+      stroke: var(--terra);
+      stroke-width: 5;
+      opacity: 0.1;
+      filter: blur(2px);
+    }
+
+    /* ========== FEATURES CARDS ========== */
+    .features {
+      position: relative;
+      z-index: 2;
+    }
+
+    .feature-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+      margin: 3.5rem 0;
+      animation: feature-reveal 0.8s var(--ease-smooth) both;
+    }
+
+    .feature-item:nth-child(1) { animation-delay: 0s; }
+    .feature-item:nth-child(2) { animation-delay: 0.2s; }
+    .feature-item:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes feature-reveal {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Meander pattern: content alternates left/right following river curve */
+    .feature-item:nth-child(odd) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .feature-item:nth-child(even) {
+      grid-template-columns: 1fr 1fr;
+      direction: rtl;
+    }
+
+    .feature-item:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .card {
+      position: relative;
+      background: linear-gradient(135deg, var(--clay) 0%, rgba(232, 221, 199, 0.7) 100%);
+      padding: 2.8rem;
+      border-radius: 52% 48% 45% 55% / 48% 55% 52% 45%;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(74, 57, 41, 0.08);
+      transition: all var(--dur-med) var(--ease-smooth);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(198, 124, 78, 0.08), transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 16px 40px rgba(74, 57, 41, 0.14);
+    }
+
+    .card-icon {
+      font-size: 3rem;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .card h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--soil);
+      margin-bottom: 0.8rem;
+      line-height: 1.3;
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: var(--soil);
+      opacity: 0.75;
+      line-height: 1.8;
+      text-wrap: pretty;
+    }
+
+    .feature-text h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--soil);
+      margin-bottom: 1rem;
+      line-height: 1.3;
+      text-wrap: balance;
+    }
+
+    .feature-text p {
+      font-size: 1.05rem;
+      color: var(--soil);
+      opacity: 0.8;
+      line-height: 1.8;
+      text-wrap: pretty;
+      margin-bottom: 0;
+    }
+
+    /* ========== QUOTE SECTION ========== */
+    .quote-section {
+      position: relative;
+      margin: 5rem 0;
+      z-index: 2;
+    }
+
+    .quote-container {
+      position: relative;
+      background: var(--leaf);
+      color: var(--sand);
+      border-radius: 55% 45% 48% 52% / 52% 48% 45% 55%;
+      padding: 4rem 3rem;
+      max-width: 720px;
+      margin: 0 auto;
+      box-shadow: 0 12px 40px rgba(107, 142, 90, 0.2);
+      animation: quote-float 0.8s var(--ease-smooth) 0.3s both;
+    }
+
+    @keyframes quote-float {
+      from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .quote-container::before {
+      content: """;
+      position: absolute;
+      top: -20px;
+      left: 30px;
+      font-size: 5rem;
+      font-family: 'Fraunces', serif;
+      opacity: 0.2;
+      line-height: 0.5;
+    }
+
+    blockquote {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      text-wrap: balance;
+    }
+
+    cite {
+      font-style: normal;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: rgba(244, 240, 230, 0.85);
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* ========== CTA FINAL SECTION ========== */
+    .cta-section {
+      position: relative;
+      margin: 4rem 0 3rem;
+      z-index: 2;
+    }
+
+    .cta-container {
+      position: relative;
+      background: linear-gradient(135deg, var(--terra) 0%, rgba(198, 124, 78, 0.85) 100%);
+      color: white;
+      border-radius: 60% 40% 48% 52% / 52% 48% 40% 60%;
+      padding: 4.5rem 3.5rem;
+      max-width: 650px;
+      margin: 0 auto;
+      text-align: center;
+      box-shadow: 0 16px 48px rgba(198, 124, 78, 0.25);
+      animation: cta-emerge 0.8s var(--ease-smooth) 0.5s both;
+    }
+
+    @keyframes cta-emerge {
+      from {
+        opacity: 0;
+        transform: scale(0.92);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .cta-container::before {
+      content: "";
+      position: absolute;
+      top: -30%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(244, 240, 230, 0.12), transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .cta-container h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+      text-wrap: balance;
+    }
+
+    .cta-container p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      opacity: 0.95;
+      position: relative;
+      z-index: 1;
+      text-wrap: pretty;
+    }
+
+    .cta-container .btn {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--soil);
+      opacity: 0.6;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer span {
+      display: inline;
+      margin: 0 0.5rem;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        min-height: auto;
+        padding-top: 5rem;
+      }
+
+      .hero-left {
+        grid-column: 1;
+      }
+
+      .hero-right {
+        grid-column: 1;
+      }
+
+      .hero-right::before {
+        top: -30px;
+        right: -60px;
+        width: 280px;
+        height: 280px;
+      }
+
+      .actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .feature-item {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        direction: ltr;
+      }
+
+      .feature-item:nth-child(even) {
+        direction: ltr;
+      }
+
+      .feature-item:nth-child(even) > * {
+        direction: ltr;
+      }
+
+      .cta-container {
+        padding: 3.5rem 2.5rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding: 0 1.2rem;
+      }
+
+      .back {
+        top: 1rem;
+        left: 1rem;
+        font-size: 0.85rem;
+        padding: 0.6rem 1.2rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .lead {
+        font-size: 1rem;
+      }
+
+      .stat {
+        padding: 1.8rem;
+      }
+
+      .stat-num {
+        font-size: 2rem;
+      }
+
+      .card {
+        padding: 2rem;
+      }
+
+      .card h3 {
+        font-size: 1.3rem;
+      }
+
+      .quote-container {
+        padding: 2.5rem 2rem;
+      }
+
+      blockquote {
+        font-size: 1.15rem;
+      }
+
+      .cta-container {
+        padding: 2.5rem 1.8rem;
+      }
+
+      .cta-container h2 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="back" href="../index.html">← galeria</a>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-left">
+        <span class="badge">Novo · v2.0</span>
+        <h1>Constrói coisas que <em>respiram</em>.</h1>
+        <p class="lead">A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção. Desenhada para quem não se contenta com o genérico.</p>
+        <div class="actions">
+          <a href="#" class="btn btn-primary">Começar agora</a>
+          <a href="#" class="btn btn-ghost">Ver demo →</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="hero-river">
+          <svg viewBox="0 0 200 400" preserveAspectRatio="none">
+            <defs>
+              <filter id="hero-river-blur">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+              </filter>
+            </defs>
+            <path class="river-glow" d="M 100,0 Q 80,80 120,160 T 90,320 Q 110,360 100,400" />
+            <path d="M 100,0 Q 80,80 120,160 T 90,320 Q 110,360 100,400" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS SECTION -->
+    <section class="stats">
+      <div class="stat">
+        <span class="stat-num">12k</span>
+        <span class="stat-label">criadores</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">99.9%</span>
+        <span class="stat-label">uptime</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">48ms</span>
+        <span class="stat-label">latência</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">Possibilidades</span>
+      </div>
+    </section>
+
+    <!-- RIVER DIVIDER -->
+    <div class="river-divider">
+      <svg viewBox="0 0 1200 200" preserveAspectRatio="none">
+        <defs>
+          <filter id="river-blur">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" />
+          </filter>
+        </defs>
+        <path class="river-glow" d="M 0,80 Q 300,40 600,100 T 1200,80" />
+        <path d="M 0,80 Q 300,40 600,100 T 1200,80" />
+      </svg>
+    </div>
+
+    <!-- FEATURES SECTION -->
+    <section class="features-section">
+      <div class="features">
+        <!-- Feature 1 -->
+        <div class="feature-item">
+          <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>Rápido por defeito</h3>
+            <p>Renderização instantânea. Zero espera, zero desculpas. Cada movimento é otimizado.</p>
+          </div>
+          <div class="feature-text">
+            <h3>Velocidade integrada no DNA</h3>
+            <p>Não é um extra — é o alicerce. Cada decisão de design prioriza performance, porque uma ferramenta lenta é uma ferramenta que ninguém usa.</p>
+          </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="feature-item">
+          <div class="feature-text">
+            <h3>Moldável ao milímetro</h3>
+            <p>Controlo total, sem complexidade. A tua visão é a lei. Cada pixel pode ser ajustado sem tocar em código.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🎨</div>
+            <h3>Feito à medida</h3>
+            <p>Cada peça é tua. Não há templates rígidos — apenas possibilidades infinitas.</p>
+          </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="feature-item">
+          <div class="card">
+            <div class="card-icon">📈</div>
+            <h3>Escala contigo</h3>
+            <p>De protótipo a produção. Cresce quando tu cresces.</p>
+          </div>
+          <div class="feature-text">
+            <h3>Sem limites, sem reinvenções</h3>
+            <p>O que funciona hoje funciona amanhã, quando fores 100x maior. Não é escalabilidade — é inevitabilidade.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUOTE SECTION -->
+    <section class="quote-section">
+      <div class="quote-container">
+        <blockquote>"Nunca um produto me fez sentir tão em casa. Isto não parece software — parece arte que funciona."</blockquote>
+        <cite>— Maria L., designer</cite>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta-section">
+      <div class="cta-container">
+        <h2>Pronto para começar?</h2>
+        <p>Junta-te a milhares de criadores que já construíram algo extraordinário.</p>
+        <a href="#" class="btn btn-primary">Criar conta grátis</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2026 Nimbus</span>
+    <span id="styleName">Orgânico / Blob</span>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Punk Zine — Style Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Righteous&family=Courier+Prime:wght@400;700&family=IBM+Plex+Serif:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root {
+  --off-white: #f5f2ed;
+  --black: #1a1a1a;
+  --red: #cc0000;
+  --tape-beige: rgba(210, 180, 140, 0.35);
+  --metal-grey: #5a5a5a;
+  --dur-slow: 2.3s;
+  --dur-med: 0.8s;
+  --dur-fast: 0.5s;
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Courier Prime', monospace;
+  background: var(--off-white);
+  color: var(--black);
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.4;
+}
+
+/* Xerox grain texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="t"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2"/></filter><rect width="200" height="200" fill="%23f5f2ed" filter="url(%23t)" opacity="0.15"/></svg>');
+  background-size: 200px 200px;
+  mix-blend-mode: multiply;
+}
+
+.back {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.7rem;
+  text-decoration: none;
+  color: var(--black);
+  z-index: 200;
+  background: var(--off-white);
+  border: 2px solid var(--black);
+  padding: 8px 12px;
+  opacity: 0;
+  animation: fadeInSlide var(--dur-fast) var(--ease-out) 0.15s forwards;
+  transition: all 0.3s ease;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.back:hover {
+  background: var(--black);
+  color: var(--off-white);
+  transform: rotate(-2deg) scale(1.05);
+  box-shadow: 2px 2px 0 var(--red);
+}
+
+main {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* ========== HERO / RANSOM NOTE HEADLINE ========== */
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 500px;
+  padding: 80px 20px 100px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: visible;
+}
+
+.ransom-headline {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 60px auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px 10px;
+  animation: scaleInBounce var(--dur-slow) var(--ease-bounce) 0s forwards;
+  transform-origin: center;
+}
+
+/* Letter styling for ransom note effect */
+.ransom-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 95px;
+  min-height: 125px;
+  padding: 6px 10px;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  position: relative;
+  transform: rotate(var(--rotation, 0deg));
+  opacity: 0;
+  animation: ransomAppear var(--dur-slow) var(--ease-bounce) forwards;
+}
+
+.ransom-letter:nth-child(1) { font-family: 'Righteous', cursive; font-size: 140px; --rotation: -6deg; background: var(--off-white); color: var(--black); border: 3px solid var(--black); animation-delay: 0.1s; }
+.ransom-letter:nth-child(2) { font-family: 'Courier Prime', monospace; font-size: 135px; --rotation: 4deg; background: var(--black); color: var(--off-white); animation-delay: 0.15s; }
+.ransom-letter:nth-child(3) { font-family: 'IBM Plex Serif', serif; font-size: 138px; --rotation: -5deg; background: var(--red); color: var(--off-white); animation-delay: 0.2s; }
+.ransom-letter:nth-child(4) { font-family: 'VT323', monospace; font-size: 128px; --rotation: 5deg; background: var(--off-white); color: var(--black); border: 3px solid var(--red); animation-delay: 0.25s; }
+.ransom-letter:nth-child(5) { font-family: 'Righteous', cursive; font-size: 132px; --rotation: -4deg; background: var(--red); color: var(--off-white); box-shadow: -4px 4px 0 var(--black); animation-delay: 0.3s; }
+.ransom-letter:nth-child(6) { font-family: 'IBM Plex Serif', serif; font-size: 135px; --rotation: 3deg; background: var(--black); color: var(--red); animation-delay: 0.35s; }
+.ransom-letter:nth-child(7) { font-family: 'Courier Prime', monospace; font-size: 125px; --rotation: -3deg; background: var(--off-white); color: var(--red); border: 2px dashed var(--black); animation-delay: 0.4s; }
+.ransom-letter:nth-child(8) { font-family: 'VT323', monospace; font-size: 130px; --rotation: 6deg; background: var(--red); color: var(--black); border: 3px solid var(--off-white); animation-delay: 0.45s; }
+
+.ransom-subtext {
+  position: relative;
+  font-family: 'Righteous', cursive;
+  font-size: 52px;
+  color: var(--black);
+  transform: rotate(-4deg);
+  margin-left: 12px;
+  opacity: 0;
+  animation: ransomAppear var(--dur-slow) var(--ease-bounce) 0.5s forwards;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+@keyframes scaleInBounce {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes ransomAppear {
+  0% { transform: rotate(calc(var(--rotation, 0deg) + 15deg)) scale(0.4); opacity: 0; }
+  100% { transform: rotate(var(--rotation, 0deg)); opacity: 1; }
+}
+
+/* Spray stencil stats overlay on hero */
+.stats-scraps {
+  position: absolute;
+  bottom: -100px;
+  right: 60px;
+  width: 370px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  z-index: 5;
+}
+
+.stat-scrap {
+  background: var(--off-white);
+  border: 3px solid var(--black);
+  padding: 24px 20px;
+  transform: rotate(var(--stat-rotate, -4deg));
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.2);
+  position: relative;
+  opacity: 0;
+  animation: statFall var(--dur-slow) var(--ease-bounce) forwards;
+  text-align: center;
+  clip-path: polygon(
+    4% 8%, 12% 0%, 88% 0%, 96% 8%, 100% 28%, 96% 72%, 88% 100%, 12% 100%, 4% 92%, 0% 70%
+  );
+}
+
+.stat-scrap:nth-child(1) { --stat-rotate: -8deg; animation-delay: 0.55s; }
+.stat-scrap:nth-child(2) { --stat-rotate: 6deg; animation-delay: 0.6s; }
+.stat-scrap:nth-child(3) { --stat-rotate: -5deg; animation-delay: 0.65s; }
+.stat-scrap:nth-child(4) { --stat-rotate: 7deg; animation-delay: 0.7s; }
+
+.stat-number {
+  font-family: 'VT323', monospace;
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--red);
+  line-height: 1;
+  text-shadow: 2px 2px 0 var(--black);
+}
+
+.stat-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 11px;
+  color: var(--black);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 10px;
+  letter-spacing: 0.1em;
+}
+
+@keyframes statFall {
+  0% { transform: translateY(-160px) rotate(calc(var(--stat-rotate) + 30deg)) scale(0.5); opacity: 0; }
+  100% { transform: translateY(0) rotate(var(--stat-rotate)); opacity: 1; }
+}
+
+/* Masking tape effect */
+.tape {
+  position: absolute;
+  background: var(--tape-beige);
+  border: 1px dashed rgba(0, 0, 0, 0.12);
+  z-index: 6;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), inset 0 -1px 3px rgba(255, 255, 255, 0.5);
+}
+
+.tape-tl { width: 70px; height: 55px; top: 8px; left: 15px; transform: rotate(-36deg); opacity: 0; animation: tapeSlide var(--dur-fast) var(--ease-out) 0.65s forwards; }
+.tape-tr { width: 75px; height: 50px; top: 25px; right: 25px; transform: rotate(28deg); opacity: 0; animation: tapeSlide var(--dur-fast) var(--ease-out) 0.7s forwards; }
+.tape-bl { width: 72px; height: 55px; bottom: 50px; left: 20px; transform: rotate(42deg); opacity: 0; animation: tapeSlide var(--dur-fast) var(--ease-out) 0.75s forwards; }
+.tape-br { width: 68px; height: 52px; bottom: 30px; right: 30px; transform: rotate(-32deg); opacity: 0; animation: tapeSlide var(--dur-fast) var(--ease-out) 0.8s forwards; }
+
+@keyframes tapeSlide {
+  0% { opacity: 0; transform: rotate(var(--r, 0deg)) translateY(-30px); }
+  100% { opacity: 1; transform: rotate(var(--r, 0deg)) translateY(0); }
+}
+
+/* Staple effect */
+.staple {
+  position: absolute;
+  width: 8px;
+  height: 22px;
+  background: linear-gradient(90deg, var(--metal-grey) 0%, #808080 50%, var(--metal-grey) 100%);
+  border-radius: 2px;
+  z-index: 7;
+  box-shadow: inset -1px 0 2px rgba(255, 255, 255, 0.4), inset 1px 0 1px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  animation: fadeInSlide var(--dur-fast) var(--ease-out) 0.8s forwards;
+}
+
+.staple-1 { top: 50px; left: 45px; transform: rotate(-14deg); }
+.staple-2 { bottom: 90px; right: 40px; transform: rotate(12deg); }
+
+/* ========== LEAD SECTION ========== */
+.lead {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: 180px auto 70px auto;
+  padding: 45px 40px;
+  background: var(--off-white);
+  border: 3px dashed var(--black);
+  transform: rotate(-2deg);
+  z-index: 10;
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  animation: leadSlide var(--dur-slow) var(--ease-out) 0.8s forwards;
+}
+
+.lead p {
+  font-family: 'Courier Prime', monospace;
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--black);
+  text-wrap: pretty;
+}
+
+.lead .highlight {
+  background: var(--red);
+  color: var(--off-white);
+  padding: 2px 6px;
+  text-decoration: none;
+  font-weight: 700;
+  position: relative;
+}
+
+/* Hand-drawn marker circle via SVG */
+.lead .circled {
+  position: relative;
+  display: inline-block;
+}
+
+.lead .circled::after {
+  content: '';
+  position: absolute;
+  inset: -8px -10px;
+  border: 2px solid var(--red);
+  border-radius: 55%;
+  transform: rotate(-9deg);
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+@keyframes leadSlide {
+  0% { transform: rotate(-2deg) translateX(-100px); opacity: 0; }
+  100% { transform: rotate(-2deg); opacity: 1; }
+}
+
+@keyframes fadeInSlide {
+  0% { opacity: 0; transform: translateY(-20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== FEATURES / SAFETY PIN LIST ========== */
+.features {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 80px auto;
+  padding: 0 20px;
+  z-index: 10;
+}
+
+.features-scrap {
+  background: var(--black);
+  color: var(--off-white);
+  padding: 50px 40px;
+  transform: rotate(3deg);
+  position: relative;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.3);
+  border: 4px solid var(--red);
+  clip-path: polygon(
+    2% 5%, 10% 0%, 90% 1%, 98% 8%, 100% 20%, 98% 80%, 90% 98%, 10% 100%, 2% 92%, 0% 80%
+  );
+  opacity: 0;
+  animation: featureFall var(--dur-slow) var(--ease-bounce) 0.95s forwards;
+}
+
+@keyframes featureFall {
+  0% { transform: rotate(3deg) translateY(-200px); opacity: 0; }
+  100% { transform: rotate(3deg); opacity: 1; }
+}
+
+.features-title {
+  font-family: 'Righteous', cursive;
+  font-size: 32px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.features-list {
+  list-style: none;
+}
+
+.features-list li {
+  position: relative;
+  margin-bottom: 24px;
+  padding-left: 40px;
+  font-size: 16px;
+  line-height: 1.5;
+  transform: rotate(var(--li-rotate, 0deg));
+}
+
+.features-list li:nth-child(1) { --li-rotate: -1deg; }
+.features-list li:nth-child(2) { --li-rotate: 1.5deg; }
+.features-list li:nth-child(3) { --li-rotate: -0.8deg; }
+.features-list li:nth-child(4) { --li-rotate: 1.2deg; }
+
+.features-list li::before {
+  content: '⚔';
+  position: absolute;
+  left: 0;
+  font-size: 24px;
+  color: var(--red);
+}
+
+/* ========== QUOTE / TORN SCRAP ========== */
+.quote-section {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 100px auto 80px auto;
+  padding: 0 20px;
+  z-index: 10;
+}
+
+.quote-scrap {
+  background: var(--red);
+  color: var(--off-white);
+  padding: 40px 35px;
+  transform: rotate(-3deg);
+  position: relative;
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.25);
+  border-left: 6px solid var(--black);
+  clip-path: polygon(
+    0% 8%, 5% 0%, 92% 2%, 100% 10%, 100% 85%, 96% 95%, 5% 100%, 0% 92%
+  );
+  opacity: 0;
+  animation: quoteRise var(--dur-slow) var(--ease-out) 1.1s forwards;
+}
+
+@keyframes quoteRise {
+  0% { transform: rotate(-3deg) translateY(100px); opacity: 0; }
+  100% { transform: rotate(-3deg); opacity: 1; }
+}
+
+.quote-text {
+  font-family: 'IBM Plex Serif', serif;
+  font-size: 20px;
+  font-style: italic;
+  line-height: 1.6;
+  text-wrap: pretty;
+  position: relative;
+  padding-left: 30px;
+}
+
+.quote-text::before {
+  content: '✁';
+  position: absolute;
+  left: -10px;
+  top: -5px;
+  font-size: 32px;
+  opacity: 0.7;
+}
+
+/* ========== CTA SECTION ========== */
+.cta-section {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 80px auto 100px auto;
+  padding: 0 20px;
+  text-align: center;
+  z-index: 10;
+}
+
+.cta-button {
+  position: relative;
+  display: inline-block;
+  font-family: 'Righteous', cursive;
+  font-size: 52px;
+  font-weight: 800;
+  color: var(--red);
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 32px 56px;
+  border: 4px double var(--red);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: rotate(2deg) skewX(-5deg);
+  letter-spacing: 0.04em;
+  opacity: 0;
+  animation: ctaAppear var(--dur-slow) var(--ease-bounce) 1.25s forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  z-index: -1;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  color: var(--off-white);
+  transform: rotate(2deg) skewX(-5deg) scale(1.08);
+  box-shadow: 8px 8px 0 var(--black), 12px 12px 0 var(--red);
+}
+
+.cta-button:hover::before {
+  opacity: 1;
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@keyframes ctaAppear {
+  0% { transform: rotate(2deg) skewX(-5deg) scale(0.5); opacity: 0; }
+  50% { transform: rotate(2deg) skewX(-5deg) scale(1.05); }
+  100% { transform: rotate(2deg) skewX(-5deg) scale(1); opacity: 1; }
+}
+
+/* ========== FOOTER ========== */
+footer {
+  position: relative;
+  width: 100%;
+  padding: 60px 20px;
+  background: var(--off-white);
+  border-top: 4px dashed var(--black);
+  text-align: center;
+  z-index: 10;
+  transform: skewY(-0.5deg);
+  opacity: 0;
+  animation: fadeInSlide var(--dur-fast) var(--ease-out) 1.4s forwards;
+}
+
+footer p {
+  font-family: 'Courier Prime', monospace;
+  font-size: 12px;
+  color: var(--black);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .ransom-headline {
+    flex-direction: column;
+    gap: 3px 0;
+  }
+
+  .ransom-letter {
+    min-width: 65px;
+    min-height: 85px;
+  }
+
+  .ransom-letter:nth-child(1) { font-size: 95px; }
+  .ransom-letter:nth-child(2) { font-size: 85px; }
+  .ransom-letter:nth-child(3) { font-size: 90px; }
+  .ransom-letter:nth-child(4) { font-size: 78px; }
+  .ransom-letter:nth-child(5) { font-size: 82px; }
+  .ransom-letter:nth-child(6) { font-size: 88px; }
+  .ransom-letter:nth-child(7) { font-size: 75px; }
+  .ransom-letter:nth-child(8) { font-size: 80px; }
+
+  .ransom-subtext {
+    font-size: 36px;
+    margin-left: 0;
+    margin-top: 20px;
+  }
+
+  .stats-scraps {
+    width: 100%;
+    right: 0;
+    bottom: -120px;
+  }
+
+  .lead {
+    margin-top: 160px;
+    padding: 30px 20px;
+    font-size: 16px;
+  }
+
+  .features-scrap {
+    padding: 30px 20px;
+  }
+
+  .features-title {
+    font-size: 24px;
+  }
+
+  .cta-button {
+    font-size: 36px;
+    padding: 22px 38px;
+  }
+
+  .tape-tl { width: 55px; height: 45px; }
+  .tape-tr { width: 60px; height: 40px; top: 20px; }
+  .tape-bl { width: 55px; height: 45px; bottom: 40px; }
+  .tape-br { width: 50px; height: 42px; bottom: 20px; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .back:hover {
+    transform: none;
+  }
+
+  .cta-button:hover {
+    transform: rotate(2deg) skewX(-5deg);
+  }
+}
+</style>
+</head>
+<body>
+
+<a href="../index.html" class="back">← galeria</a>
+
+<main>
+
+<section class="hero">
+  <div class="ransom-headline">
+    <div class="ransom-letter">C</div>
+    <div class="ransom-letter">O</div>
+    <div class="ransom-letter">N</div>
+    <div class="ransom-letter">S</div>
+    <div class="ransom-letter">T</div>
+    <div class="ransom-letter">R</div>
+    <div class="ransom-letter">Ó</div>
+    <div class="ransom-letter">I</div>
+    <div class="ransom-subtext">coisas que respiram.</div>
+  </div>
+
+  <div class="tape tape-tl"></div>
+  <div class="tape tape-tr"></div>
+  <div class="tape tape-bl"></div>
+  <div class="tape tape-br"></div>
+
+  <div class="staple staple-1"></div>
+  <div class="staple staple-2"></div>
+
+  <div class="stats-scraps">
+    <div class="stat-scrap">
+      <div class="stat-number">10K+</div>
+      <div class="stat-label">Criadores</div>
+    </div>
+    <div class="stat-scrap">
+      <div class="stat-number">99%</div>
+      <div class="stat-label">Uptime</div>
+    </div>
+    <div class="stat-scrap">
+      <div class="stat-number">0</div>
+      <div class="stat-label">Bloat</div>
+    </div>
+    <div class="stat-scrap">
+      <div class="stat-number">∞</div>
+      <div class="stat-label">Criatividade</div>
+    </div>
+  </div>
+</section>
+
+<section class="lead">
+  <p>Para <span class="circled highlight">criadores</span> que querem construir sem ruído corporativo. Sem marketing feito à máquina. Sem BS. Nimbus é a ferramenta para quem quer criar coisas que respiram, que têm alma. Não é para todos. E está bem assim.</p>
+</section>
+
+<section class="features">
+  <div class="features-scrap">
+    <h2 class="features-title">Por quê Nimbus?</h2>
+    <ul class="features-list">
+      <li>Código limpo, sem framework do mês. Funciona.</li>
+      <li>Comunidade de verdade. Sem influencers pagos.</li>
+      <li>Construído por criadores, para criadores.</li>
+      <li>Suporte humano. Mensagem directa, resposta real.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="quote-section">
+  <div class="quote-scrap">
+    <p class="quote-text">"As melhores coisas são feitas quando a tecnologia desaparece e fica só o criador com a sua visão."</p>
+  </div>
+</section>
+
+<section class="cta-section">
+  <a href="#" class="cta-button">Junta-te</a>
+</section>
+
+</main>
+
+<footer>
+  <p>© 2026 Nimbus</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vaporwave Y2K — Style Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Righteous&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --vapor-pink: #ff6bb6;
+      --vapor-blue: #4a9eff;
+      --vapor-purple: #a78bfa;
+      --vapor-cyan: #00d9ff;
+      --vapor-dark: #0a0e27;
+      --vapor-light: #f5f1ff;
+      --vapor-grid: repeating-linear-gradient(
+        0deg,
+        rgba(74, 158, 255, 0.08) 0px,
+        rgba(74, 158, 255, 0.08) 1px,
+        transparent 1px,
+        transparent 80px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        rgba(255, 107, 182, 0.08) 0px,
+        rgba(255, 107, 182, 0.08) 1px,
+        transparent 1px,
+        transparent 80px
+      );
+      --dur-base: 0.4s;
+      --dur-slow: 0.8s;
+      --ease-smooth: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: 'Courier Prime', monospace;
+      color: var(--vapor-dark);
+      overflow-x: hidden;
+    }
+
+    body {
+      background: var(--vapor-grid),
+                  linear-gradient(180deg, #ffd6f5 0%, #b8d4ff 40%, #b8e8ff 100%);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Wallpaper atmosphere: sun/glow + perspective statue */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 8%;
+      right: 10%;
+      width: 280px;
+      height: 280px;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--vapor-cyan), var(--vapor-pink) 40%, transparent 70%);
+      filter: blur(60px);
+      box-shadow: 0 0 180px var(--vapor-pink);
+    }
+
+    /* Statue (left side) */
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 10%;
+      left: 4%;
+      width: 320px;
+      height: 420px;
+      opacity: 0.09;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        linear-gradient(90deg, transparent 0%, var(--vapor-purple) 45%, var(--vapor-blue) 55%, transparent 100%),
+        linear-gradient(180deg, transparent 0%, var(--vapor-pink) 30%, transparent 60%);
+      filter: blur(50px);
+      transform: perspective(800px) rotateY(15deg);
+    }
+
+    main {
+      flex: 1;
+      padding: 40px 20px 100px;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: auto;
+      min-height: calc(100vh - 100px);
+    }
+
+    /* Desktop-style absolute positioning for windows */
+    main > .window {
+      position: absolute;
+      animation: slideIn var(--dur-slow) var(--ease-smooth) both;
+    }
+
+    /* Back link integrated into design */
+    .back {
+      display: inline-block;
+      position: absolute;
+      top: 12px;
+      left: 20px;
+      z-index: 100;
+      background: rgba(255, 107, 182, 0.9);
+      color: var(--vapor-light);
+      padding: 8px 14px;
+      border-radius: 3px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: 2px outset #fff;
+      cursor: pointer;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5),
+                  inset -1px -1px 0 rgba(0,0,0,0.2),
+                  2px 2px 6px rgba(0,0,0,0.1);
+      transition: all 0.15s;
+      font-family: 'Courier Prime', monospace;
+    }
+
+    .back:hover {
+      transform: translateY(1px);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5),
+                  inset -1px -1px 0 rgba(0,0,0,0.2),
+                  1px 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .back:active {
+      transform: translateY(2px);
+    }
+
+    /* OS Window style */
+    .window {
+      background: linear-gradient(180deg, #dfdef4 0%, #c0c0c0 100%);
+      border: 2px solid;
+      border-color: #dfdfdf #808080 #808080 #dfdfdf;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.8),
+                  inset -1px -1px 0 rgba(0,0,0,0.2),
+                  2px 2px 8px rgba(0,0,0,0.15);
+      position: relative;
+      animation-fill-mode: both;
+    }
+
+    /* Hero window — top-left, largest */
+    .hero-window {
+      animation-delay: 0.1s;
+      width: 520px;
+      min-height: 360px;
+      top: 60px;
+      left: 40px;
+      z-index: 10;
+    }
+
+    /* Stats container: positioned as overlapping widgets */
+    .stats-container {
+      position: absolute;
+      top: 200px;
+      right: 60px;
+      width: 480px;
+      z-index: 8;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      animation: slideIn var(--dur-slow) var(--ease-smooth) 0.25s both;
+    }
+
+    .stat-widget {
+      animation: none;
+      width: 100%;
+    }
+
+    .stat-widget:nth-child(1) { animation: none; }
+    .stat-widget:nth-child(2) { animation: none; }
+    .stat-widget:nth-child(3) { animation: none; }
+
+    /* Features container: file icons scattered left-bottom */
+    .features-container {
+      position: absolute;
+      bottom: 160px;
+      left: 80px;
+      width: 240px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 7;
+      animation: slideIn var(--dur-slow) var(--ease-smooth) 0.35s both;
+    }
+
+    .feature-icon {
+      animation: none;
+      width: 80px;
+      height: 100px;
+      margin-left: calc(var(--feature-offset, 0) * 40px);
+    }
+
+    .feature-icon:nth-child(1) { --feature-offset: 0; }
+    .feature-icon:nth-child(2) { --feature-offset: 0.5; }
+    .feature-icon:nth-child(3) { --feature-offset: 1; }
+
+    /* Quote window: center-bottom, rotated slightly */
+    .quote-window {
+      animation-delay: 0.45s;
+      position: absolute;
+      width: 500px;
+      min-height: 140px;
+      bottom: 240px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      z-index: 6;
+    }
+
+    /* CTA window: bottom-right */
+    .cta-window {
+      animation-delay: 0.55s;
+      position: absolute;
+      width: 440px;
+      min-height: 200px;
+      bottom: 80px;
+      right: 100px;
+      transform: rotate(1.5deg);
+      z-index: 9;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Title bar */
+    .titlebar {
+      background: linear-gradient(90deg, #000080 0%, #1084d7 100%);
+      color: #fff;
+      padding: 2px 2px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      user-select: none;
+    }
+
+    .titlebar-icon {
+      display: inline-block;
+      width: 16px;
+      height: 14px;
+      background: linear-gradient(135deg, #000080 0%, #1084d7 50%, #0a6ba0 100%);
+      margin-right: 4px;
+      font-size: 10px;
+      line-height: 1;
+      color: var(--vapor-pink);
+      text-align: center;
+    }
+
+    .titlebar-text {
+      flex: 1;
+      padding: 0 4px;
+      color: #fff;
+      text-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+    }
+
+    .titlebar-controls {
+      display: flex;
+      gap: 2px;
+    }
+
+    .window-btn {
+      width: 16px;
+      height: 14px;
+      background: linear-gradient(180deg, #dfdfdf 0%, #a0a0a0 100%);
+      border: 1px solid;
+      border-color: #dfdfdf #808080 #808080 #dfdfdf;
+      cursor: pointer;
+      font-size: 8px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--vapor-dark);
+      font-weight: 700;
+      user-select: none;
+      transition: all 0.1s;
+    }
+
+    .window-btn:active {
+      border-color: #808080 #dfdfdf #dfdfdf #808080;
+      background: linear-gradient(180deg, #a0a0a0 0%, #dfdfdf 100%);
+    }
+
+    .window-content {
+      padding: 8px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      background: linear-gradient(180deg, #e0e0e0 0%, #c8c8c8 100%);
+    }
+
+    /* Hero window — styled */
+    .hero-window {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-window .window-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #ffd6f5 0%, #b8e8ff 100%);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--vapor-pink);
+      color: var(--vapor-light);
+      padding: 4px 12px;
+      border-radius: 3px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: 0.1em;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
+      text-transform: uppercase;
+    }
+
+    .hero-window h1 {
+      font-family: 'Righteous', cursive;
+      font-size: clamp(2rem, 8vw, 4rem);
+      font-weight: 400;
+      margin: 0 0 16px;
+      line-height: 1.1;
+      background: linear-gradient(90deg, var(--vapor-pink), var(--vapor-blue), var(--vapor-cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      filter: drop-shadow(2px 2px 0 var(--vapor-pink));
+      text-wrap: balance;
+      animation: glitch-shimmer var(--dur-slow) ease-in-out infinite;
+    }
+
+    @keyframes glitch-shimmer {
+      0%, 100% {
+        filter: drop-shadow(2px 2px 0 var(--vapor-pink)) drop-shadow(-1px -1px 0 var(--vapor-cyan));
+      }
+      50% {
+        filter: drop-shadow(3px 2px 0 var(--vapor-pink)) drop-shadow(-2px -1px 0 var(--vapor-cyan));
+      }
+    }
+
+    .hero-window p {
+      max-width: 500px;
+      color: var(--vapor-dark);
+      margin: 0 0 24px;
+      text-wrap: pretty;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 24px;
+      border-radius: 3px;
+      border: 2px outset #fff;
+      background: linear-gradient(180deg, #dfdfdf 0%, #a0a0a0 100%);
+      color: var(--vapor-dark);
+      font-family: 'Courier Prime', monospace;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5),
+                  inset -1px -1px 0 rgba(0,0,0,0.2),
+                  2px 2px 6px rgba(0,0,0,0.1);
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, var(--vapor-pink), #f0349b);
+      color: var(--vapor-light);
+      border-color: #fff;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.5),
+                  inset -1px -1px 0 rgba(0,0,0,0.2),
+                  4px 4px 8px rgba(0,0,0,0.15);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+      border-color: #808080 #dfdfdf #dfdfdf #808080;
+      box-shadow: inset 1px 1px 0 rgba(0,0,0,0.1),
+                  inset -1px -1px 0 rgba(255,255,255,0.2),
+                  1px 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Stats widget row — overridden below */
+
+    .stat-widget {
+      background: linear-gradient(180deg, #dfdef4 0%, #c0c0c0 100%);
+      border: 2px solid;
+      border-color: #dfdfdf #808080 #808080 #dfdfdf;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.8),
+                  inset -1px -1px 0 rgba(0,0,0,0.2),
+                  2px 2px 6px rgba(0,0,0,0.1);
+      padding: 0;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+      animation: slideIn var(--dur-slow) var(--ease-smooth) both;
+    }
+
+    .stat-widget:nth-child(1) { animation-delay: 0.25s; }
+    .stat-widget:nth-child(2) { animation-delay: 0.35s; }
+    .stat-widget:nth-child(3) { animation-delay: 0.45s; }
+
+    .stat-widget .titlebar {
+      background: linear-gradient(90deg, #4a9eff 0%, #00d9ff 100%);
+    }
+
+    .stat-widget .window-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      background: linear-gradient(135deg, #e8f4ff 0%, #f0e8ff 100%);
+    }
+
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--vapor-blue), var(--vapor-cyan));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--vapor-dark);
+    }
+
+    /* Features as mini file icons — overridden below */
+
+    .feature-icon {
+      background: var(--vapor-light);
+      border: 2px solid;
+      border-color: #dfdfdf #808080 #808080 #dfdfdf;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.6),
+                  inset -1px -1px 0 rgba(0,0,0,0.1),
+                  2px 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-icon::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: 4px;
+      font-size: 0.65rem;
+      font-weight: 400;
+      color: var(--vapor-dark);
+      text-align: center;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .feature-icon::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(255, 107, 182, 0.1) 100%);
+      pointer-events: none;
+    }
+
+    .feature-icon:hover {
+      background: linear-gradient(135deg, var(--vapor-light), #e8f4ff);
+      border-color: var(--vapor-blue);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.8),
+                  inset -1px -1px 0 rgba(0,0,0,0.2),
+                  0 0 12px rgba(74, 158, 255, 0.4);
+    }
+
+    .feature-icon:active {
+      border-color: #808080 #dfdfdf #dfdfdf #808080;
+      box-shadow: inset 2px 2px 0 rgba(0,0,0,0.1),
+                  inset -1px -1px 0 rgba(255,255,255,0.3);
+    }
+
+    .feature-glyph {
+      font-size: 3rem;
+      margin-bottom: 8px;
+      z-index: 1;
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+    }
+
+    .feature-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+      color: var(--vapor-dark);
+      z-index: 1;
+      text-wrap: balance;
+      line-height: 1.2;
+      padding: 0 8px;
+    }
+
+    /* Quote Notepad window — styled */
+
+    .quote-window .titlebar {
+      background: linear-gradient(90deg, #a78bfa 0%, var(--vapor-pink) 100%);
+    }
+
+    .quote-window .window-content {
+      background: linear-gradient(180deg, #fffaf0 0%, #f5f1ff 100%);
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .quote-text {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--vapor-dark);
+      text-align: center;
+      margin: 0 0 12px;
+      text-wrap: pretty;
+      line-height: 1.8;
+    }
+
+    .quote-author {
+      font-size: 0.85rem;
+      color: var(--vapor-pink);
+      text-align: right;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    /* CTA window — styled */
+
+    .cta-window .window-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, #b8d4ff 0%, #b8e8ff 100%);
+      flex: 1;
+    }
+
+    .cta-window h2 {
+      font-family: 'Righteous', cursive;
+      font-size: clamp(1.8rem, 6vw, 3rem);
+      margin: 0 0 8px;
+      background: linear-gradient(90deg, var(--vapor-pink), var(--vapor-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-wrap: balance;
+      line-height: 1.2;
+      filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.1));
+    }
+
+    .cta-window p {
+      color: var(--vapor-dark);
+      margin: 0 0 20px;
+      font-size: 0.95rem;
+      text-wrap: pretty;
+    }
+
+    /* Taskbar */
+    .taskbar {
+      background: linear-gradient(180deg, #dfdfdf 0%, #a0a0a0 100%);
+      border: 2px solid;
+      border-color: #dfdfdf #808080 #808080 #dfdfdf;
+      border-top-width: 2px;
+      padding: 2px 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 4px;
+      height: 28px;
+      margin-top: auto;
+      position: relative;
+      z-index: 90;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.6),
+                  inset -1px -1px 0 rgba(0,0,0,0.2);
+    }
+
+    .taskbar-start {
+      display: flex;
+      gap: 0;
+    }
+
+    .start-btn {
+      background: linear-gradient(180deg, #dfdfdf 0%, #a0a0a0 100%);
+      border: 2px outset;
+      border-color: #dfdfdf #808080 #808080 #dfdfdf;
+      padding: 2px 6px;
+      font-weight: 700;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.1s;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      color: var(--vapor-dark);
+      font-family: 'Courier Prime', monospace;
+      user-select: none;
+    }
+
+    .start-btn:hover {
+      background: linear-gradient(180deg, #dfdfdf 0%, #b0b0b0 100%);
+    }
+
+    .start-btn:active {
+      border-color: #808080 #dfdfdf #dfdfdf #808080;
+      background: linear-gradient(180deg, #a0a0a0 0%, #dfdfdf 100%);
+    }
+
+    .start-icon {
+      width: 14px;
+      height: 14px;
+      background: linear-gradient(135deg, var(--vapor-pink), var(--vapor-blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .taskbar-windows {
+      display: flex;
+      gap: 4px;
+      flex: 1;
+      padding: 0 8px;
+    }
+
+    .window-btn-taskbar {
+      background: linear-gradient(180deg, #dfdfdf 0%, #a0a0a0 100%);
+      border: 2px outset;
+      border-color: #dfdfdf #808080 #808080 #dfdfdf;
+      padding: 2px 10px;
+      font-weight: 400;
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: all 0.1s;
+      color: var(--vapor-dark);
+      font-family: 'Courier Prime', monospace;
+      user-select: none;
+      white-space: nowrap;
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .window-btn-taskbar:hover {
+      background: linear-gradient(180deg, #dfdfdf 0%, #b0b0b0 100%);
+    }
+
+    .window-btn-taskbar:active {
+      border-color: #808080 #dfdfdf #dfdfdf #808080;
+      background: linear-gradient(180deg, #a0a0a0 0%, #dfdfdf 100%);
+    }
+
+    .taskbar-clock {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--vapor-dark);
+      padding: 0 8px;
+      font-family: 'Courier Prime', monospace;
+      user-select: none;
+      margin-left: auto;
+    }
+
+    /* Desktop icons */
+    .desktop-icon {
+      position: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      user-select: none;
+      z-index: 2;
+      pointer-events: auto;
+    }
+
+    .desktop-icon-box {
+      width: 60px;
+      height: 60px;
+      background: var(--vapor-light);
+      border: 2px solid;
+      border-color: #dfdfdf #808080 #808080 #dfdfdf;
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.6),
+                  inset -1px -1px 0 rgba(0,0,0,0.1),
+                  2px 2px 4px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      transition: all 0.15s;
+    }
+
+    .desktop-icon-label {
+      font-size: 0.65rem;
+      text-align: center;
+      color: var(--vapor-dark);
+      font-weight: 400;
+      max-width: 70px;
+      line-height: 1.1;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    }
+
+    .desktop-icon:hover .desktop-icon-box {
+      border-color: var(--vapor-blue);
+      box-shadow: inset 1px 1px 0 rgba(255,255,255,0.8),
+                  inset -1px -1px 0 rgba(0,0,0,0.2),
+                  0 0 8px rgba(74, 158, 255, 0.3);
+    }
+
+    .desktop-icon:active .desktop-icon-box {
+      border-color: #808080 #dfdfdf #dfdfdf #808080;
+      box-shadow: inset 2px 2px 0 rgba(0,0,0,0.1),
+                  inset -1px -1px 0 rgba(255,255,255,0.3);
+    }
+
+    /* Position desktop icons */
+    .icon-docs {
+      top: 80px;
+      left: 20px;
+    }
+
+    .icon-trash {
+      top: 180px;
+      left: 20px;
+    }
+
+    .icon-exe {
+      top: 280px;
+      left: 20px;
+    }
+
+    /* Responsive */
+    @media (max-width: 1200px) {
+      .hero-window {
+        width: 420px;
+        top: 50px;
+        left: 30px;
+      }
+
+      .stats-container {
+        width: 380px;
+        right: 40px;
+        top: 180px;
+      }
+
+      .features-container {
+        width: 200px;
+        left: 60px;
+        bottom: 140px;
+      }
+
+      .feature-icon {
+        width: 70px;
+        height: 90px;
+      }
+
+      .quote-window {
+        width: 420px;
+        bottom: 200px;
+      }
+
+      .cta-window {
+        width: 380px;
+        right: 60px;
+        bottom: 60px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding: 60px 12px 100px;
+        position: relative;
+      }
+
+      .back {
+        top: 8px;
+        left: 12px;
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+
+      .window-content {
+        font-size: 0.9rem;
+      }
+
+      .hero-window {
+        position: static;
+        width: 100%;
+        margin-top: 12px;
+      }
+
+      .hero-window h1 {
+        font-size: 1.8rem;
+      }
+
+      .stats-container {
+        position: static;
+        width: 100%;
+        margin-top: 16px;
+        flex-direction: row;
+      }
+
+      .cta-window {
+        position: static;
+        width: 100%;
+        margin-top: 16px;
+        transform: none;
+      }
+
+      .cta-window h2 {
+        font-size: 1.4rem;
+      }
+
+      .quote-window {
+        position: static;
+        width: 100%;
+        margin-top: 16px;
+        transform: none;
+      }
+
+      .features-container {
+        position: static;
+        width: 100%;
+        margin-top: 16px;
+        flex-direction: row;
+        gap: 12px;
+      }
+
+      .feature-icon {
+        width: auto;
+        height: auto;
+        aspect-ratio: 1;
+        flex: 1;
+        min-width: 80px;
+      }
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Desktop icons -->
+  <div class="desktop-icon icon-docs">
+    <div class="desktop-icon-box">📁</div>
+    <div class="desktop-icon-label">Os Meus Documentos</div>
+  </div>
+  <div class="desktop-icon icon-trash">
+    <div class="desktop-icon-box">🗑️</div>
+    <div class="desktop-icon-label">Lixo</div>
+  </div>
+  <div class="desktop-icon icon-exe">
+    <div class="desktop-icon-box">⚡</div>
+    <div class="desktop-icon-label">nimbus.exe</div>
+  </div>
+
+  <main>
+    <a class="back" href="../index.html">← galeria</a>
+
+    <!-- Hero Window -->
+    <div class="window hero-window">
+      <div class="titlebar">
+        <div style="display: flex; align-items: center;">
+          <div class="titlebar-icon">✦</div>
+          <div class="titlebar-text">Nimbus.exe</div>
+        </div>
+        <div class="titlebar-controls">
+          <button class="window-btn">_</button>
+          <button class="window-btn">□</button>
+          <button class="window-btn">×</button>
+        </div>
+      </div>
+      <div class="window-content">
+        <span class="hero-badge">Novo · v2.0</span>
+        <h1>Constrói coisas que respiram</h1>
+        <p>A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção. Desenhada para quem não se contenta com o genérico.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary">Começar agora</a>
+          <a href="#" class="btn">Ver demo →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats Widgets -->
+    <div class="stats-container">
+      <div class="stat-widget window">
+        <div class="titlebar">
+          <div style="display: flex; align-items: center;">
+            <div class="titlebar-icon">📊</div>
+            <div class="titlebar-text">Criadores</div>
+          </div>
+          <div class="titlebar-controls">
+            <button class="window-btn">_</button>
+            <button class="window-btn">□</button>
+            <button class="window-btn">×</button>
+          </div>
+        </div>
+        <div class="window-content">
+          <div class="stat-num">12k</div>
+          <div class="stat-label">criadores ativos</div>
+        </div>
+      </div>
+
+      <div class="stat-widget window">
+        <div class="titlebar">
+          <div style="display: flex; align-items: center;">
+            <div class="titlebar-icon">⚡</div>
+            <div class="titlebar-text">Uptime</div>
+          </div>
+          <div class="titlebar-controls">
+            <button class="window-btn">_</button>
+            <button class="window-btn">□</button>
+            <button class="window-btn">×</button>
+          </div>
+        </div>
+        <div class="window-content">
+          <div class="stat-num">99.9%</div>
+          <div class="stat-label">disponibilidade</div>
+        </div>
+      </div>
+
+      <div class="stat-widget window">
+        <div class="titlebar">
+          <div style="display: flex; align-items: center;">
+            <div class="titlebar-icon">⚙️</div>
+            <div class="titlebar-text">Latência</div>
+          </div>
+          <div class="titlebar-controls">
+            <button class="window-btn">_</button>
+            <button class="window-btn">□</button>
+            <button class="window-btn">×</button>
+          </div>
+        </div>
+        <div class="window-content">
+          <div class="stat-num">48ms</div>
+          <div class="stat-label">resposta global</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Features as file icons -->
+    <div class="features-container">
+      <div class="feature-icon">
+        <div class="feature-glyph">⚡</div>
+        <div class="feature-name">Rápido por defeito</div>
+      </div>
+      <div class="feature-icon">
+        <div class="feature-glyph">✨</div>
+        <div class="feature-name">Feito à medida</div>
+      </div>
+      <div class="feature-icon">
+        <div class="feature-glyph">🚀</div>
+        <div class="feature-name">Escala contigo</div>
+      </div>
+    </div>
+
+    <!-- Quote Notepad -->
+    <div class="window quote-window">
+      <div class="titlebar">
+        <div style="display: flex; align-items: center;">
+          <div class="titlebar-icon">📝</div>
+          <div class="titlebar-text">Testemunha.txt</div>
+        </div>
+        <div class="titlebar-controls">
+          <button class="window-btn">_</button>
+          <button class="window-btn">□</button>
+          <button class="window-btn">×</button>
+        </div>
+      </div>
+      <div class="window-content">
+        <div>
+          <p class="quote-text">"Nunca um produto me fez sentir tão em casa. Isto não parece software — parece arte que funciona."</p>
+          <p class="quote-author">— Maria L., designer</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Window -->
+    <div class="window cta-window">
+      <div class="titlebar">
+        <div style="display: flex; align-items: center;">
+          <div class="titlebar-icon">🎯</div>
+          <div class="titlebar-text">Próximo passo</div>
+        </div>
+        <div class="titlebar-controls">
+          <button class="window-btn">_</button>
+          <button class="window-btn">□</button>
+          <button class="window-btn">×</button>
+        </div>
+      </div>
+      <div class="window-content">
+        <h2>Pronto para começar?</h2>
+        <p>Junta-te a milhares de criadores hoje.</p>
+        <a href="#" class="btn btn-primary">Criar conta grátis</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <div class="taskbar-start">
+      <button class="start-btn">
+        <div class="start-icon">❖</div>
+        Iniciar
+      </button>
+    </div>
+    <div class="taskbar-windows" id="taskbar-windows"></div>
+    <div class="taskbar-clock" id="clock">15:47</div>
+  </div>
+
+  <script>
+    // Taskbar clock simulation — update every minute
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('clock').textContent = `${hours}:${minutes}`;
+    }
+    updateClock();
+    setInterval(updateClock, 60000);
+
+    // Populate taskbar with open windows
+    function populateTaskbar() {
+      const taskbar = document.getElementById('taskbar-windows');
+      const windows = [
+        { title: 'Nimbus.exe', emoji: '✦' },
+        { title: 'Criadores', emoji: '📊' },
+        { title: 'Uptime', emoji: '⚡' },
+        { title: 'Latência', emoji: '⚙️' },
+        { title: 'Testemunha.txt', emoji: '📝' },
+        { title: 'Próximo passo', emoji: '🎯' }
+      ];
+      windows.forEach(w => {
+        const btn = document.createElement('button');
+        btn.className = 'window-btn-taskbar';
+        btn.innerHTML = `${w.emoji} ${w.title}`;
+        btn.title = w.title;
+        taskbar.appendChild(btn);
+      });
+    }
+    populateTaskbar();
+
+    // Window interaction (bring to front on click)
+    let maxZ = 10;
+    document.querySelectorAll('main > .window').forEach((w, idx) => {
+      w.style.zIndex = 10 + idx;
+      w.addEventListener('mousedown', function() {
+        this.style.zIndex = ++maxZ;
+      });
+    });
+  </script>
+</body>
+</html>

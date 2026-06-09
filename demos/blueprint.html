@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Blueprint Industrial — Style Gallery</title>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=PT+Mono&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--bg-dark: #0a1927;
+			--bg-paper: #0d2442;
+			--cyan: #00d9ff;
+			--cyan-light: #4dd9ff;
+			--cyan-dark: #00a3cc;
+			--text-primary: #b8d4f1;
+			--text-secondary: #7a98b3;
+			--grid-line: rgba(0, 217, 255, 0.08);
+			--grid-line-fine: rgba(0, 217, 255, 0.03);
+			--dur-fast: 0.3s;
+			--dur-med: 0.6s;
+			--ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+			--ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		body {
+			font-family: 'IBM Plex Mono', monospace;
+			background: linear-gradient(135deg, var(--bg-dark) 0%, #061422 100%);
+			color: var(--text-primary);
+			line-height: 1.6;
+			position: relative;
+			overflow-x: hidden;
+		}
+
+		/* Grid pattern background */
+		body::before {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-image:
+				linear-gradient(0deg, var(--grid-line) 1px, transparent 1px),
+				linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
+				linear-gradient(0deg, var(--grid-line-fine) 1px, transparent 1px),
+				linear-gradient(90deg, var(--grid-line-fine) 1px, transparent 1px);
+			background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+			background-attachment: fixed;
+			pointer-events: none;
+			z-index: 1;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			* {
+				animation-duration: 0.01ms !important;
+				animation-iteration-count: 1 !important;
+				transition-duration: 0.01ms !important;
+			}
+		}
+
+		/* Back link */
+		.back {
+			position: fixed;
+			top: 24px;
+			left: 24px;
+			z-index: 200;
+			text-decoration: none;
+			color: var(--bg-dark);
+			background: var(--cyan);
+			border: 2px solid var(--cyan);
+			padding: 10px 18px;
+			font-size: 0.8rem;
+			font-weight: 700;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			transition: all var(--dur-fast) var(--ease-smooth);
+			box-shadow: 2px 4px 0 rgba(0, 0, 0, 0.3);
+		}
+
+		.back:hover {
+			background: var(--cyan-light);
+			transform: translate(-2px, -2px);
+			box-shadow: 4px 6px 0 rgba(0, 0, 0, 0.3);
+		}
+
+		main {
+			position: relative;
+			z-index: 2;
+			max-width: 1400px;
+			margin: 0 auto;
+			padding: 80px 40px;
+		}
+
+		/* Main blueprint sheet container */
+		.sheet {
+			background: linear-gradient(135deg, var(--bg-paper) 0%, #0a1f35 100%);
+			border: 3px solid var(--cyan);
+			position: relative;
+			padding: 60px 50px;
+			box-shadow:
+				0 0 40px rgba(0, 217, 255, 0.2),
+				inset 0 0 60px rgba(0, 217, 255, 0.05);
+		}
+
+		/* Coordinate grid (A-F, 1-8) */
+		.sheet::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-image:
+				linear-gradient(0deg, var(--grid-line) 1px, transparent 1px),
+				linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+			background-size: calc(100% / 6) calc(100% / 8);
+			pointer-events: none;
+		}
+
+		/* Margin rulers (coordinates) */
+		.coord-h {
+			position: absolute;
+			bottom: 8px;
+			left: 60px;
+			right: 50px;
+			height: 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 0.65rem;
+			color: var(--cyan-dark);
+			letter-spacing: 0.1em;
+			z-index: 3;
+		}
+
+		.coord-v {
+			position: absolute;
+			left: 8px;
+			top: 60px;
+			bottom: 60px;
+			width: 20px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: center;
+			font-size: 0.65rem;
+			color: var(--cyan-dark);
+			letter-spacing: 0.1em;
+			z-index: 3;
+		}
+
+		/* Title block (bottom right) */
+		.title-block {
+			position: absolute;
+			bottom: 12px;
+			right: 12px;
+			border: 2px solid var(--cyan);
+			width: 180px;
+			z-index: 4;
+			background: rgba(10, 25, 39, 0.8);
+		}
+
+		.title-block-row {
+			display: flex;
+			border-bottom: 1px solid var(--cyan);
+			min-height: 24px;
+		}
+
+		.title-block-row:last-child {
+			border-bottom: none;
+		}
+
+		.title-block-label {
+			flex: 0 0 60%;
+			padding: 6px 8px;
+			font-size: 0.6rem;
+			color: var(--cyan-dark);
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			border-right: 1px solid var(--cyan);
+			display: flex;
+			align-items: center;
+		}
+
+		.title-block-value {
+			flex: 1;
+			padding: 6px 8px;
+			font-size: 0.65rem;
+			color: var(--cyan);
+			font-weight: 700;
+		}
+
+		/* Main content area (positioned over grid) */
+		.blueprint-content {
+			position: relative;
+			z-index: 2;
+		}
+
+		/* Header with badge and title */
+		.hero-section {
+			margin-bottom: 60px;
+			position: relative;
+		}
+
+		.badge {
+			display: inline-block;
+			border: 1px dashed var(--cyan);
+			color: var(--cyan);
+			padding: 8px 16px;
+			font-size: 0.7rem;
+			text-transform: uppercase;
+			letter-spacing: 0.15em;
+			margin-bottom: 24px;
+			background: rgba(0, 217, 255, 0.04);
+		}
+
+		.badge::before {
+			content: "◇ ";
+			margin-right: 4px;
+		}
+
+		h1 {
+			font-family: 'PT Mono', monospace;
+			font-weight: 700;
+			font-size: clamp(2.4rem, 7vw, 4.8rem);
+			line-height: 1.15;
+			color: var(--cyan-light);
+			letter-spacing: -0.01em;
+			margin-bottom: 20px;
+			text-wrap: balance;
+		}
+
+		h1 em {
+			font-style: normal;
+			color: var(--cyan);
+			position: relative;
+		}
+
+		h1 em::after {
+			content: '';
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: -4px;
+			height: 2px;
+			background: linear-gradient(90deg, var(--cyan) 0%, transparent 100%);
+		}
+
+		.lead {
+			font-size: 1.05rem;
+			max-width: 640px;
+			line-height: 1.8;
+			color: var(--text-primary);
+			margin-bottom: 36px;
+		}
+
+		.lead::before {
+			content: '> ';
+			color: var(--cyan);
+			margin-right: 8px;
+			font-weight: 700;
+		}
+
+		.actions {
+			display: flex;
+			gap: 16px;
+			flex-wrap: wrap;
+		}
+
+		.btn {
+			font-family: 'PT Mono', monospace;
+			text-transform: uppercase;
+			letter-spacing: 0.1em;
+			border: 2px solid transparent;
+			padding: 14px 28px;
+			font-size: 0.75rem;
+			font-weight: 700;
+			text-decoration: none;
+			cursor: pointer;
+			transition: all var(--dur-fast) var(--ease-smooth);
+			position: relative;
+			display: inline-block;
+		}
+
+		.btn-primary {
+			background: var(--cyan);
+			color: var(--bg-dark);
+			box-shadow: 2px 4px 0 rgba(0, 217, 255, 0.3);
+		}
+
+		.btn-primary:hover {
+			background: var(--cyan-light);
+			transform: translate(-2px, -2px);
+			box-shadow: 4px 6px 0 rgba(0, 217, 255, 0.4);
+		}
+
+		.btn-ghost {
+			background: transparent;
+			border: 2px solid var(--cyan);
+			color: var(--cyan);
+			box-shadow: inset 0 0 0 0 var(--cyan);
+		}
+
+		.btn-ghost:hover {
+			background: rgba(0, 217, 255, 0.1);
+			box-shadow: inset 0 0 20px var(--cyan);
+			transform: translate(-1px, -1px);
+		}
+
+		/* Dimension callout system */
+		.dimensions {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 0;
+			margin: 80px 0 100px 0;
+			position: relative;
+		}
+
+		.dimension-line {
+			position: absolute;
+			border-color: var(--cyan-dark);
+		}
+
+		.dimension-h {
+			border-top: 1px dashed var(--cyan-dark);
+			top: -30px;
+			left: 0;
+			right: 0;
+			width: 100%;
+		}
+
+		.dimension-label {
+			position: absolute;
+			font-size: 0.7rem;
+			color: var(--cyan-dark);
+			text-transform: uppercase;
+			letter-spacing: 0.1em;
+		}
+
+		.stat {
+			padding: 40px 30px;
+			border: 1px solid var(--grid-line);
+			background: rgba(0, 217, 255, 0.02);
+			position: relative;
+			text-align: center;
+		}
+
+		.stat:not(:last-child) {
+			border-right: 2px dashed var(--grid-line);
+		}
+
+		.stat::before {
+			content: '';
+			position: absolute;
+			top: -12px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 8px;
+			height: 8px;
+			border: 1px solid var(--cyan-dark);
+			background: var(--bg-paper);
+		}
+
+		.stat::after {
+			content: '';
+			position: absolute;
+			bottom: -12px;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 8px;
+			height: 8px;
+			border: 1px solid var(--cyan-dark);
+			background: var(--bg-paper);
+		}
+
+		.stat-num {
+			font-family: 'PT Mono', monospace;
+			font-weight: 700;
+			font-size: clamp(1.8rem, 4vw, 2.8rem);
+			color: var(--cyan);
+			line-height: 1;
+			margin-bottom: 12px;
+			display: block;
+		}
+
+		.stat-label {
+			text-transform: uppercase;
+			letter-spacing: 0.12em;
+			font-size: 0.7rem;
+			color: var(--text-secondary);
+		}
+
+		.stat-label::before {
+			content: '[ ';
+		}
+
+		.stat-label::after {
+			content: ' ]';
+		}
+
+		/* Exploded view callouts */
+		.features-section {
+			margin: 100px 0;
+			position: relative;
+		}
+
+		.features-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+			gap: 50px;
+			margin: 60px 0;
+		}
+
+		.callout {
+			position: relative;
+			padding: 32px;
+			border: 1px dashed var(--cyan);
+			background: rgba(0, 217, 255, 0.03);
+			transition: all var(--dur-med) var(--ease-smooth);
+		}
+
+		.callout::before {
+			content: '◆';
+			position: absolute;
+			top: -12px;
+			left: -12px;
+			width: 20px;
+			height: 20px;
+			border: 1px solid var(--cyan);
+			background: var(--bg-paper);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 0.9rem;
+			color: var(--cyan);
+		}
+
+		.callout::after {
+			content: '';
+			position: absolute;
+			bottom: -12px;
+			right: -12px;
+			width: 20px;
+			height: 20px;
+			border: 1px solid var(--cyan);
+			background: var(--bg-paper);
+		}
+
+		.callout:hover {
+			background: rgba(0, 217, 255, 0.08);
+			transform: translate(-4px, -4px);
+			box-shadow: 4px 4px 0 rgba(0, 217, 255, 0.15);
+		}
+
+		.callout h3 {
+			font-family: 'PT Mono', monospace;
+			font-weight: 700;
+			font-size: 1.1rem;
+			text-transform: uppercase;
+			color: var(--cyan-light);
+			margin: 0 0 12px 0;
+			letter-spacing: 0.05em;
+		}
+
+		.callout p {
+			font-size: 0.95rem;
+			color: var(--text-primary);
+			margin: 0;
+			line-height: 1.7;
+		}
+
+		/* Leader lines (numeric references) */
+		.callout-num {
+			display: inline-block;
+			width: 28px;
+			height: 28px;
+			border: 2px solid var(--cyan);
+			border-radius: 50%;
+			text-align: center;
+			line-height: 24px;
+			color: var(--cyan);
+			font-weight: 700;
+			font-size: 0.85rem;
+			background: var(--bg-paper);
+			margin-bottom: 16px;
+		}
+
+		/* Quote section */
+		.quote-section {
+			margin: 100px 0;
+			position: relative;
+		}
+
+		.quote-container {
+			border: 2px solid var(--cyan);
+			padding: 50px 40px;
+			background: linear-gradient(135deg, rgba(0, 217, 255, 0.05) 0%, rgba(0, 217, 255, 0.01) 100%);
+			position: relative;
+			margin-bottom: 40px;
+		}
+
+		.quote-container::before {
+			content: '"';
+			position: absolute;
+			top: 10px;
+			left: 20px;
+			font-size: 4rem;
+			color: var(--cyan-dark);
+			opacity: 0.3;
+		}
+
+		blockquote {
+			font-family: 'PT Mono', monospace;
+			font-size: 1.3rem;
+			font-weight: 300;
+			color: var(--text-primary);
+			line-height: 1.8;
+			margin: 0;
+		}
+
+		cite {
+			display: block;
+			margin-top: 20px;
+			font-style: normal;
+			color: var(--cyan);
+			font-weight: 700;
+			font-size: 0.9rem;
+			text-transform: uppercase;
+			letter-spacing: 0.1em;
+		}
+
+		cite::before {
+			content: '— [ ';
+		}
+
+		cite::after {
+			content: ' ]';
+		}
+
+		/* Revision table */
+		.revisions-table {
+			border: 1px solid var(--cyan);
+			margin: 40px 0;
+			font-size: 0.8rem;
+		}
+
+		.revisions-table thead {
+			background: rgba(0, 217, 255, 0.1);
+			border-bottom: 2px solid var(--cyan);
+		}
+
+		.revisions-table th,
+		.revisions-table td {
+			padding: 12px 16px;
+			border-right: 1px dashed var(--cyan);
+			text-align: left;
+			color: var(--text-primary);
+		}
+
+		.revisions-table th {
+			color: var(--cyan);
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+		}
+
+		.revisions-table td:last-child,
+		.revisions-table th:last-child {
+			border-right: none;
+		}
+
+		.revisions-table tbody tr {
+			border-bottom: 1px dashed var(--grid-line);
+		}
+
+		.revisions-table tbody tr:last-child {
+			border-bottom: none;
+		}
+
+		/* CTA section */
+		.cta-section {
+			margin: 80px 0 60px 0;
+			padding: 50px 40px;
+			border: 2px solid var(--cyan);
+			background: rgba(0, 217, 255, 0.03);
+			text-align: center;
+			position: relative;
+		}
+
+		.cta-section::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 2px;
+			background: repeating-linear-gradient(
+				90deg,
+				var(--cyan) 0,
+				var(--cyan) 10px,
+				transparent 10px,
+				transparent 20px
+			);
+		}
+
+		h2 {
+			font-family: 'PT Mono', monospace;
+			font-weight: 700;
+			font-size: clamp(1.8rem, 4vw, 2.8rem);
+			color: var(--cyan-light);
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			margin: 0 0 16px 0;
+			text-wrap: balance;
+		}
+
+		.cta-section p {
+			font-size: 1rem;
+			color: var(--text-primary);
+			margin: 0 0 28px 0;
+		}
+
+		/* Footer */
+		footer {
+			border-top: 2px dashed var(--cyan);
+			margin-top: 60px;
+			padding-top: 30px;
+			text-align: center;
+			font-size: 0.75rem;
+			color: var(--text-secondary);
+			text-transform: uppercase;
+			letter-spacing: 0.12em;
+		}
+
+		/* Animation sequences */
+		@keyframes reveal-fade {
+			from {
+				opacity: 0;
+				transform: translateY(20px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes line-draw {
+			from {
+				width: 0;
+				opacity: 0;
+			}
+			to {
+				width: 100%;
+				opacity: 1;
+			}
+		}
+
+		@keyframes glow-pulse {
+			0%, 100% {
+				box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+			}
+			50% {
+				box-shadow: 0 0 40px rgba(0, 217, 255, 0.35);
+			}
+		}
+
+		/* Staggered load animation */
+		.sheet {
+			animation: reveal-fade 0.8s var(--ease-smooth);
+		}
+
+		.badge {
+			animation: reveal-fade 0.6s var(--ease-smooth) 0.1s both;
+		}
+
+		h1 {
+			animation: reveal-fade 0.8s var(--ease-smooth) 0.2s both;
+		}
+
+		.lead {
+			animation: reveal-fade 0.8s var(--ease-smooth) 0.3s both;
+		}
+
+		.actions {
+			animation: reveal-fade 0.8s var(--ease-smooth) 0.4s both;
+		}
+
+		.stat {
+			animation: reveal-fade 0.6s var(--ease-smooth) both;
+		}
+
+		.stat:nth-child(1) { animation-delay: 0.5s; }
+		.stat:nth-child(2) { animation-delay: 0.6s; }
+		.stat:nth-child(3) { animation-delay: 0.7s; }
+
+		.callout {
+			animation: reveal-fade 0.6s var(--ease-smooth) both;
+		}
+
+		.callout:nth-child(1) { animation-delay: 0.8s; }
+		.callout:nth-child(2) { animation-delay: 0.9s; }
+		.callout:nth-child(3) { animation-delay: 1s; }
+
+		.quote-container {
+			animation: reveal-fade 0.8s var(--ease-smooth) 1.1s both;
+		}
+
+		.cta-section {
+			animation: reveal-fade 0.8s var(--ease-smooth) 1.2s both;
+		}
+
+		footer {
+			animation: reveal-fade 0.6s var(--ease-smooth) 1.3s both;
+		}
+
+		/* Responsive */
+		@media (max-width: 768px) {
+			main {
+				padding: 60px 24px;
+			}
+
+			.sheet {
+				padding: 40px 30px;
+				border: 2px solid var(--cyan);
+			}
+
+			.features-grid {
+				grid-template-columns: 1fr;
+				gap: 40px;
+			}
+
+			.actions {
+				flex-direction: column;
+			}
+
+			.btn {
+				width: 100%;
+				text-align: center;
+			}
+
+			.title-block {
+				width: 140px;
+				font-size: 0.9em;
+			}
+
+			.title-block-row {
+				min-height: 20px;
+			}
+
+			.coord-h,
+			.coord-v {
+				display: none;
+			}
+
+			.revisions-table {
+				font-size: 0.7rem;
+			}
+
+			.revisions-table th,
+			.revisions-table td {
+				padding: 8px 10px;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.back {
+				padding: 8px 12px;
+				font-size: 0.7rem;
+			}
+
+			h1 {
+				font-size: 1.8rem;
+			}
+
+			h2 {
+				font-size: 1.4rem;
+			}
+
+			.lead {
+				font-size: 0.95rem;
+			}
+
+			.btn {
+				padding: 12px 20px;
+				font-size: 0.7rem;
+			}
+
+			.sheet {
+				padding: 30px 20px;
+			}
+
+			.stat {
+				padding: 24px 16px;
+			}
+
+			.stat-num {
+				font-size: 1.6rem;
+			}
+
+			.callout {
+				padding: 24px;
+			}
+
+			.quote-container {
+				padding: 30px 24px;
+			}
+
+			blockquote {
+				font-size: 1.1rem;
+			}
+
+			.cta-section {
+				padding: 30px 20px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<a class="back" href="../index.html">← galeria</a>
+
+	<main>
+		<div class="sheet">
+			<!-- Coordinate rulers -->
+			<div class="coord-h">
+				<span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span>
+			</div>
+			<div class="coord-v">
+				<span>1</span>
+				<span>2</span>
+				<span>3</span>
+				<span>4</span>
+				<span>5</span>
+				<span>6</span>
+				<span>7</span>
+				<span>8</span>
+			</div>
+
+			<!-- Title block -->
+			<div class="title-block">
+				<div class="title-block-row">
+					<div class="title-block-label">Projeto</div>
+					<div class="title-block-value">Nimbus</div>
+				</div>
+				<div class="title-block-row">
+					<div class="title-block-label">Escala</div>
+					<div class="title-block-value">1:1</div>
+				</div>
+				<div class="title-block-row">
+					<div class="title-block-label">Data</div>
+					<div class="title-block-value">09.06.26</div>
+				</div>
+				<div class="title-block-row">
+					<div class="title-block-label">Aprovado</div>
+					<div class="title-block-value">✓</div>
+				</div>
+			</div>
+
+			<!-- Main content -->
+			<div class="blueprint-content">
+				<!-- Hero section -->
+				<section class="hero-section">
+					<span class="badge">Novo · v2.0</span>
+					<h1>Constrói coisas que <em>respiram</em>.</h1>
+					<p class="lead">A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção. Desenhada para quem não se contenta com o genérico.</p>
+					<div class="actions">
+						<a href="#" class="btn btn-primary">Começar agora</a>
+						<a href="#" class="btn btn-ghost">Ver demo →</a>
+					</div>
+				</section>
+
+				<!-- Dimension callouts (stats as technical specs) -->
+				<section class="dimensions">
+					<div class="stat">
+						<span class="stat-num">12k</span>
+						<span class="stat-label">criadores</span>
+					</div>
+					<div class="stat">
+						<span class="stat-num">99.9%</span>
+						<span class="stat-label">uptime</span>
+					</div>
+					<div class="stat">
+						<span class="stat-num">48ms</span>
+						<span class="stat-label">latência</span>
+					</div>
+				</section>
+
+				<!-- Features as exploded view callouts -->
+				<section class="features-section">
+					<h2 style="text-align: center; margin-bottom: 40px;">Especificações Técnicas</h2>
+					<div class="features-grid">
+						<article class="callout">
+							<div class="callout-num">①</div>
+							<h3>Rápido por defeito</h3>
+							<p>Renderização instantânea. Zero espera, zero desculpas. Desempenho é fundação, não luxo.</p>
+						</article>
+						<article class="callout">
+							<div class="callout-num">②</div>
+							<h3>Feito à medida</h3>
+							<p>Cada peça moldável ao milímetro. O controlo é teu. Flexibilidade sem compromissos.</p>
+						</article>
+						<article class="callout">
+							<div class="callout-num">③</div>
+							<h3>Escala contigo</h3>
+							<p>De protótipo a produção sem reescrever uma linha. Crescimento sem fricção.</p>
+						</article>
+					</div>
+				</section>
+
+				<!-- Revision table -->
+				<table class="revisions-table">
+					<thead>
+						<tr>
+							<th>Rev</th>
+							<th>Data</th>
+							<th>Descrição</th>
+							<th>Aprovado</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>A</td>
+							<td>01.06.26</td>
+							<td>Lançamento inicial v1.0</td>
+							<td>✓</td>
+						</tr>
+						<tr>
+							<td>B</td>
+							<td>05.06.26</td>
+							<td>Suporte multiplataforma</td>
+							<td>✓</td>
+						</tr>
+						<tr>
+							<td>C</td>
+							<td>09.06.26</td>
+							<td>Beta features e otimizações</td>
+							<td>✓</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<!-- Quote section -->
+				<section class="quote-section">
+					<div class="quote-container">
+						<blockquote>"Nunca um produto me fez sentir tão em casa. Isto não parece software — parece arte que funciona."</blockquote>
+						<cite>Maria L., designer</cite>
+					</div>
+				</section>
+
+				<!-- CTA section -->
+				<section class="cta-section">
+					<h2>Pronto para começar?</h2>
+					<p>Junta-te a milhares de criadores que já constroem coisas que respiram.</p>
+					<a href="#" class="btn btn-primary">Criar conta grátis</a>
+				</section>
+
+				<!-- Footer -->
+				<footer>
+					<span>© 2026 Nimbus Studio</span>
+				</footer>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

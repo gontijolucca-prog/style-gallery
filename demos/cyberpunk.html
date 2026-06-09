@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Cyberpunk Terminal — Style Gallery</title>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--bg: #0a0e27;
+			--neon-cyan: #00ffff;
+			--neon-magenta: #ff00ff;
+			--neon-yellow: #ffff00;
+			--neon-green: #00ff00;
+			--text-primary: #00ffaa;
+			--text-secondary: #00dd88;
+			--text-dim: #005544;
+			--grid-color: rgba(0, 255, 170, 0.05);
+			--dur-fast: 0.2s;
+			--dur-med: 0.5s;
+			--dur-slow: 1s;
+			--ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		body {
+			font-family: 'IBM Plex Mono', monospace;
+			background: var(--bg);
+			color: var(--text-primary);
+			line-height: 1.6;
+			background-image:
+				linear-gradient(0deg, rgba(0, 255, 170, 0.03) 1px, transparent 1px),
+				linear-gradient(90deg, rgba(0, 255, 170, 0.03) 1px, transparent 1px),
+				radial-gradient(circle at 20% 50%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+				radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+			background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
+			background-attachment: fixed;
+			position: relative;
+			overflow-x: hidden;
+		}
+
+		/* Scanlines overlay */
+		body::before {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: repeating-linear-gradient(
+				0deg,
+				rgba(0, 0, 0, 0.15) 0px,
+				rgba(0, 0, 0, 0.15) 2px,
+				transparent 2px,
+				transparent 4px
+			);
+			pointer-events: none;
+			z-index: 100;
+		}
+
+		/* CRT flicker */
+		body::after {
+			content: '';
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+			pointer-events: none;
+			z-index: 99;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			* {
+				animation-duration: 0.01ms !important;
+				animation-iteration-count: 1 !important;
+				transition-duration: 0.01ms !important;
+			}
+		}
+
+		/* Back link */
+		.back {
+			position: fixed;
+			top: 20px;
+			left: 20px;
+			z-index: 200;
+			text-decoration: none;
+			color: var(--neon-magenta);
+			border: 2px solid var(--neon-magenta);
+			padding: 8px 16px;
+			font-size: 0.875rem;
+			font-weight: 600;
+			letter-spacing: 0.05em;
+			text-transform: uppercase;
+			background: rgba(255, 0, 255, 0.05);
+			transition: all var(--dur-fast) var(--ease-smooth);
+			box-shadow: 0 0 10px rgba(255, 0, 255, 0.3), inset 0 0 10px rgba(255, 0, 255, 0.1);
+		}
+
+		.back:hover {
+			background: rgba(255, 0, 255, 0.15);
+			box-shadow: 0 0 20px rgba(255, 0, 255, 0.6), inset 0 0 10px rgba(255, 0, 255, 0.2);
+			transform: translateY(-2px);
+		}
+
+		/* Main container */
+		main {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 60px 24px;
+		}
+
+		/* Boot sequence / header */
+		.boot-log {
+			border: 1px solid var(--neon-green);
+			background: rgba(0, 255, 0, 0.02);
+			padding: 20px;
+			margin-bottom: 40px;
+			box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.1), 0 0 30px rgba(0, 255, 0, 0.2);
+			font-size: 0.85rem;
+			line-height: 1.8;
+			animation: glow-pulse 3s ease-in-out infinite;
+		}
+
+		@keyframes glow-pulse {
+			0%, 100% { box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.1), 0 0 30px rgba(0, 255, 0, 0.2); }
+			50% { box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.15), 0 0 40px rgba(0, 255, 0, 0.3); }
+		}
+
+		.boot-line {
+			color: var(--text-secondary);
+			margin: 4px 0;
+			opacity: 0;
+			animation: slide-in 0.4s var(--ease-smooth) forwards;
+		}
+
+		.boot-line:nth-child(1) { animation-delay: 0.1s; }
+		.boot-line:nth-child(2) { animation-delay: 0.3s; }
+		.boot-line:nth-child(3) { animation-delay: 0.5s; }
+		.boot-line:nth-child(4) { animation-delay: 0.7s; }
+
+		@keyframes slide-in {
+			from {
+				opacity: 0;
+				transform: translateX(-10px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		/* Terminal prompt section */
+		.terminal-hero {
+			margin-bottom: 60px;
+			padding: 40px;
+			border: 1px solid var(--neon-cyan);
+			background: rgba(0, 255, 255, 0.03);
+			box-shadow: inset 0 0 30px rgba(0, 255, 255, 0.08), 0 0 40px rgba(0, 255, 255, 0.15);
+			position: relative;
+		}
+
+		.terminal-hero::before {
+			content: '┌─────────────────────────────────────────┐';
+			display: block;
+			color: var(--neon-cyan);
+			margin-bottom: 16px;
+			font-size: 0.75rem;
+			letter-spacing: -0.05em;
+		}
+
+		.terminal-hero::after {
+			content: '└─────────────────────────────────────────┘';
+			display: block;
+			color: var(--neon-cyan);
+			margin-top: 20px;
+			font-size: 0.75rem;
+			letter-spacing: -0.05em;
+		}
+
+		.prompt {
+			color: var(--neon-yellow);
+			font-weight: 600;
+			margin-bottom: 8px;
+			letter-spacing: 0.05em;
+		}
+
+		.headline {
+			font-size: clamp(2rem, 6vw, 4.5rem);
+			font-weight: 700;
+			line-height: 1.1;
+			margin: 12px 0 20px;
+			color: #fff;
+			text-shadow: 0 0 20px var(--neon-cyan), 0 0 40px rgba(255, 0, 255, 0.4);
+			letter-spacing: 0.02em;
+			text-wrap: balance;
+		}
+
+		.typing-cursor {
+			display: inline-block;
+			width: 3px;
+			height: 1.2em;
+			background: var(--neon-cyan);
+			margin-left: 4px;
+			animation: cursor-blink 1s step(1) infinite;
+			vertical-align: bottom;
+		}
+
+		@keyframes cursor-blink {
+			0%, 50% { opacity: 1; }
+			51%, 100% { opacity: 0; }
+		}
+
+		.subheader {
+			color: var(--text-secondary);
+			font-size: 1.1rem;
+			margin-top: 20px;
+			max-width: 700px;
+			line-height: 1.7;
+			text-wrap: pretty;
+		}
+
+		/* Stats as process list */
+		.stats-section {
+			margin-bottom: 60px;
+		}
+
+		.stats-header {
+			color: var(--neon-yellow);
+			font-weight: 600;
+			margin-bottom: 12px;
+			letter-spacing: 0.05em;
+			text-transform: uppercase;
+			font-size: 0.9rem;
+		}
+
+		.stat-bar {
+			background: rgba(0, 255, 170, 0.08);
+			border: 1px solid var(--neon-cyan);
+			padding: 12px 16px;
+			margin-bottom: 8px;
+			display: grid;
+			grid-template-columns: 120px 1fr 80px;
+			gap: 16px;
+			align-items: center;
+			box-shadow: inset 0 0 15px rgba(0, 255, 170, 0.04);
+			transition: all var(--dur-med) var(--ease-smooth);
+		}
+
+		.stat-bar:hover {
+			background: rgba(0, 255, 170, 0.12);
+			box-shadow: inset 0 0 20px rgba(0, 255, 170, 0.08), 0 0 20px rgba(0, 255, 170, 0.15);
+			transform: translateX(4px);
+		}
+
+		.stat-label {
+			color: var(--text-secondary);
+			font-size: 0.85rem;
+			font-weight: 600;
+		}
+
+		.stat-bar-visual {
+			height: 12px;
+			background: linear-gradient(90deg,
+				rgba(0, 255, 170, 0.3) 0%,
+				rgba(0, 255, 170, 0.6) 50%,
+				var(--neon-cyan) 100%);
+			position: relative;
+			overflow: hidden;
+			box-shadow: 0 0 8px var(--neon-cyan), inset 0 0 4px rgba(0, 0, 0, 0.5);
+		}
+
+		.stat-bar-visual::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+			background: repeating-linear-gradient(
+				90deg,
+				transparent,
+				transparent 2px,
+				rgba(255, 255, 255, 0.1) 2px,
+				rgba(255, 255, 255, 0.1) 4px
+			);
+			animation: slide-wave 2s linear infinite;
+		}
+
+		@keyframes slide-wave {
+			0% { transform: translateX(-100%); }
+			100% { transform: translateX(100%); }
+		}
+
+		.stat-value {
+			color: var(--neon-magenta);
+			font-weight: 700;
+			text-align: right;
+			font-size: 0.95rem;
+			text-shadow: 0 0 10px var(--neon-magenta);
+		}
+
+		/* Features as command output */
+		.features-section {
+			margin-bottom: 60px;
+		}
+
+		.command-header {
+			color: var(--neon-yellow);
+			font-weight: 600;
+			margin-bottom: 16px;
+			letter-spacing: 0.05em;
+			text-transform: uppercase;
+			font-size: 0.9rem;
+		}
+
+		.feature-card {
+			background: rgba(0, 255, 170, 0.04);
+			border: 1px solid var(--neon-magenta);
+			padding: 28px;
+			margin-bottom: 16px;
+			box-shadow: 0 0 20px rgba(255, 0, 255, 0.15), inset 0 0 15px rgba(255, 0, 255, 0.05);
+			transition: all var(--dur-med) var(--ease-smooth);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.feature-card::before {
+			content: '» ';
+			color: var(--neon-green);
+			font-weight: 700;
+			margin-right: 8px;
+		}
+
+		.feature-card:hover {
+			background: rgba(255, 0, 255, 0.08);
+			box-shadow: 0 0 30px rgba(255, 0, 255, 0.25), inset 0 0 20px rgba(255, 0, 255, 0.08);
+			transform: translateX(8px);
+			border-color: var(--neon-cyan);
+		}
+
+		.feature-title {
+			color: #fff;
+			font-size: 1.3rem;
+			font-weight: 700;
+			margin-bottom: 8px;
+			text-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+		}
+
+		.feature-desc {
+			color: var(--text-secondary);
+			font-size: 0.95rem;
+			line-height: 1.6;
+		}
+
+		/* Quote as IRC message */
+		.irc-section {
+			margin-bottom: 60px;
+			margin-top: 50px;
+		}
+
+		.irc-message {
+			background: rgba(255, 0, 255, 0.04);
+			border-left: 3px solid var(--neon-magenta);
+			padding: 24px;
+			box-shadow: 0 0 25px rgba(255, 0, 255, 0.1), inset 0 0 15px rgba(255, 0, 255, 0.04);
+			position: relative;
+		}
+
+		.irc-nick {
+			color: var(--neon-magenta);
+			font-weight: 700;
+			margin-bottom: 12px;
+			text-transform: uppercase;
+			font-size: 0.85rem;
+			letter-spacing: 0.1em;
+		}
+
+		.irc-text {
+			color: var(--text-primary);
+			font-size: 1.1rem;
+			line-height: 1.8;
+			margin-bottom: 12px;
+			text-wrap: pretty;
+			font-style: italic;
+			color: var(--neon-cyan);
+		}
+
+		.irc-author {
+			color: var(--text-secondary);
+			font-size: 0.9rem;
+			text-align: right;
+			font-style: normal;
+		}
+
+		/* CTA as interactive prompt */
+		.prompt-section {
+			margin-bottom: 40px;
+			padding: 36px;
+			border: 1px solid var(--neon-green);
+			background: rgba(0, 255, 0, 0.04);
+			box-shadow: 0 0 35px rgba(0, 255, 0, 0.2), inset 0 0 25px rgba(0, 255, 0, 0.06);
+			position: relative;
+		}
+
+		.prompt-header {
+			color: var(--neon-green);
+			font-weight: 700;
+			margin-bottom: 8px;
+			letter-spacing: 0.05em;
+		}
+
+		.prompt-text {
+			color: var(--text-secondary);
+			margin-bottom: 24px;
+			font-size: 1rem;
+		}
+
+		.cta-button {
+			display: inline-block;
+			background: var(--neon-green);
+			color: var(--bg);
+			padding: 14px 28px;
+			border: none;
+			font-family: 'IBM Plex Mono', monospace;
+			font-weight: 700;
+			font-size: 0.95rem;
+			text-transform: uppercase;
+			letter-spacing: 0.1em;
+			cursor: pointer;
+			transition: all var(--dur-fast) var(--ease-smooth);
+			box-shadow: 0 0 20px var(--neon-green);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.cta-button::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+			transition: left var(--dur-fast) ease;
+		}
+
+		.cta-button:hover {
+			background: var(--neon-cyan);
+			color: var(--bg);
+			box-shadow: 0 0 30px var(--neon-cyan), inset 0 0 15px rgba(0, 255, 255, 0.3);
+			transform: translateY(-2px);
+		}
+
+		.cta-button:hover::before {
+			left: 100%;
+		}
+
+		.cta-button:active {
+			transform: translateY(0);
+			box-shadow: 0 0 20px var(--neon-cyan), inset 0 0 20px rgba(0, 255, 255, 0.4);
+		}
+
+		/* Footer */
+		footer {
+			text-align: center;
+			padding: 40px 24px;
+			border-top: 1px solid var(--neon-green);
+			margin-top: 60px;
+			color: var(--text-dim);
+			font-size: 0.85rem;
+			letter-spacing: 0.05em;
+		}
+
+		footer a {
+			color: var(--neon-yellow);
+			text-decoration: none;
+			transition: all var(--dur-fast) var(--ease-smooth);
+		}
+
+		footer a:hover {
+			color: var(--neon-cyan);
+			text-shadow: 0 0 10px var(--neon-cyan);
+		}
+
+		/* Responsive */
+		@media (max-width: 768px) {
+			main {
+				padding: 40px 16px;
+			}
+
+			.back {
+				font-size: 0.75rem;
+				padding: 6px 12px;
+				top: 16px;
+				left: 16px;
+			}
+
+			.headline {
+				font-size: clamp(1.6rem, 5vw, 2.8rem);
+			}
+
+			.stat-bar {
+				grid-template-columns: 1fr;
+				gap: 8px;
+			}
+
+			.feature-card {
+				padding: 20px;
+			}
+
+			.prompt-section {
+				padding: 24px;
+			}
+		}
+
+		@media (max-width: 480px) {
+			.terminal-hero {
+				padding: 20px;
+			}
+
+			.terminal-hero::before,
+			.terminal-hero::after {
+				font-size: 0.6rem;
+			}
+
+			.headline {
+				font-size: clamp(1.3rem, 4vw, 2rem);
+				margin: 8px 0 12px;
+			}
+
+			.subheader {
+				font-size: 0.95rem;
+			}
+
+			.cta-button {
+				width: 100%;
+				padding: 12px 20px;
+				font-size: 0.85rem;
+			}
+		}
+	</style>
+</head>
+<body>
+	<a class="back" href="../index.html">← galeria</a>
+
+	<main>
+		<!-- Boot sequence -->
+		<section class="boot-log">
+			<div class="boot-line">NIMBUS v2.0 BOOT SEQUENCE INITIATED</div>
+			<div class="boot-line">» Loading core modules... [OK]</div>
+			<div class="boot-line">» Initializing neural pathways... [OK]</div>
+			<div class="boot-line">» System ready for creative override.</div>
+		</section>
+
+		<!-- Terminal hero with typing effect -->
+		<section class="terminal-hero">
+			<div class="prompt">user@nimbus:~$</div>
+			<h1 class="headline">
+				Constrói coisas que <span style="color: var(--neon-magenta); text-shadow: 0 0 20px var(--neon-magenta), 0 0 40px rgba(255, 0, 255, 0.5);">respiram</span><span class="typing-cursor"></span>
+			</h1>
+			<p class="subheader">A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção. Desenhada para quem não se contenta com o genérico.</p>
+		</section>
+
+		<!-- Stats as htop-like process list -->
+		<section class="stats-section">
+			<div class="stats-header">▸ System metrics (top)</div>
+
+			<div class="stat-bar">
+				<span class="stat-label">Criadores</span>
+				<div class="stat-bar-visual" style="width: 95%;"></div>
+				<span class="stat-value">12k</span>
+			</div>
+
+			<div class="stat-bar">
+				<span class="stat-label">Uptime</span>
+				<div class="stat-bar-visual" style="width: 99%;"></div>
+				<span class="stat-value">99.9%</span>
+			</div>
+
+			<div class="stat-bar">
+				<span class="stat-label">Latência</span>
+				<div class="stat-bar-visual" style="width: 12%;"></div>
+				<span class="stat-value">48ms</span>
+			</div>
+		</section>
+
+		<!-- Features as ls -la output -->
+		<section class="features-section">
+			<div class="command-header">▸ Recursos (ls -la nimbus/features/)</div>
+
+			<article class="feature-card">
+				<h3 class="feature-title">Rápido por defeito</h3>
+				<p class="feature-desc">Renderização instantânea. Zero espera, zero desculpas.</p>
+			</article>
+
+			<article class="feature-card">
+				<h3 class="feature-title">Feito à medida</h3>
+				<p class="feature-desc">Cada peça moldável ao milímetro. O controlo é teu.</p>
+			</article>
+
+			<article class="feature-card">
+				<h3 class="feature-title">Escala contigo</h3>
+				<p class="feature-desc">Começa pequeno, cresce sem limites. Sem reescrever código.</p>
+			</article>
+		</section>
+
+		<!-- Quote as IRC message -->
+		<section class="irc-section">
+			<div class="irc-message">
+				<div class="irc-nick">&lt;maria.designer&gt;</div>
+				<div class="irc-text">"Nunca um produto me fez sentir tão em casa. Isto não parece software — parece arte que funciona."</div>
+				<div class="irc-author">— Maria L., designer</div>
+			</div>
+		</section>
+
+		<!-- CTA as terminal prompt -->
+		<section class="prompt-section">
+			<div class="prompt-header">user@nimbus:~$ criar_conta()</div>
+			<p class="prompt-text">Junta-te a milhares de criadores que já respiram mais fácil.</p>
+			<button class="cta-button">Criar conta grátis</button>
+		</section>
+	</main>
+
+	<footer>
+		<div style="margin-bottom: 12px;">© 2026 Nimbus · Cyberpunk Terminal</div>
+		<div><a href="../index.html">Voltar à galeria</a></div>
+	</footer>
+
+	<script>
+		// Ensure no CLS (Cumulative Layout Shift) — cursor is cosmetic
+		document.querySelectorAll('.typing-cursor').forEach(cursor => {
+			cursor.style.pointerEvents = 'none';
+		});
+
+		// Optional: Add subtle entrance animations to sections
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach(entry => {
+				if (entry.isIntersecting) {
+					entry.target.style.animation = 'slide-in 0.6s ease-out forwards';
+					observer.unobserve(entry.target);
+				}
+			});
+		}, { threshold: 0.1 });
+
+		document.querySelectorAll('.stat-bar, .feature-card, .irc-message').forEach(el => {
+			observer.observe(el);
+		});
+
+		// CTA button click handler
+		document.querySelector('.cta-button')?.addEventListener('click', () => {
+			const button = event.target;
+			button.style.background = 'var(--neon-yellow)';
+			button.style.color = 'var(--bg)';
+			setTimeout(() => {
+				button.style.background = 'var(--neon-green)';
+				button.style.color = 'var(--bg)';
+			}, 150);
+		});
+	</script>
+</body>
+</html>

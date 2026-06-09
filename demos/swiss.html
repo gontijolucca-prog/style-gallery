@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swiss / Internacional — Style Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@200;400;600;800;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafaf8;
+  --ink: #0a0a09;
+  --red: #e8482b;
+  --line: #0a0a09;
+  --grid-bg: rgba(10,10,9,0.04);
+  --dur-slow: 0.8s;
+  --dur-base: 0.4s;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --col-width: calc(100% / 12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Archivo', sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+}
+
+/* 12-column grid background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      var(--grid-bg) 0,
+      var(--grid-bg) 1px,
+      transparent 1px,
+      transparent var(--col-width)
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+main { position: relative; z-index: 2; }
+
+/* Back link — minimal, integrated */
+.back {
+  position: fixed;
+  top: 40px; left: 40px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  padding: 12px 20px;
+  background: var(--bg);
+  opacity: 0;
+  animation: fadeInUp 0.6s var(--ease-out) 0.1s forwards;
+  z-index: 10;
+}
+
+.back:hover {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+}
+
+/* SECTION 01: Hero — asymmetric grid anchor */
+.section-hero {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+  min-height: 100vh;
+  padding: 80px 0 0 0;
+  align-items: center;
+}
+
+.hero-number {
+  grid-column: 1;
+  font-size: 120px;
+  font-weight: 900;
+  line-height: 0.9;
+  color: var(--grid-bg);
+  padding-left: 40px;
+  text-anchor: middle;
+  animation: fadeInUp var(--dur-slow) var(--ease-out) 0s forwards;
+  opacity: 0;
+}
+
+.hero-content {
+  grid-column: 3 / span 6;
+  padding: 0 40px 80px 0;
+  animation: fadeInUp var(--dur-slow) var(--ease-out) 0.15s forwards;
+  opacity: 0;
+}
+
+.hero-content h1 {
+  font-size: clamp(3.2rem, 7vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 30px;
+  text-wrap: balance;
+}
+
+.hero-content h1 em {
+  font-style: normal;
+  color: var(--red);
+  font-weight: 900;
+}
+
+.hero-content p {
+  font-size: 1.15rem;
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 480px;
+  margin-bottom: 40px;
+  text-wrap: pretty;
+  color: var(--ink);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 16px 32px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+
+.btn-primary {
+  background: var(--red);
+  color: #fff;
+  border-color: var(--red);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--red);
+}
+
+.btn-primary:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+/* SECTION 02: Stats — modular 3-col arrangement */
+.section-stats {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 0;
+  background: var(--bg);
+}
+
+.stats-number {
+  grid-column: 1;
+  font-size: 120px;
+  font-weight: 900;
+  line-height: 0.9;
+  color: var(--grid-bg);
+  padding: 60px 0 60px 40px;
+  animation: fadeInUp var(--dur-slow) var(--ease-out) 0.2s forwards;
+  opacity: 0;
+}
+
+.stats-grid {
+  grid-column: 3 / span 9;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 60px 40px 60px 0;
+}
+
+.stat {
+  padding: 0 40px;
+  border-right: 1px solid var(--line);
+  animation: fadeInUp var(--dur-slow) var(--ease-out) 0.25s forwards;
+  opacity: 0;
+}
+
+.stat:last-child { border-right: none; }
+
+.stat-num {
+  display: block;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 12px;
+  color: var(--red);
+}
+
+.stat-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* SECTION 03: Features — staggered cards on grid */
+.section-features {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 80px 0;
+  background: var(--bg);
+}
+
+.features-number {
+  grid-column: 1;
+  font-size: 120px;
+  font-weight: 900;
+  line-height: 0.9;
+  color: var(--grid-bg);
+  padding-left: 40px;
+  animation: fadeInUp var(--dur-slow) var(--ease-out) 0.3s forwards;
+  opacity: 0;
+}
+
+.features-container {
+  grid-column: 2 / span 11;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  padding: 0 40px 0 0;
+}
+
+.card {
+  border: 1px solid var(--line);
+  padding: 40px;
+  animation: fadeInUp var(--dur-slow) var(--ease-out) 0.35s forwards;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.card:nth-child(3) {
+  animation-delay: 0.45s;
+}
+
+.card:hover {
+  border-color: var(--red);
+  transform: translateY(-4px);
+}
+
+.card-number {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--red);
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.card h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.card p {
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* SECTION 04: Quote — full-width testimonial */
+.section-quote {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 100px 0;
+  background: var(--bg);
+}
+
+.quote-content {
+  grid-column: 3 / span 8;
+  animation: fadeInUp var(--dur-slow) var(--ease-out) 0.5s forwards;
+  opacity: 0;
+}
+
+.quote-content blockquote {
+  font-size: 1.85rem;
+  font-weight: 200;
+  line-height: 1.35;
+  margin-bottom: 24px;
+  text-wrap: balance;
+  letter-spacing: -0.01em;
+}
+
+.quote-content blockquote::before {
+  content: '"';
+  font-size: 4rem;
+  color: var(--red);
+  line-height: 0.8;
+  margin-right: 8px;
+}
+
+.quote-content cite {
+  font-family: 'IBM Plex Mono', monospace;
+  font-style: normal;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--red);
+  display: block;
+}
+
+/* SECTION 05: CTA — minimal closing */
+.section-cta {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 120px 0 80px 0;
+  background: var(--bg);
+}
+
+.cta-content {
+  grid-column: 1 / span 2;
+  padding-left: 40px;
+  animation: fadeInUp var(--dur-slow) var(--ease-out) 0.6s forwards;
+  opacity: 0;
+}
+
+.cta-content h2 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.cta-actions {
+  grid-column: 4 / span 6;
+  padding: 0 40px 0 0;
+  animation: fadeInUp var(--dur-slow) var(--ease-out) 0.65s forwards;
+  opacity: 0;
+}
+
+.cta-actions p {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 28px;
+  max-width: 420px;
+  text-wrap: pretty;
+}
+
+/* SECTION 06: Footer / Colophon */
+.footer {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0;
+  border-bottom: none;
+  padding: 80px 0;
+  background: var(--bg);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+}
+
+.footer-colophon {
+  grid-column: 3 / span 8;
+  animation: fadeInUp var(--dur-slow) var(--ease-out) 0.7s forwards;
+  opacity: 0;
+}
+
+.colophon-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.colophon-table td {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.colophon-table td:first-child {
+  width: 150px;
+  font-weight: 600;
+  padding-right: 40px;
+}
+
+.colophon-table td:last-child {
+  text-align: right;
+  color: var(--red);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: prefer-reduced) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Responsive — tablet and mobile */
+@media (max-width: 1024px) {
+  .hero-content {
+    grid-column: 2 / span 10;
+    padding: 0 30px 60px 0;
+  }
+
+  .stats-grid {
+    grid-column: 2 / span 10;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px 0;
+    padding: 40px 30px 40px 0;
+  }
+
+  .stat {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding: 40px 30px 40px 0;
+  }
+
+  .stat:nth-child(n+3) {
+    border-bottom: none;
+  }
+
+  .features-container {
+    grid-column: 2 / span 10;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 0 30px 0 0;
+  }
+
+  .quote-content {
+    grid-column: 2 / span 10;
+    padding: 0 30px;
+  }
+
+  .cta-content {
+    grid-column: 1 / span 3;
+    padding: 0 30px 30px 40px;
+  }
+
+  .cta-actions {
+    grid-column: 4 / span 8;
+    padding: 0 30px 0 0;
+  }
+
+  .footer-colophon {
+    grid-column: 2 / span 10;
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --col-width: calc(100% / 6);
+  }
+
+  .back {
+    top: 20px;
+    left: 20px;
+    font-size: 0.75rem;
+    padding: 10px 16px;
+  }
+
+  .hero-number,
+  .stats-number,
+  .features-number {
+    font-size: 60px;
+    padding-left: 20px;
+  }
+
+  .hero-content,
+  .stats-grid,
+  .features-container,
+  .quote-content,
+  .cta-content,
+  .cta-actions,
+  .footer-colophon {
+    grid-column: 1 / span 6 !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .hero-content {
+    padding-bottom: 40px;
+  }
+
+  .section-stats {
+    padding: 0;
+  }
+
+  .stat {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding: 30px 20px;
+  }
+
+  .stat:last-child {
+    border-bottom: none;
+  }
+
+  .features-container {
+    gap: 20px;
+  }
+
+  .card {
+    padding: 30px;
+  }
+
+  .quote-content blockquote {
+    font-size: 1.35rem;
+  }
+
+  .colophon-table td {
+    padding: 6px 0;
+    display: block;
+    border-bottom: none;
+    text-align: left;
+  }
+
+  .colophon-table td:first-child {
+    width: auto;
+    font-weight: 600;
+    padding-right: 0;
+    margin-top: 12px;
+  }
+
+  .colophon-table td:last-child {
+    text-align: left;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<a class="back" href="../index.html">← galeria</a>
+
+<main>
+
+  <!-- SECTION 01: Hero -->
+  <section class="section-hero">
+    <div class="hero-number">01</div>
+    <div class="hero-content">
+      <h1>Constrói coisas que <em>respiram</em>.</h1>
+      <p>A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção. Desenhada para quem não se contenta com o genérico.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary">Começar agora</a>
+        <a href="#" class="btn">Ver demo →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 02: Stats -->
+  <section class="section-stats">
+    <div class="stats-number">02</div>
+    <div class="stats-grid">
+      <div class="stat">
+        <span class="stat-num">12k</span>
+        <span class="stat-label">criadores</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">99.9%</span>
+        <span class="stat-label">uptime</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">48ms</span>
+        <span class="stat-label">latência</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 03: Features -->
+  <section class="section-features">
+    <div class="features-number">03</div>
+    <div class="features-container">
+      <article class="card">
+        <div class="card-number">A</div>
+        <h3>Rápido por defeito</h3>
+        <p>Renderização instantânea. Zero espera, zero desculpas. Cada interacção responde em milissegundos — é assim que deve ser.</p>
+      </article>
+      <article class="card">
+        <div class="card-number">B</div>
+        <h3>Feito à medida</h3>
+        <p>Cada peça moldável ao milímetro. O controlo é completamente teu. Sem limitações artificiais, sem conformismo.</p>
+      </article>
+      <article class="card">
+        <div class="card-number">C</div>
+        <h3>Escala contigo</h3>
+        <p>De protótipo a produção sem reescrever uma linha. Cresce conforme precisas, sem sacrificar qualidade.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- SECTION 04: Testimonial -->
+  <section class="section-quote">
+    <div class="quote-content">
+      <blockquote>Nunca um produto me fez sentir tão em casa. Isto não parece software — parece arte que funciona.</blockquote>
+      <cite>— Maria L., designer</cite>
+    </div>
+  </section>
+
+  <!-- SECTION 05: Final CTA -->
+  <section class="section-cta">
+    <div class="cta-content">
+      <h2>Pronto para começar?</h2>
+    </div>
+    <div class="cta-actions">
+      <p>Junta-te a milhares de criadores que construíram a sua próxima grande coisa em Nimbus.</p>
+      <a href="#" class="btn btn-primary">Criar conta grátis</a>
+    </div>
+  </section>
+
+  <!-- SECTION 06: Footer Colophon -->
+  <footer class="footer">
+    <div class="footer-colophon">
+      <table class="colophon-table">
+        <tr>
+          <td>© 2026</td>
+          <td>Nimbus Creative Platform</td>
+        </tr>
+        <tr>
+          <td>Tipografia</td>
+          <td>Archivo · IBM Plex Mono</td>
+        </tr>
+        <tr>
+          <td>Modo</td>
+          <td>Swiss / Internacional</td>
+        </tr>
+        <tr>
+          <td>Grelha</td>
+          <td>12 colunas · 40px margens</td>
+        </tr>
+      </table>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+// Minimal — deterministic scroll reveal trigger (no external deps)
+document.addEventListener('DOMContentLoaded', () => {
+  // Staggered section reveals via animation-delay already in CSS
+  // This is purely for fallback/enhance
+  const sections = document.querySelectorAll('[class*="section-"]');
+  sections.forEach((el, idx) => {
+    el.setAttribute('data-section', idx);
+  });
+});
+</script>
+
+</body>
+</html>

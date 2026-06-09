@@ -16,5 +16,13 @@ window.STYLES = [
   { slug: 'maximalist',         name: 'Maximalista',         tag: 'denso · vibrante · excesso',          sw: ['#1b0033','#ffe600','#ff2d95'] },
   { slug: 'skeuomorphic',       name: 'Skeuomorfismo',       tag: 'realista · texturas · relevo',        sw: ['#d8cfc0','#5a7d2a','#3a2c1a'] },
   { slug: 'dark-aurora',        name: 'Dark Aurora',         tag: 'malha · gradiente · profundo',        sw: ['#070b14','#7c5cff','#21e6c1'] },
-  { slug: 'paper-print',        name: 'Paper Print',         tag: 'risografia · grão · 2 cores',          sw: ['#f3ede0','#2b2d42','#ef6f53'] }
+  { slug: 'paper-print',        name: 'Paper Print',         tag: 'risografia · grão · 2 cores',          sw: ['#f3ede0','#2b2d42','#ef6f53'] },
+  { slug: 'frutiger-aero',      name: 'Frutiger Aero',       tag: 'gloss 2007 · bolhas · otimismo',       sw: ['#a8d8f0','#1a3a52','#7fd8d8'] },
+  { slug: 'pixel-arcade',       name: 'Pixel Arcade',        tag: '8-bit · HUD · press start',           sw: ['#0b0014','#e8e8d8','#ff00ff'] },
+  { slug: 'atomic-fifties',     name: 'Atomic Fifties',      tag: 'anos 50 · starburst · halftone',      sw: ['#fef9f3','#0e7c7b','#d32f2f'] },
+  { slug: 'punk-zine',          name: 'Punk Zine',           tag: 'colagem · ransom note · xerox',       sw: ['#f5f2ed','#1a1a1a','#cc0000'] },
+  { slug: 'corporate-flat',     name: 'Corporate Flat',      tag: 'alegria · vetores · pastel',          sw: ['#ffffff','#2d3436','#ff9f7f'] },
+  { slug: 'wabi-sabi',          name: 'Wabi-Sabi',           tag: 'vertical · vazio · tinta',            sw: ['#f5f2ed','#1a1a1a','#d73e3e'] },
+  { slug: 'bento-dark',         name: 'Bento Grid',          tag: 'mosaico · hairline · numerais',       sw: ['#0a0a0a','#f5f5f5','#ff6b35'] },
+  { slug: 'victorian-apothecary',name:'Victorian Apothecary',tag: 'gravura · simetria · dourado',        sw: ['#faf6f0','#1a1410','#b8860b'] }
 ];

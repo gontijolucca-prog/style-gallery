@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paper Print — Style Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Newsreader:ital,wght@0,400;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #f3ede0;
+  --ink: #2b2d42;
+  --riso-o: #ef6f53;
+  --riso-b: #3a5bd9;
+  --dur-fast: 0.6s;
+  --dur-med: 0.9s;
+  --ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Newsreader', serif;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Grain texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' result='noise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.08'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* Vertical fold shadow (spine of zine) */
+body::after {
+  content: '';
+  position: fixed;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  box-shadow: -8px 0 24px rgba(43, 45, 66, 0.18), 8px 0 24px rgba(43, 45, 66, 0.08);
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* Crop marks — top-left, top-right, bottom-left, bottom-right */
+main::before,
+main::after {
+  content: '';
+  position: fixed;
+  pointer-events: none;
+  z-index: 50;
+  mix-blend-mode: darken;
+}
+
+main::before {
+  width: 100%;
+  height: 100%;
+  background-image:
+    /* TL corner */
+    linear-gradient(to right, var(--ink) 0, var(--ink) 2px, transparent 2px),
+    linear-gradient(to bottom, var(--ink) 0, var(--ink) 2px, transparent 2px),
+    /* TR corner */
+    linear-gradient(to left, var(--ink) 0, var(--ink) 2px, transparent 2px),
+    linear-gradient(to bottom, var(--ink) 0, var(--ink) 2px, transparent 2px),
+    /* BL corner */
+    linear-gradient(to right, var(--ink) 0, var(--ink) 2px, transparent 2px),
+    linear-gradient(to top, var(--ink) 0, var(--ink) 2px, transparent 2px),
+    /* BR corner */
+    linear-gradient(to left, var(--ink) 0, var(--ink) 2px, transparent 2px),
+    linear-gradient(to top, var(--ink) 0, var(--ink) 2px, transparent 2px);
+  background-size: 40px 40px, 40px 40px, 40px 40px, 40px 40px, 40px 40px, 40px 40px, 40px 40px, 40px 40px;
+  background-position: 0 0, 0 0, 100% 0, 100% 0, 0 100%, 0 100%, 100% 100%, 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.back {
+  position: fixed;
+  top: 32px;
+  left: 32px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.85rem;
+  text-decoration: none;
+  color: var(--ink);
+  z-index: 200;
+  opacity: 0;
+  animation: fadeInSlide var(--dur-fast) var(--ease-out) 0.2s forwards;
+  letter-spacing: 0.03em;
+  padding: 8px 12px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.back:hover {
+  background: var(--ink);
+  color: var(--paper);
+  transform: translateX(-4px);
+}
+
+main {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 120px 60px 80px;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 100px 40px 60px;
+  }
+  .back {
+    left: 20px;
+    top: 20px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ========== HERO / COVER ========== */
+.hero {
+  margin-bottom: 120px;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-tag {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--riso-o);
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeInUp var(--dur-fast) var(--ease-out) 0.1s forwards;
+}
+
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.8rem, 7vw, 5.2rem);
+  line-height: 1;
+  color: var(--ink);
+  margin-bottom: 32px;
+  text-wrap: balance;
+  position: relative;
+  opacity: 0;
+  animation: fadeInUp var(--dur-med) var(--ease-out) 0.2s forwards;
+}
+
+/* Risograph print misalignment effect on h1 */
+.hero h1::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  color: var(--riso-o);
+  opacity: 0.6;
+  transform: translate(3px, 2px);
+  font-weight: 800;
+}
+
+.hero-lead {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  max-width: 620px;
+  font-style: italic;
+  color: var(--ink);
+  margin-bottom: 48px;
+  text-wrap: pretty;
+  opacity: 0;
+  animation: fadeInUp var(--dur-med) var(--ease-out) 0.35s forwards;
+}
+
+.hero-cta {
+  display: inline-block;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--riso-b);
+  color: var(--paper);
+  padding: 16px 36px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp var(--dur-med) var(--ease-out) 0.45s forwards;
+}
+
+.hero-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--riso-o);
+  z-index: -1;
+  transform: translate(2px, 2px);
+  opacity: 0.4;
+  transition: all 0.3s ease;
+}
+
+.hero-cta:hover::before {
+  transform: translate(4px, 4px);
+}
+
+.hero-cta:hover {
+  transform: translate(-2px, -2px);
+}
+
+/* ========== STATS SECTION ========== */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+  margin: 100px 0 120px;
+  position: relative;
+  z-index: 10;
+}
+
+.stat {
+  position: relative;
+  padding: 32px;
+  perspective: 1000px;
+}
+
+.stat-label {
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  display: block;
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: fadeInUp var(--dur-fast) var(--ease-out) forwards;
+}
+
+.stat:nth-child(1) .stat-label { animation-delay: calc(0.5s + 0.15s); }
+.stat:nth-child(2) .stat-label { animation-delay: calc(0.5s + 0.30s); }
+.stat:nth-child(3) .stat-label { animation-delay: calc(0.5s + 0.45s); }
+.stat:nth-child(4) .stat-label { animation-delay: calc(0.5s + 0.60s); }
+
+.stat-num {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  color: var(--riso-b);
+  display: block;
+  line-height: 1;
+  position: relative;
+  opacity: 0;
+  animation: fadeInUp var(--dur-med) var(--ease-out) forwards;
+}
+
+.stat:nth-child(1) .stat-num { animation-delay: calc(0.5s + 0s); }
+.stat:nth-child(2) .stat-num { animation-delay: calc(0.5s + 0.12s); }
+.stat:nth-child(3) .stat-num { animation-delay: calc(0.5s + 0.24s); }
+.stat:nth-child(4) .stat-num { animation-delay: calc(0.5s + 0.36s); }
+
+/* Rubber stamp effect on stats */
+.stat::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 80px;
+  height: 80px;
+  border: 2px dashed var(--riso-o);
+  border-radius: 50%;
+  opacity: 0;
+  animation: rotatingStamp var(--dur-med) var(--ease-out) forwards;
+  z-index: -1;
+  transform-origin: center;
+}
+
+.stat:nth-child(1)::after { animation-delay: calc(0.8s + 0.18s); }
+.stat:nth-child(2)::after { animation-delay: calc(0.8s + 0.36s); }
+.stat:nth-child(3)::after { animation-delay: calc(0.8s + 0.54s); }
+.stat:nth-child(4)::after { animation-delay: calc(0.8s + 0.72s); }
+
+@keyframes rotatingStamp {
+  0% {
+    opacity: 0;
+    transform: rotate(-15deg) scale(0.6);
+  }
+  100% {
+    opacity: 0.35;
+    transform: rotate(12deg) scale(1);
+  }
+}
+
+/* ========== FEATURES / POSTCARDS ========== */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 48px;
+  margin: 100px 0 120px;
+  position: relative;
+  z-index: 10;
+}
+
+.card {
+  position: relative;
+  padding: 40px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  transform: rotate(0deg);
+  opacity: 0;
+  animation: cardIn var(--dur-med) var(--ease-out) forwards;
+  transition: all 0.4s ease;
+  transform-origin: center;
+}
+
+.card:nth-child(1) { animation-delay: calc(0.9s + 0s); }
+.card:nth-child(2) { animation-delay: calc(0.9s + 0.15s); }
+.card:nth-child(3) { animation-delay: calc(0.9s + 0.30s); }
+
+.card:hover {
+  transform: translateY(-8px) rotate(1deg);
+  box-shadow: 4px 12px 32px rgba(43, 45, 66, 0.15);
+}
+
+@keyframes cardIn {
+  0% {
+    opacity: 0;
+    transform: translateY(32px) rotate(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+/* Postcard stamp effect */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 60px;
+  height: 60px;
+  background: repeating-linear-gradient(45deg, var(--riso-o), var(--riso-o) 2px, transparent 2px, transparent 8px);
+  border: 1px solid var(--riso-o);
+  opacity: 0.3;
+}
+
+.card-icon {
+  font-size: 2.4rem;
+  color: var(--riso-b);
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.card h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin-bottom: 14px;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.card p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-wrap: pretty;
+  color: var(--ink);
+}
+
+/* ========== QUOTE ========== */
+.quote-section {
+  margin: 100px 0;
+  padding: 60px 40px;
+  position: relative;
+  z-index: 10;
+  opacity: 0;
+  animation: fadeInUp var(--dur-med) var(--ease-out) 1.3s forwards;
+}
+
+.quote-section blockquote {
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 28px;
+  text-wrap: pretty;
+  position: relative;
+  padding-left: 0;
+}
+
+.quote-section blockquote::before {
+  content: '"';
+  position: absolute;
+  left: -32px;
+  top: -12px;
+  font-size: 4rem;
+  color: var(--riso-o);
+  opacity: 0.3;
+  line-height: 1;
+}
+
+.quote-section cite {
+  font-family: 'Courier Prime', monospace;
+  font-style: normal;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--riso-o);
+  display: block;
+}
+
+/* ========== CTA COUPON ========== */
+.cta-coupon {
+  position: relative;
+  margin: 80px 0 60px;
+  padding: 0;
+  z-index: 10;
+}
+
+.coupon {
+  border: 2px dashed var(--ink);
+  padding: 48px 40px;
+  background: var(--paper);
+  position: relative;
+  opacity: 0;
+  animation: fadeInScale var(--dur-med) var(--ease-out) 1.5s forwards;
+}
+
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Scissor line markers */
+.coupon::before,
+.coupon::after {
+  content: '✂';
+  position: absolute;
+  left: -24px;
+  font-size: 1.2rem;
+  color: var(--ink);
+  opacity: 0.4;
+}
+
+.coupon::before { top: 20%; }
+.coupon::after { bottom: 20%; }
+
+.coupon h2 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--riso-b);
+  line-height: 1.1;
+  margin-bottom: 16px;
+  text-wrap: balance;
+}
+
+.coupon p {
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: 28px;
+  text-wrap: pretty;
+}
+
+.coupon-cta {
+  display: inline-block;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: var(--riso-o);
+  color: var(--paper);
+  padding: 14px 32px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.coupon-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--riso-b);
+  z-index: -1;
+  transform: translate(2px, 2px);
+  opacity: 0.3;
+  transition: all 0.3s ease;
+}
+
+.coupon-cta:hover {
+  transform: translate(-2px, -2px);
+}
+
+.coupon-cta:hover::before {
+  transform: translate(4px, 4px);
+}
+
+/* ========== FOOTER ========== */
+footer {
+  border-top: 2px solid var(--ink);
+  padding: 40px 60px 40px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  text-align: center;
+  opacity: 0;
+  animation: fadeIn var(--dur-fast) var(--ease-out) 1.7s forwards;
+}
+
+@media (max-width: 768px) {
+  main {
+    padding: 100px 32px 60px;
+  }
+
+  footer {
+    padding: 32px 20px;
+  }
+
+  .stats {
+    gap: 32px;
+    margin: 80px 0 100px;
+  }
+
+  .features {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    margin: 80px 0 100px;
+  }
+
+  .hero {
+    margin-bottom: 80px;
+  }
+
+  .quote-section {
+    padding: 40px 24px;
+  }
+
+  .coupon {
+    padding: 36px 24px;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .back:hover {
+    transform: none;
+  }
+
+  .hero-cta:hover {
+    transform: none;
+  }
+
+  .hero-cta:hover::before {
+    transform: translate(2px, 2px);
+  }
+
+  .card:hover {
+    transform: none;
+  }
+}
+</style>
+</head>
+<body>
+  <a class="back" href="../index.html">← galeria</a>
+
+  <main>
+    <!-- Hero / Cover -->
+    <section class="hero">
+      <p class="hero-tag">Novo · v2.0</p>
+      <h1 data-text="Constrói coisas que respiram.">Constrói coisas que respiram.</h1>
+      <p class="hero-lead">A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção. Desenhada para quem não se contenta com o genérico.</p>
+      <a href="#" class="hero-cta">Começar agora</a>
+    </section>
+
+    <!-- Stats with rubber stamp effect -->
+    <section class="stats">
+      <div class="stat">
+        <span class="stat-num">12k</span>
+        <span class="stat-label">criadores</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">99.9%</span>
+        <span class="stat-label">uptime</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">48ms</span>
+        <span class="stat-label">latência</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">possibilidades</span>
+      </div>
+    </section>
+
+    <!-- Features as Postcards -->
+    <section class="features">
+      <article class="card">
+        <div class="card-icon">◆</div>
+        <h3>Rápido por defeito</h3>
+        <p>Renderização instantânea. Zero espera, zero desculpas.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">◈</div>
+        <h3>Feito à medida</h3>
+        <p>Cada peça moldável ao milímetro. O controlo é teu.</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">❖</div>
+        <h3>Escala contigo</h3>
+        <p>De protótipo a produção sem reescrever uma linha.</p>
+      </article>
+    </section>
+
+    <!-- Quote -->
+    <section class="quote-section">
+      <blockquote>"Nunca um produto me fez sentir tão em casa. Isto não parece software — parece arte que funciona."</blockquote>
+      <cite>— Maria L., designer</cite>
+    </section>
+
+    <!-- CTA Coupon -->
+    <section class="cta-coupon">
+      <div class="coupon">
+        <h2>Pronto para começar?</h2>
+        <p>Junta-te a milhares de criadores hoje.</p>
+        <a href="#" class="coupon-cta">Criar conta grátis</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Nimbus · Paper Print</span>
+  </footer>
+
+  <script>
+    // Respect reduced motion preference
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Optional: Add slight random rotation to cards on load for more authentic zine feel
+    if (!prefersReduced) {
+      document.querySelectorAll('.card').forEach((card, i) => {
+        const rotation = (Math.random() - 0.5) * 2; // -1 to 1 degree
+        card.style.setProperty('--card-rotation', rotation + 'deg');
+      });
+    }
+  </script>
+</body>
+</html>

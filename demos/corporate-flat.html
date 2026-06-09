@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corporate Flat — Style Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;500;600;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --lilac: #d4c4f9;
+  --coral: #ff9f7f;
+  --mint: #a8e6d8;
+  --sun: #ffd97d;
+  --sky: #b5e7ff;
+  --ink: #2d3436;
+  --white: #ffffff;
+  --light-bg: #f8f9ff;
+  --dur-slow: 1.2s;
+  --dur-med: 0.8s;
+  --dur-fast: 0.5s;
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Fredoka', 'Trebuchet MS', Georgia, serif;
+  background: var(--white);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* Animated background blob layer */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse 800px 600px at 20% 30%, rgba(212, 196, 249, 0.15) 0%, transparent 70%);
+}
+
+/* ========== NAV ========== */
+nav {
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  padding: 24px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  border-radius: 0 0 32px 32px;
+  margin: 16px 16px 0;
+  box-shadow: 0 8px 32px rgba(45, 52, 54, 0.08);
+  opacity: 0;
+  animation: slideDown var(--dur-fast) var(--ease-smooth) forwards;
+}
+
+.nav-brand {
+  font-family: 'Sora', 'Trebuchet MS', Georgia, serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--ink);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-wrap: balance;
+}
+
+.nav-brand-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--coral), var(--sun));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.95rem;
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--coral);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+nav button {
+  background: linear-gradient(135deg, var(--lilac), var(--mint));
+  color: var(--ink);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 24px;
+  font-family: 'Fredoka', 'Trebuchet MS', Georgia, serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+nav button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(212, 196, 249, 0.3);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== MAIN CONTENT ========== */
+main {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 60px;
+}
+
+/* ========== HERO SECTION ========== */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  padding: 100px 0 120px;
+  position: relative;
+}
+
+.hero-content {
+  opacity: 0;
+  animation: fadeInUp var(--dur-med) var(--ease-smooth) 0.1s forwards;
+}
+
+.hero-tag {
+  display: inline-block;
+  font-family: 'Sora', 'Trebuchet MS', Georgia, serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--sun);
+  color: var(--ink);
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-family: 'Sora', 'Trebuchet MS', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2.4rem, 7vw, 3.8rem);
+  line-height: 1.1;
+  color: var(--ink);
+  margin-bottom: 24px;
+  text-wrap: balance;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-bottom: 40px;
+  max-width: 480px;
+  text-wrap: pretty;
+  font-weight: 300;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 16px 36px;
+  border: none;
+  border-radius: 28px;
+  font-family: 'Fredoka', 'Trebuchet MS', Georgia, serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--coral), var(--sun));
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(255, 159, 127, 0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--lilac);
+}
+
+.btn-secondary:hover {
+  background: var(--lilac);
+  transform: translateY(-2px);
+}
+
+/* Hero illustration area */
+.hero-visual {
+  position: relative;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeInUp var(--dur-med) var(--ease-smooth) 0.25s forwards;
+}
+
+/* Floating blob decoration */
+.blob {
+  position: absolute;
+  border-radius: 45% 55% 52% 48% / 48% 45% 55% 52%;
+  animation: float var(--dur-slow) ease-in-out infinite;
+}
+
+.blob-1 {
+  width: 200px;
+  height: 200px;
+  background: var(--lilac);
+  top: 20px;
+  right: 60px;
+  animation-delay: 0s;
+  opacity: 0.7;
+}
+
+.blob-2 {
+  width: 150px;
+  height: 150px;
+  background: var(--mint);
+  bottom: 40px;
+  left: 20px;
+  animation-delay: 2s;
+  opacity: 0.6;
+}
+
+.blob-3 {
+  width: 180px;
+  height: 180px;
+  background: var(--sky);
+  top: 120px;
+  left: 100px;
+  animation-delay: 1s;
+  opacity: 0.5;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-30px); }
+}
+
+/* ========== LOGOS SECTION ========== */
+.logos-section {
+  padding: 60px 0;
+  border-top: 2px solid rgba(212, 196, 249, 0.3);
+  border-bottom: 2px solid rgba(212, 196, 249, 0.3);
+  text-align: center;
+  margin-bottom: 100px;
+  opacity: 0;
+  animation: fadeInUp var(--dur-med) var(--ease-smooth) 0.4s forwards;
+}
+
+.logos-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  opacity: 0.6;
+  margin-bottom: 24px;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.logos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 40px;
+  align-items: center;
+}
+
+.logo-item {
+  padding: 16px;
+  border-radius: 16px;
+  background: var(--light-bg);
+  font-weight: 600;
+  color: var(--ink);
+  opacity: 0.7;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.logo-item:hover {
+  opacity: 1;
+  transform: scale(1.05);
+  background: var(--lilac);
+}
+
+/* ========== FEATURES SECTION ========== */
+.features {
+  margin: 120px 0;
+}
+
+.features h2 {
+  font-family: 'Sora', 'Trebuchet MS', Georgia, serif;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 80px;
+  color: var(--ink);
+  text-wrap: balance;
+  opacity: 0;
+  animation: fadeInUp var(--dur-med) var(--ease-smooth) 0.5s forwards;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+}
+
+.feature-card {
+  background: var(--light-bg);
+  padding: 48px;
+  border-radius: 32px;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: cardBounce var(--dur-med) var(--ease-bounce) forwards;
+  transition: all 0.3s ease;
+}
+
+.feature-card:nth-child(1) { animation-delay: 0.55s; }
+.feature-card:nth-child(2) { animation-delay: 0.65s; }
+.feature-card:nth-child(3) { animation-delay: 0.75s; }
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 48px rgba(212, 196, 249, 0.25);
+}
+
+/* Card background blob */
+.feature-card::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 45% 55% 52% 48% / 48% 45% 55% 52%;
+  top: -40px;
+  right: -60px;
+  z-index: 0;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.feature-card:nth-child(1)::before {
+  background: var(--lilac);
+}
+
+.feature-card:nth-child(2)::before {
+  background: var(--coral);
+}
+
+.feature-card:nth-child(3)::before {
+  background: var(--mint);
+}
+
+.feature-icon {
+  position: relative;
+  z-index: 1;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 24px;
+}
+
+.feature-card:nth-child(1) .feature-icon {
+  background: var(--sun);
+}
+
+.feature-card:nth-child(2) .feature-icon {
+  background: var(--sky);
+}
+
+.feature-card:nth-child(3) .feature-icon {
+  background: var(--mint);
+}
+
+.feature-card h3 {
+  font-family: 'Sora', 'Trebuchet MS', Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--ink);
+  position: relative;
+  z-index: 1;
+  text-wrap: balance;
+}
+
+.feature-card p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink);
+  position: relative;
+  z-index: 1;
+  text-wrap: pretty;
+  font-weight: 300;
+}
+
+@keyframes cardBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ========== TESTIMONIAL SECTION ========== */
+.testimonial {
+  background: linear-gradient(135deg, var(--lilac), var(--sky));
+  border-radius: 40px;
+  padding: 60px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 40px;
+  align-items: center;
+  margin: 120px 0;
+  opacity: 0;
+  animation: fadeInUp var(--dur-med) var(--ease-smooth) 0.85s forwards;
+}
+
+.testimonial-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 30px;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  flex-shrink: 0;
+}
+
+.testimonial-text h3 {
+  font-family: 'Sora', 'Trebuchet MS', Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 12px;
+  text-wrap: balance;
+}
+
+.testimonial-text p {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 300;
+  text-wrap: pretty;
+  margin-bottom: 16px;
+}
+
+.testimonial-author {
+  font-family: 'Sora', 'Trebuchet MS', Georgia, serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.8);
+  text-wrap: balance;
+}
+
+/* ========== CTA SECTION ========== */
+.cta-section {
+  background: linear-gradient(135deg, var(--coral), var(--sun));
+  border-radius: 40px;
+  padding: 80px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin: 120px 0;
+  opacity: 0;
+  animation: fadeInUp var(--dur-med) var(--ease-smooth) 1s forwards;
+}
+
+/* Confetti decorations */
+.confetti {
+  position: absolute;
+  pointer-events: none;
+}
+
+.confetti-square {
+  width: 20px;
+  height: 20px;
+  background: var(--lilac);
+  opacity: 0.5;
+  border-radius: 4px;
+  animation: confettiFall var(--dur-slow) linear infinite;
+}
+
+.confetti-square:nth-child(1) {
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.confetti-square:nth-child(2) {
+  left: 30%;
+  animation-delay: 0.3s;
+  background: var(--mint);
+}
+
+.confetti-square:nth-child(3) {
+  left: 60%;
+  animation-delay: 0.6s;
+  background: var(--sky);
+}
+
+.confetti-square:nth-child(4) {
+  left: 80%;
+  animation-delay: 0.9s;
+}
+
+.confetti-circle {
+  width: 16px;
+  height: 16px;
+  background: var(--sun);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: confettiFall var(--dur-slow) linear infinite;
+}
+
+.confetti-circle:nth-child(5) {
+  left: 20%;
+  animation-delay: 0.15s;
+}
+
+.confetti-circle:nth-child(6) {
+  left: 70%;
+  animation-delay: 0.75s;
+  background: var(--mint);
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-600px) rotateZ(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0px) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+
+.cta-content {
+  position: relative;
+  z-index: 1;
+}
+
+.cta-section h2 {
+  font-family: 'Sora', 'Trebuchet MS', Georgia, serif;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  color: white;
+  margin-bottom: 16px;
+  text-wrap: balance;
+}
+
+.cta-section p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 32px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  text-wrap: pretty;
+  font-weight: 300;
+}
+
+.cta-section .btn-primary {
+  background: white;
+  color: var(--coral);
+  font-weight: 700;
+}
+
+.cta-section .btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== FOOTER ========== */
+footer {
+  background: var(--ink);
+  color: white;
+  padding: 80px 60px 40px;
+  margin-top: 120px;
+  opacity: 0;
+  animation: fadeInUp var(--dur-med) var(--ease-smooth) 1.15s forwards;
+}
+
+.footer-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+.footer-column h4 {
+  font-family: 'Sora', 'Trebuchet MS', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: white;
+  text-wrap: balance;
+}
+
+.footer-column ul {
+  list-style: none;
+}
+
+.footer-column li {
+  margin-bottom: 12px;
+}
+
+.footer-column a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 300;
+  transition: color 0.3s ease;
+}
+
+.footer-column a:hover {
+  color: white;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 40px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 300;
+}
+
+/* ========== KEYFRAMES ========== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  main {
+    padding: 0 40px;
+  }
+
+  nav {
+    padding: 20px 40px;
+    margin: 12px 12px 0;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 60px;
+    padding: 80px 0 100px;
+  }
+
+  .hero-visual {
+    height: 400px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonial {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .testimonial-avatar {
+    margin: 0 auto;
+  }
+
+  .cta-section {
+    padding: 60px 40px;
+  }
+
+  footer {
+    padding: 60px 40px 30px;
+  }
+
+  .nav-links {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  main {
+    padding: 0 24px;
+  }
+
+  nav {
+    padding: 16px 24px;
+    margin: 8px 8px 0;
+  }
+
+  .hero {
+    padding: 60px 0 80px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .hero-buttons {
+    gap: 12px;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+
+  .hero-visual {
+    height: 300px;
+  }
+
+  .features h2 {
+    font-size: 1.8rem;
+    margin-bottom: 60px;
+  }
+
+  .feature-card {
+    padding: 36px 24px;
+  }
+
+  .testimonial {
+    padding: 40px 24px;
+  }
+
+  .cta-section {
+    padding: 50px 24px;
+  }
+
+  .cta-section h2 {
+    font-size: 1.6rem;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .blob {
+    animation: none;
+  }
+
+  nav button:hover {
+    transform: none;
+  }
+
+  .btn-primary:hover {
+    transform: none;
+  }
+
+  .feature-card:hover {
+    transform: none;
+  }
+}
+</style>
+</head>
+<body>
+  <nav>
+    <a class="nav-brand" href="#">
+      <span class="nav-brand-icon">N</span>
+      <span>Nimbus</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Funcionalidades</a></li>
+      <li><a href="#pricing">Preços</a></li>
+      <li><a href="#about">Sobre</a></li>
+    </ul>
+    <button>Começar grátis</button>
+  </nav>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <span class="hero-tag">Novo em 2026</span>
+        <h1>Constrói coisas que respiram.</h1>
+        <p>A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção. Desenhada para quem não se contenta com o genérico.</p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary">Começar agora</button>
+          <button class="btn btn-secondary">Saber mais</button>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <!-- Inline SVG: Person with pencil building -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="100%" height="100%" style="max-width: 450px; max-height: 450px;">
+          <!-- Decorative blobs -->
+          <g opacity="0.3">
+            <ellipse cx="100" cy="150" rx="120" ry="100" fill="#d4c4f9" />
+            <ellipse cx="320" cy="380" rx="100" ry="80" fill="#a8e6d8" />
+          </g>
+
+          <!-- Person body -->
+          <ellipse cx="150" cy="280" rx="45" ry="80" fill="#ff9f7f" />
+          <!-- Person head -->
+          <circle cx="150" cy="160" r="35" fill="#ffc996" />
+          <!-- Eyes -->
+          <circle cx="138" cy="155" r="4" fill="#2d3436" />
+          <circle cx="162" cy="155" r="4" fill="#2d3436" />
+          <!-- Smile -->
+          <path d="M 140 170 Q 150 178 160 170" stroke="#2d3436" stroke-width="2" fill="none" stroke-linecap="round" />
+
+          <!-- Left arm -->
+          <ellipse cx="105" cy="250" rx="18" ry="60" fill="#ffc996" transform="rotate(-35 105 250)" />
+          <!-- Right arm -->
+          <ellipse cx="195" cy="250" rx="18" ry="60" fill="#ffc996" transform="rotate(35 195 250)" />
+
+          <!-- Legs -->
+          <ellipse cx="135" cy="360" rx="16" ry="50" fill="#2d3436" />
+          <ellipse cx="165" cy="360" rx="16" ry="50" fill="#2d3436" />
+
+          <!-- Large pencil being held -->
+          <g>
+            <!-- Pencil shaft -->
+            <rect x="200" y="120" width="140" height="28" rx="14" fill="#ffd97d" />
+            <!-- Pencil tip (graphite) -->
+            <polygon points="340,120 340,148 370,134" fill="#2d3436" />
+            <!-- Eraser -->
+            <rect x="190" y="122" width="20" height="24" rx="2" fill="#ff9f7f" />
+          </g>
+
+          <!-- UI windows emerging from pencil -->
+          <g opacity="0.8">
+            <!-- Window 1 -->
+            <rect x="260" y="60" width="90" height="70" rx="8" fill="#b5e7ff" stroke="#2d3436" stroke-width="2" />
+            <rect x="260" y="60" width="90" height="16" rx="8 8 0 0" fill="#ffd97d" />
+            <!-- Window 2 -->
+            <rect x="310" y="180" width="85" height="65" rx="8" fill="#a8e6d8" stroke="#2d3436" stroke-width="2" />
+            <rect x="310" y="180" width="85" height="14" rx="8 8 0 0" fill="#ff9f7f" />
+          </g>
+
+          <!-- Decorative dots and shapes -->
+          <circle cx="80" cy="100" r="6" fill="#ffd97d" opacity="0.7" />
+          <circle cx="380" cy="280" r="8" fill="#d4c4f9" opacity="0.6" />
+          <rect x="50" y="400" width="12" height="12" rx="2" fill="#b5e7ff" opacity="0.7" />
+        </svg>
+
+        <!-- Blob overlays -->
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+      </div>
+    </section>
+
+    <!-- Logos Section -->
+    <section class="logos-section">
+      <p class="logos-label">Confiado por milhares de criadores</p>
+      <div class="logos-grid">
+        <div class="logo-item">Studio Pro</div>
+        <div class="logo-item">Design Co</div>
+        <div class="logo-item">Criando</div>
+        <div class="logo-item">BuildHQ</div>
+        <div class="logo-item">NextGen</div>
+        <div class="logo-item">PixelWorks</div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+      <h2>Tudo o que precisas para criar</h2>
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Rápido por defeito</h3>
+          <p>Renderização instantânea. Zero espera, zero desculpas. Os teus projetos ganham vida em milissegundos.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🎨</div>
+          <h3>Feito à medida</h3>
+          <p>Cada peça moldável ao milímetro. O controlo é teu, sempre. Sem limitações da plataforma.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3>Escala contigo</h3>
+          <p>De protótipo a produção sem reescrever uma linha. Arquitetura robusta desde o primeiro dia.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial">
+      <div class="testimonial-avatar">🎯</div>
+      <div class="testimonial-text">
+        <h3>Transformou a forma como trabalho.</h3>
+        <p>"Nunca um produto me fez sentir tão em casa. Isto não parece software — parece arte que funciona. Recomendo a todos os meus colegas."</p>
+        <p class="testimonial-author">— Ana Costa, designer sénior</p>
+      </div>
+    </section>
+
+    <!-- CTA Section with Confetti -->
+    <section class="cta-section">
+      <div class="confetti">
+        <div class="confetti-square"></div>
+        <div class="confetti-square"></div>
+        <div class="confetti-square"></div>
+        <div class="confetti-square"></div>
+        <div class="confetti-circle"></div>
+        <div class="confetti-circle"></div>
+      </div>
+      <div class="cta-content">
+        <h2>Pronto para começar?</h2>
+        <p>Junta-te a milhares de criadores que já estão a fazer coisas incríveis.</p>
+        <button class="btn btn-primary">Criar conta grátis</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h4>Produto</h4>
+        <ul>
+          <li><a href="#">Funcionalidades</a></li>
+          <li><a href="#">Preços</a></li>
+          <li><a href="#">O que há de novo</a></li>
+          <li><a href="#">Roadmap</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Comunidade</h4>
+        <ul>
+          <li><a href="#">Documentação</a></li>
+          <li><a href="#">Fórum</a></li>
+          <li><a href="#">Casos de uso</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="#">Sobre</a></li>
+          <li><a href="#">Carreira</a></li>
+          <li><a href="#">Imprensa</a></li>
+          <li><a href="#">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacidade</a></li>
+          <li><a href="#">Termos</a></li>
+          <li><a href="#">Cookies</a></li>
+          <li><a href="#">Conformidade</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Nimbus · Corporate Flat
+    </div>
+  </footer>
+
+  <script>
+    // Respect reduced motion preference
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Smooth animation on page load
+    if (!prefersReduced) {
+      // All animations are handled by CSS, but we can add interactivity
+      document.querySelectorAll('nav button, .btn-primary, .btn-secondary').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Add subtle feedback
+          btn.style.transform = 'scale(0.98)';
+          setTimeout(() => {
+            btn.style.transform = '';
+          }, 150);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

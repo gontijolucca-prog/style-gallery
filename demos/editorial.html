@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Editorial Serif — Style Gallery</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+		:root {
+			--paper: #fdf8f3;
+			--ink: #1a1410;
+			--red: #c41e3a;
+			--grey: #6b5d54;
+			--rule: #1a141028;
+			--dur-slow: 1.2s;
+			--dur-normal: 0.6s;
+			--ease-out: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		html {
+			scroll-behavior: smooth;
+		}
+
+		body {
+			font-family: 'Crimson Text', serif;
+			color: var(--ink);
+			background: var(--paper);
+			font-size: 18px;
+			line-height: 1.7;
+			font-weight: 400;
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			* {
+				animation: none !important;
+				transition: none !important;
+			}
+		}
+
+		/* Back link — integrated as masthead element */
+		.back {
+			display: block;
+			text-decoration: none;
+			color: var(--grey);
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 0.7rem;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			padding: 2rem 3rem 0;
+			margin-bottom: 0.5rem;
+			opacity: 0;
+			animation: fadeInDown 0.8s var(--ease-out) 0.1s forwards;
+		}
+
+		.back:hover {
+			color: var(--red);
+		}
+
+		/* Masthead: date, edition, price */
+		.masthead {
+			border-bottom: 1px solid var(--rule);
+			padding: 2.5rem 3rem;
+			display: grid;
+			grid-template-columns: 1fr auto auto;
+			gap: 3rem;
+			align-items: baseline;
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 0.75rem;
+			letter-spacing: 0.12em;
+			text-transform: uppercase;
+			color: var(--grey);
+			opacity: 0;
+			animation: fadeInDown 0.8s var(--ease-out) 0.2s forwards;
+		}
+
+		.masthead-item {
+			text-align: right;
+		}
+
+		.masthead-item strong {
+			display: block;
+			font-weight: 500;
+			color: var(--ink);
+			font-size: 1rem;
+		}
+
+		/* Hero section — edition badge + title */
+		.hero {
+			padding: 4rem 3rem 3rem;
+			opacity: 0;
+			animation: fadeInDown 0.8s var(--ease-out) 0.3s forwards;
+		}
+
+		.edition-badge {
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 0.65rem;
+			letter-spacing: 0.15em;
+			text-transform: uppercase;
+			color: var(--red);
+			border-top: 2px solid var(--red);
+			border-bottom: 2px solid var(--red);
+			padding: 0.4rem 0;
+			display: inline-block;
+			margin-bottom: 1.5rem;
+			font-weight: 500;
+		}
+
+		.hero h1 {
+			font-family: 'Cormorant Garamond', serif;
+			font-size: clamp(2.2rem, 7vw, 4.5rem);
+			font-weight: 700;
+			line-height: 1.15;
+			letter-spacing: -0.02em;
+			max-width: 90%;
+			margin-bottom: 1.5rem;
+			text-wrap: balance;
+		}
+
+		.hero h1 em {
+			font-style: italic;
+			color: var(--red);
+			font-weight: 700;
+		}
+
+		/* Two-column lede with drop cap */
+		.lede-wrapper {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 3rem;
+			padding: 3rem;
+			border-top: 1px solid var(--rule);
+			position: relative;
+		}
+
+		.lede {
+			font-size: 1rem;
+			line-height: 1.8;
+			font-weight: 400;
+			column-count: 1;
+			opacity: 0;
+			animation: fadeInUp 0.8s var(--ease-out) 0.4s forwards;
+		}
+
+		/* Drop cap — first letter */
+		.lede::first-letter {
+			font-family: 'Cormorant Garamond', serif;
+			font-size: 5em;
+			font-weight: 700;
+			float: left;
+			line-height: 0.8;
+			padding-right: 0.1em;
+			padding-top: 0.05em;
+			color: var(--red);
+			initial-letter: 4;
+		}
+
+		/* Pull quote breaking out of columns */
+		.pull-quote {
+			grid-column: 1 / -1;
+			border-left: 4px solid var(--red);
+			padding-left: 2rem;
+			padding-right: 2rem;
+			margin: 2rem 0;
+			font-family: 'Cormorant Garamond', serif;
+			font-size: 1.4rem;
+			font-style: italic;
+			font-weight: 400;
+			line-height: 1.6;
+			color: var(--ink);
+			opacity: 0;
+			animation: fadeInLeft 0.8s var(--ease-out) 0.5s forwards;
+		}
+
+		.pull-quote em {
+			font-weight: 500;
+			color: var(--red);
+		}
+
+		/* Features as "table of contents" with rulers and page numbers */
+		.features {
+			padding: 3rem;
+			border-top: 1px solid var(--rule);
+			opacity: 0;
+			animation: fadeInUp 0.8s var(--ease-out) 0.6s forwards;
+		}
+
+		.features-header {
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 0.7rem;
+			letter-spacing: 0.15em;
+			text-transform: uppercase;
+			color: var(--red);
+			margin-bottom: 1.5rem;
+			font-weight: 500;
+		}
+
+		.feature-item {
+			display: grid;
+			grid-template-columns: 2rem 1fr auto;
+			gap: 1rem;
+			align-items: baseline;
+			padding: 1rem 0;
+			border-bottom: 1px dotted var(--rule);
+		}
+
+		.feature-item:last-child {
+			border-bottom: none;
+		}
+
+		.feature-number {
+			font-family: 'IBM Plex Mono', monospace;
+			font-weight: 500;
+			font-size: 0.9rem;
+			color: var(--red);
+		}
+
+		.feature-title {
+			font-family: 'Cormorant Garamond', serif;
+			font-size: 1.1rem;
+			font-weight: 600;
+		}
+
+		.feature-page {
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 0.8rem;
+			color: var(--grey);
+		}
+
+		/* Full-width serifed declaration */
+		.declaration {
+			padding: 4rem 3rem;
+			border-top: 2px solid var(--ink);
+			border-bottom: 2px solid var(--ink);
+			text-align: center;
+			margin: 3rem 0;
+			background: linear-gradient(
+				to bottom,
+				transparent 0%,
+				rgba(196, 30, 58, 0.02) 50%,
+				transparent 100%
+			);
+			opacity: 0;
+			animation: fadeIn 0.8s var(--ease-out) 0.7s forwards;
+		}
+
+		.declaration p {
+			font-family: 'Cormorant Garamond', serif;
+			font-size: clamp(1.4rem, 5vw, 2.2rem);
+			font-weight: 500;
+			font-style: italic;
+			line-height: 1.6;
+			letter-spacing: -0.01em;
+			max-width: 900px;
+			margin: 0 auto;
+			color: var(--ink);
+			text-wrap: balance;
+		}
+
+		/* CTA section */
+		.cta-section {
+			padding: 4rem 3rem;
+			text-align: center;
+			border-top: 1px solid var(--rule);
+			opacity: 0;
+			animation: fadeInUp 0.8s var(--ease-out) 0.8s forwards;
+		}
+
+		.cta-section h2 {
+			font-family: 'Cormorant Garamond', serif;
+			font-size: clamp(1.8rem, 5vw, 2.8rem);
+			font-weight: 700;
+			margin-bottom: 0.8rem;
+			text-wrap: balance;
+		}
+
+		.cta-section p {
+			font-size: 1rem;
+			color: var(--grey);
+			margin-bottom: 2rem;
+		}
+
+		/* Buttons */
+		.btn {
+			display: inline-block;
+			text-decoration: none;
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 0.7rem;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			padding: 1rem 2rem;
+			border: 2px solid var(--ink);
+			color: var(--ink);
+			background: transparent;
+			transition: all 0.3s var(--ease-out);
+			font-weight: 500;
+		}
+
+		.btn:hover {
+			background: var(--ink);
+			color: var(--paper);
+			transform: scale(1.05);
+		}
+
+		.btn-primary {
+			background: var(--red);
+			color: var(--paper);
+			border-color: var(--red);
+		}
+
+		.btn-primary:hover {
+			background: var(--ink);
+			border-color: var(--ink);
+		}
+
+		/* Byline and colophon */
+		.colophon {
+			padding: 4rem 3rem;
+			border-top: 1px solid var(--rule);
+			background: linear-gradient(
+				to bottom,
+				transparent 0%,
+				rgba(0, 0, 0, 0.02) 100%
+			);
+			opacity: 0;
+			animation: fadeInUp 0.8s var(--ease-out) 0.9s forwards;
+		}
+
+		.byline {
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 0.75rem;
+			letter-spacing: 0.1em;
+			text-transform: uppercase;
+			color: var(--grey);
+			margin-bottom: 2rem;
+		}
+
+		.byline strong {
+			color: var(--ink);
+			font-weight: 500;
+		}
+
+		.colophon-meta {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 2rem;
+			font-size: 0.85rem;
+			color: var(--grey);
+			line-height: 1.8;
+		}
+
+		.colophon-meta strong {
+			display: block;
+			color: var(--ink);
+			font-weight: 600;
+			margin-bottom: 0.3rem;
+			font-family: 'Cormorant Garamond', serif;
+		}
+
+		/* Responsive adjustments */
+		@media (max-width: 768px) {
+			body {
+				font-size: 16px;
+			}
+
+			.masthead {
+				grid-template-columns: 1fr;
+				gap: 1rem;
+				padding: 1.5rem 1.5rem;
+			}
+
+			.masthead-item {
+				text-align: left;
+			}
+
+			.masthead-item strong {
+				display: inline;
+				margin-right: 0.5rem;
+			}
+
+			.lede-wrapper {
+				grid-template-columns: 1fr;
+				gap: 1.5rem;
+				padding: 1.5rem;
+			}
+
+			.pull-quote {
+				padding-left: 1.5rem;
+				padding-right: 1.5rem;
+				font-size: 1.2rem;
+			}
+
+			.back,
+			.hero,
+			.features,
+			.declaration,
+			.cta-section,
+			.colophon {
+				padding-left: 1.5rem;
+				padding-right: 1.5rem;
+			}
+
+			.colophon-meta {
+				grid-template-columns: 1fr;
+				gap: 1.5rem;
+			}
+		}
+
+		@media (max-width: 480px) {
+			body {
+				font-size: 15px;
+			}
+
+			.hero h1 {
+				font-size: 1.8rem;
+				max-width: 100%;
+			}
+
+			.declaration p {
+				font-size: 1.2rem;
+			}
+
+			.lede {
+				font-size: 0.95rem;
+			}
+
+			.pull-quote {
+				font-size: 1rem;
+				border-left-width: 3px;
+			}
+
+			.back,
+			.hero,
+			.masthead,
+			.lede-wrapper,
+			.features,
+			.declaration,
+			.cta-section,
+			.colophon {
+				padding-left: 1rem;
+				padding-right: 1rem;
+			}
+		}
+
+		/* Animations */
+		@keyframes fadeInDown {
+			from {
+				opacity: 0;
+				transform: translateY(-12px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes fadeInUp {
+			from {
+				opacity: 0;
+				transform: translateY(12px);
+			}
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes fadeInLeft {
+			from {
+				opacity: 0;
+				transform: translateX(-16px);
+			}
+			to {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+			to {
+				opacity: 1;
+			}
+		}
+	</style>
+</head>
+<body>
+
+	<a class="back" href="../index.html">← galeria</a>
+
+	<!-- Masthead: publication info -->
+	<div class="masthead">
+		<div class="masthead-item">
+			<span>9 de Junho de 2026</span>
+		</div>
+		<div class="masthead-item">
+			<strong>Edição 12</strong>
+			<span>Verão</span>
+		</div>
+		<div class="masthead-item">
+			<strong>€ 4.50</strong>
+		</div>
+	</div>
+
+	<!-- Hero: badge + title -->
+	<header class="hero">
+		<p class="edition-badge">Produto · v2.0</p>
+		<h1>Constrói coisas que <em>respiram</em>.</h1>
+	</header>
+
+	<!-- Two-column lede with drop cap and pull quote -->
+	<div class="lede-wrapper">
+		<p class="lede">
+			A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção. Desenhada para quem não se contenta com o genérico. Cada ferramenta foi pensada ao milímetro para sair do caminho e deixar a criatividade em primeiro plano. Não é apenas software; é um instrumento de expressão.
+		</p>
+
+		<div>
+			<p class="lede">
+				Imagina um espaço onde a velocidade não te custa qualidade. Onde cada clique aproxima-te da visão na tua cabeça. Onde escalar de um rascunho para produção é natural, inevitável. Isto é Nimbus. Milhares de criadores já perceberam. Agora chegou a tua vez.
+			</p>
+		</div>
+
+		<blockquote class="pull-quote">
+			"<em>Isto não parece software</em> — parece arte que funciona." — Maria L., designer
+		</blockquote>
+	</div>
+
+	<!-- Features as Table of Contents -->
+	<section class="features">
+		<p class="features-header">Nesta Edição</p>
+
+		<div class="feature-item">
+			<span class="feature-number">01</span>
+			<span class="feature-title">Rápido por defeito</span>
+			<span class="feature-page">p. 8</span>
+		</div>
+
+		<div class="feature-item">
+			<span class="feature-number">02</span>
+			<span class="feature-title">Feito à medida</span>
+			<span class="feature-page">p. 14</span>
+		</div>
+
+		<div class="feature-item">
+			<span class="feature-number">03</span>
+			<span class="feature-title">Escala contigo</span>
+			<span class="feature-page">p. 22</span>
+		</div>
+
+		<div class="feature-item">
+			<span class="feature-number">04</span>
+			<span class="feature-title">Comunidade e suporte</span>
+			<span class="feature-page">p. 28</span>
+		</div>
+	</section>
+
+	<!-- Full-width declaration -->
+	<section class="declaration">
+		<p>Nunca te sentiste em casa num produto. Agora tens de esperar menos.</p>
+	</section>
+
+	<!-- CTA -->
+	<section class="cta-section">
+		<h2>Pronto para começar?</h2>
+		<p>Junta-te a 12 mil criadores que já transformam ideias em realidade.</p>
+		<a href="#" class="btn btn-primary">Criar conta grátis</a>
+	</section>
+
+	<!-- Colophon: byline and publication info -->
+	<footer class="colophon">
+		<p class="byline">
+			Escrito por <strong>Redacção Nimbus</strong> · Fotografia de <strong>O teu trabalho</strong> · Tipografia <strong>Crimson Text + Cormorant Garamond</strong>
+		</p>
+
+		<div class="colophon-meta">
+			<div>
+				<strong>Estatísticas</strong>
+				12 mil criadores<br>
+				99,9% uptime<br>
+				48ms latência
+			</div>
+			<div>
+				<strong>Publicação</strong>
+				Edição Impressa & Digital<br>
+				ISSN 2847-3210<br>
+				© 2026 Nimbus Studio
+			</div>
+			<div>
+				<strong>Contacto</strong>
+				design@nimbus.app<br>
+				+351 910 000 000<br>
+				nimbus.app
+			</div>
+		</div>
+	</footer>
+
+</body>
+</html>

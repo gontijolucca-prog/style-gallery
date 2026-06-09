@@ -47,11 +47,11 @@
 <body>
   <header>
     <p class="kicker">// provador de estilos</p>
-    <h1>Um conteúdo. <em>Dezoito</em> peles.</h1>
-    <p class="sub">A mesma landing page renderizada em estilos radicalmente diferentes. Passa o rato, clica para abrir em ecrã inteiro, rouba o que precisares para projetos futuros.</p>
+    <h1>Uma marca. <em>Vinte e seis</em> mundos.</h1>
+    <p class="sub">O mesmo produto fictício reconstruído em vinte e seis estilos — cada um com layout, tipografia e movimento próprios. Passa o rato, clica para abrir em ecrã inteiro, rouba o que precisares para projetos futuros.</p>
     <div class="meta">
       <span><b id="count">0</b> estilos</span>
-      <span>mesmo markup · CSS isolado por estilo</span>
+      <span>layout próprio por estilo · página self-contained</span>
       <span><b>clica</b> num cartão → página completa</span>
     </div>
   </header>
@@ -59,7 +59,7 @@
   <main class="grid" id="grid"></main>
 
   <footer>
-    <b>Style Gallery</b> — cada estilo é um único ficheiro em <b>styles/&lt;slug&gt;.css</b>. Copia o ficheiro, aponta o teu HTML às mesmas classes (.hero / .h1 / .btn-primary / .card / .cta…) e tens o estilo aplicado. Markup partilhado em <b>demo.html</b>.
+    <b>Style Gallery</b> — cada estilo é agora uma página completa e self-contained em <b>demos/&lt;slug&gt;.html</b>: layout, CSS e movimento próprios, sem dependências além das fontes. Copia o ficheiro inteiro e tens o mundo todo. (As skins antigas continuam em <b>styles/</b> + <b>demo.html</b>.)
   </footer>
 
   <script>
@@ -68,13 +68,13 @@
     STYLES.forEach(s => {
       const a = document.createElement('a');
       a.className = 'card';
-      a.href = 'demo.html?style=' + s.slug;
+      a.href = 'demos/' + s.slug + '.html';
       a.innerHTML = `
         <div class="preview">
           <div class="swatches">${(s.sw||[]).map(c=>`<span style="background:${c}"></span>`).join('')}</div>
           <span class="open">abrir ↗</span>
           <div class="shade"></div>
-          <iframe loading="lazy" src="demo.html?style=${s.slug}" tabindex="-1" scrolling="no"></iframe>
+          <iframe loading="lazy" src="demos/${s.slug}.html" tabindex="-1" scrolling="no"></iframe>
         </div>
         <div class="body">
           <h3>${s.name}</h3>

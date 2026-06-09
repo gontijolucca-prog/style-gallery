@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Minimal Mono — Style Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,200;9..144,300;9..144,600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fafafa;
+  --ink: #171717;
+  --mid: #999;
+  --line: #e5e5e5;
+  --accent: #171717;
+
+  --dur-base: 0.3s;
+  --dur-slow: 0.6s;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Mono', monospace;
+  color: var(--ink);
+  background: var(--bg);
+  font-weight: 300;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  overflow-x: hidden;
+}
+
+main { position: relative; }
+
+/* Back link — minimal, top left */
+.back {
+  position: fixed;
+  top: 32px;
+  left: 32px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 300;
+  text-decoration: none;
+  color: var(--ink);
+  padding: 0;
+  background: transparent;
+  border: none;
+  opacity: 0;
+  animation: fadeIn var(--dur-slow) var(--ease-out) 0.1s forwards;
+  z-index: 10;
+  transition: color var(--dur-base) ease;
+}
+
+.back:hover {
+  color: var(--mid);
+}
+
+/* SECTION 01: Hero — one word, monastic */
+.section-hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding: 80px 32px 20vh 32px;
+  border-bottom: 1px solid var(--line);
+  opacity: 0;
+  animation: fadeIn var(--dur-slow) var(--ease-out) 0.2s forwards;
+}
+
+.hero-breath {
+  display: none;
+}
+
+.hero-word {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(5rem, 14vw, 11rem);
+  font-weight: 100;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  margin-bottom: 8vh;
+  text-wrap: balance;
+}
+
+.hero-line {
+  max-width: 360px;
+  font-size: 0.8rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--mid);
+  text-wrap: pretty;
+  margin-bottom: 3rem;
+}
+
+.hero-cta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  text-decoration: none;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 0 0 2px 0;
+  transition: all var(--dur-base) ease;
+  display: inline-block;
+  letter-spacing: 0.05em;
+}
+
+.hero-cta:hover {
+  color: var(--mid);
+  border-color: var(--mid);
+}
+
+/* SECTION 02: Stats — footnote style */
+.section-stats {
+  padding: 20vh 32px 12vh 32px;
+  border-bottom: 1px solid var(--line);
+  opacity: 0;
+  animation: fadeIn var(--dur-slow) var(--ease-out) 0.3s forwards;
+}
+
+.stats-label {
+  font-family: 'Fraunces', serif;
+  font-size: 0.8rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--mid);
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.stats-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem 6rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-num {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 300;
+  text-transform: none;
+  letter-spacing: 0.08em;
+  color: var(--mid);
+  margin: 0;
+}
+
+/* SECTION 03: Features — index list with reveal */
+.section-features {
+  padding: 20vh 32px 16vh 32px;
+  border-bottom: 1px solid var(--line);
+  opacity: 0;
+  animation: fadeIn var(--dur-slow) var(--ease-out) 0.4s forwards;
+}
+
+.features-intro {
+  font-family: 'Fraunces', serif;
+  font-size: 0.8rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--mid);
+  margin-bottom: 3rem;
+  display: block;
+}
+
+.features-list {
+  list-style: none;
+  max-width: 600px;
+}
+
+.feature {
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  transition: all var(--dur-base) ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.feature:hover {
+  padding-left: 2rem;
+  color: var(--accent);
+}
+
+.feature:hover .feature-reveal {
+  opacity: 1;
+}
+
+.feature:last-child {
+  border-bottom: none;
+}
+
+.feature-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.feature-reveal {
+  font-size: 0.8rem;
+  color: var(--mid);
+  opacity: 0;
+  transition: opacity var(--dur-base) ease;
+  margin-left: 2rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  text-align: right;
+  line-height: 1.4;
+}
+
+/* SECTION 04: Quote — testimony in serif */
+.section-quote {
+  padding: 18vh 32px 14vh 32px;
+  border-bottom: 1px solid var(--line);
+  opacity: 0;
+  animation: fadeIn var(--dur-slow) var(--ease-out) 0.5s forwards;
+}
+
+.quote-content {
+  max-width: 700px;
+}
+
+.quote-text {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 300;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+  margin-bottom: 2rem;
+  text-wrap: balance;
+  font-style: italic;
+}
+
+.quote-author {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--mid);
+  font-style: normal;
+}
+
+/* SECTION 05: CTA — final breath */
+.section-cta {
+  padding: 20vh 32px 16vh 32px;
+  border-bottom: 1px solid var(--line);
+  opacity: 0;
+  animation: fadeIn var(--dur-slow) var(--ease-out) 0.6s forwards;
+}
+
+.cta-word {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 150;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-bottom: 3rem;
+  text-wrap: balance;
+}
+
+.cta-line {
+  max-width: 480px;
+  font-size: 0.9rem;
+  color: var(--mid);
+  margin-bottom: 2.5rem;
+  text-wrap: pretty;
+}
+
+.cta-link {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  text-decoration: none;
+  color: var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 0 0 2px 0;
+  transition: all var(--dur-base) ease;
+  display: inline-block;
+}
+
+.cta-link:hover {
+  color: var(--mid);
+  border-color: var(--mid);
+}
+
+/* Footer — colophon */
+.footer {
+  padding: 10vh 32px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--mid);
+  border-top: 1px solid var(--line);
+  opacity: 0;
+  animation: fadeIn var(--dur-slow) var(--ease-out) 0.7s forwards;
+}
+
+.footer-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  max-width: 900px;
+}
+
+.footer-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-label {
+  color: var(--mid);
+}
+
+.footer-value {
+  color: var(--ink);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: prefer-reduced) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .back {
+    top: 20px;
+    left: 20px;
+    font-size: 0.7rem;
+  }
+
+  .section-hero,
+  .section-stats,
+  .section-features,
+  .section-quote,
+  .section-cta,
+  .footer {
+    padding: 8vh 20px;
+  }
+
+  .hero-breath {
+    margin-bottom: 2rem;
+  }
+
+  .hero-word {
+    margin-bottom: 2rem;
+  }
+
+  .stats-list {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .feature {
+    flex-direction: column;
+    padding: 1.5rem 0;
+  }
+
+  .feature:hover {
+    padding-left: 0;
+  }
+
+  .feature-reveal {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    text-align: left;
+  }
+
+  .footer-meta {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-hero,
+  .section-stats,
+  .section-features,
+  .section-quote,
+  .section-cta,
+  .footer {
+    padding: 6vh 16px;
+  }
+
+  .hero-word {
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-line {
+    font-size: 0.85rem;
+    margin-bottom: 2rem;
+  }
+
+  .cta-word {
+    font-size: clamp(1.8rem, 7vw, 2.5rem);
+    margin-bottom: 1.5rem;
+  }
+
+  .quote-text {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+  }
+}
+</style>
+</head>
+<body>
+
+<a class="back" href="../index.html">← galeria</a>
+
+<main>
+
+  <!-- SECTION 01: Hero — one word, monastic space -->
+  <section class="section-hero">
+    <div class="hero-breath"></div>
+    <h1 class="hero-word">Constrói.</h1>
+    <p class="hero-line">A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção. Desenhada para quem não se contenta com o genérico.</p>
+    <a href="#" class="hero-cta">entrar</a>
+  </section>
+
+  <!-- SECTION 02: Stats — minimal footnote -->
+  <section class="section-stats">
+    <label class="stats-label">números</label>
+    <ul class="stats-list">
+      <li class="stat">
+        <span class="stat-num">12k</span>
+        <span class="stat-label">criadores</span>
+      </li>
+      <li class="stat">
+        <span class="stat-num">99.9%</span>
+        <span class="stat-label">uptime</span>
+      </li>
+      <li class="stat">
+        <span class="stat-num">48ms</span>
+        <span class="stat-label">latência</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- SECTION 03: Features — index with reveal -->
+  <section class="section-features">
+    <label class="features-intro">o essencial</label>
+    <ul class="features-list">
+      <li class="feature">
+        <span class="feature-title">Rápido por defeito</span>
+        <span class="feature-reveal">renderização instantânea</span>
+      </li>
+      <li class="feature">
+        <span class="feature-title">Feito à medida</span>
+        <span class="feature-reveal">controlo total ao milímetro</span>
+      </li>
+      <li class="feature">
+        <span class="feature-title">Escala contigo</span>
+        <span class="feature-reveal">sem reescrever nada</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- SECTION 04: Testimony — serif voice -->
+  <section class="section-quote">
+    <div class="quote-content">
+      <p class="quote-text">Nunca um produto me fez sentir tão em casa. Isto não parece software — parece arte que funciona.</p>
+      <p class="quote-author">— Maria L., designer</p>
+    </div>
+  </section>
+
+  <!-- SECTION 05: Final breath -->
+  <section class="section-cta">
+    <h2 class="cta-word">Começa.</h2>
+    <p class="cta-line">Junta-te a milhares de criadores que constroem coisas que respiram em Nimbus.</p>
+    <a href="#" class="cta-link">criar conta grátis</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-meta">
+      <div class="footer-item">
+        <span class="footer-label">© 2026</span>
+        <span class="footer-value">Nimbus</span>
+      </div>
+      <div class="footer-item">
+        <span class="footer-label">Tipografia</span>
+        <span class="footer-value">Fraunces · DM Mono</span>
+      </div>
+      <div class="footer-item">
+        <span class="footer-label">Estilo</span>
+        <span class="footer-value">Minimal Mono</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<script>
+// Minimal JS — just feature hover reveal state
+document.querySelectorAll('.feature').forEach(el => {
+  el.addEventListener('mouseenter', function() {
+    this.querySelector('.feature-reveal').style.opacity = '1';
+  });
+  el.addEventListener('mouseleave', function() {
+    this.querySelector('.feature-reveal').style.opacity = '0';
+  });
+});
+</script>
+
+</body>
+</html>

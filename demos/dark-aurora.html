@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dark Aurora — Style Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@300;700;800&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #030609;
+      --bg-surface: #0a0f1a;
+      --violet: #7c5cff;
+      --teal: #21e6c1;
+      --pink: #ff5c8a;
+      --text-primary: #dfe6f5;
+      --text-secondary: rgba(223, 230, 245, 0.65);
+      --border: rgba(255, 255, 255, 0.08);
+      --glow-violet: rgba(124, 92, 255, 0.3);
+      --glow-teal: rgba(33, 230, 193, 0.2);
+      --dur-sm: 0.3s;
+      --dur-md: 0.6s;
+      --dur-lg: 1.2s;
+      --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+    }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-deep);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Animated background aurora - primary layer */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        /* Grain texture overlay */
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" fill="%23000" opacity="0.03"/><rect width="100" height="100" fill="%23fff" opacity="0.01" filter="url(%23noise)"/></svg>');
+      animation: grain-shift 8s linear infinite;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background: var(--bg-deep);
+      pointer-events: none;
+    }
+
+    @keyframes grain-shift {
+      0% { background-position: 0 0; }
+      100% { background-position: 100px 100px; }
+    }
+
+    /* Back link */
+    .back {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 100;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem;
+      color: var(--teal);
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid var(--teal);
+      border-radius: 4px;
+      transition: all var(--dur-sm) var(--ease-smooth);
+      background: transparent;
+    }
+
+    .back:hover {
+      background: rgba(33, 230, 193, 0.1);
+      transform: translateX(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .back {
+        top: 16px;
+        left: 16px;
+        font-size: 0.8rem;
+        padding: 6px 12px;
+      }
+    }
+
+    /* Section snap */
+    section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    /* Dot nav (fixed right) */
+    .dot-nav {
+      position: fixed;
+      right: 32px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: all var(--dur-sm) var(--ease-smooth);
+      background: transparent;
+    }
+
+    .dot.active {
+      border-color: var(--teal);
+      background: var(--teal);
+      box-shadow: 0 0 12px var(--glow-teal);
+    }
+
+    .dot:hover {
+      border-color: var(--violet);
+    }
+
+    @media (max-width: 768px) {
+      .dot-nav {
+        right: 16px;
+        gap: 12px;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+      }
+    }
+
+    /* ===== ACT 1: HERO WITH AURORA MESH ===== */
+    .act-hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px;
+      overflow: hidden;
+    }
+
+    /* Primary aurora backdrop */
+    .act-hero::before {
+      content: '';
+      position: absolute;
+      inset: -40%;
+      z-index: 2;
+      pointer-events: none;
+      filter: blur(150px);
+      opacity: 0.32;
+      background:
+        /* Teal aurora ribbon top-left */
+        radial-gradient(
+          45% 32% at 20% 12%,
+          var(--teal),
+          transparent 60%
+        ),
+        /* Violet ribbon top-center */
+        radial-gradient(
+          40% 28% at 68% 18%,
+          var(--violet),
+          transparent 62%
+        ),
+        /* Teal accent mid-right */
+        radial-gradient(
+          32% 24% at 90% 42%,
+          var(--teal),
+          transparent 68%
+        );
+      animation: aurora-layer-1 20s ease-in-out infinite alternate;
+    }
+
+    /* Secondary aurora layer - counter motion */
+    .act-hero::after {
+      content: '';
+      position: absolute;
+      inset: -35%;
+      z-index: 3;
+      pointer-events: none;
+      filter: blur(130px);
+      opacity: 0.22;
+      background:
+        /* Pink accent upper */
+        radial-gradient(
+          38% 26% at 52% 10%,
+          rgba(255, 92, 138, 0.85),
+          transparent 62%
+        );
+      animation: aurora-layer-2 28s ease-in-out infinite alternate;
+    }
+
+    @keyframes aurora-layer-1 {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+      100% {
+        transform: translate(15%, -10%) scale(1.25);
+      }
+    }
+
+    @keyframes aurora-layer-2 {
+      0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+      }
+      100% {
+        transform: translate(-12%, 12%) scale(1.2) rotate(20deg);
+      }
+    }
+
+    .hero-mesh {
+      position: absolute;
+      inset: 0;
+      z-index: 5;
+      opacity: 1;
+      background-image:
+        /* Vignette overlay - dark edges */
+        radial-gradient(
+          ellipse at 50% 42%,
+          transparent 0%,
+          transparent 42%,
+          rgba(5, 7, 13, 0.55) 75%,
+          rgba(5, 7, 13, 0.92) 100%
+        ),
+        linear-gradient(0deg, transparent 24%, rgba(33, 230, 193, 0.015) 25%, rgba(33, 230, 193, 0.015) 26%, transparent 27%, transparent 74%, rgba(33, 230, 193, 0.015) 75%, rgba(33, 230, 193, 0.015) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, rgba(124, 92, 255, 0.015) 25%, rgba(124, 92, 255, 0.015) 26%, transparent 27%, transparent 74%, rgba(124, 92, 255, 0.015) 75%, rgba(124, 92, 255, 0.015) 76%, transparent 77%, transparent);
+      background-size: auto, 60px 60px, 60px 60px;
+      animation: mesh-float 30s ease-in-out infinite;
+    }
+
+    @keyframes mesh-float {
+      0%, 100% {
+        transform: translate(0, 0);
+      }
+      50% {
+        transform: translate(4px, 4px);
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 20;
+      text-align: center;
+      max-width: 900px;
+      opacity: 0;
+      animation: fade-up 1s var(--ease-smooth) 0.2s forwards;
+    }
+
+    @keyframes fade-up {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .badge-hero {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: var(--teal);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 8px 16px;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .h1-aurora {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 8vw, 5.8rem);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+      text-wrap: balance;
+    }
+
+    .h1-aurora em {
+      font-style: normal;
+      font-weight: 700;
+      background: linear-gradient(120deg, var(--teal), var(--violet), var(--pink));
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: gradient-shift 4s ease-in-out infinite;
+    }
+
+    @keyframes gradient-shift {
+      0%, 100% {
+        background-position: 0% center;
+      }
+      50% {
+        background-position: 100% center;
+      }
+    }
+
+    .lead-aurora {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      font-weight: 300;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+      text-wrap: pretty;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .buttons-hero {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all var(--dur-sm) var(--ease-smooth);
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--violet), var(--teal));
+      color: var(--bg-deep);
+      box-shadow: 0 8px 24px rgba(124, 92, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(124, 92, 255, 0.4);
+    }
+
+    .btn-ghost {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-primary);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--violet);
+      background: rgba(124, 92, 255, 0.1);
+    }
+
+    /* ===== ACT 2: CONSTELLATION STATS ===== */
+    .act-stats {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px;
+    }
+
+    .constellation-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      height: 600px;
+    }
+
+    .constellation-canvas {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      opacity: 0.3;
+    }
+
+    .stats-grid {
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      width: 100%;
+      height: 100%;
+      align-content: center;
+    }
+
+    .stat-point {
+      position: relative;
+      text-align: center;
+      opacity: 0;
+      animation: constellation-glow 1s var(--ease-smooth) forwards;
+    }
+
+    .stat-point:nth-child(1) { animation-delay: 0.2s; }
+    .stat-point:nth-child(2) { animation-delay: 0.35s; }
+    .stat-point:nth-child(3) { animation-delay: 0.5s; }
+    .stat-point:nth-child(4) { animation-delay: 0.65s; }
+
+    @keyframes constellation-glow {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .stat-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 20px var(--glow-teal);
+      margin: 0 auto 16px;
+    }
+
+    .stat-number {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      background: linear-gradient(120deg, var(--teal), var(--violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    @media (max-width: 768px) {
+      .constellation-wrapper {
+        height: 500px;
+      }
+      .stats-grid {
+        gap: 32px;
+      }
+    }
+
+    /* ===== ACT 3: FEATURES WITH STICKY RAIL ===== */
+    .act-features {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      padding: 80px 40px;
+      gap: 60px;
+      align-items: flex-start;
+      padding-top: 120px;
+    }
+
+    .feature-rail {
+      position: sticky;
+      top: 120px;
+      height: fit-content;
+      width: 40%;
+      z-index: 20;
+    }
+
+    .rail-dots {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .rail-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      position: relative;
+      cursor: pointer;
+      transition: all var(--dur-sm) var(--ease-smooth);
+    }
+
+    .rail-dot::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: calc(100% + 16px);
+      width: 20px;
+      height: 1px;
+      background: var(--border);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--dur-sm) var(--ease-smooth);
+    }
+
+    .rail-dot.active {
+      background: var(--teal);
+      border-color: var(--teal);
+      box-shadow: 0 0 16px var(--glow-teal);
+    }
+
+    .rail-dot.active::after {
+      transform: scaleX(1);
+    }
+
+    .rail-label {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      margin-top: 8px;
+    }
+
+    .feature-steps {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+    }
+
+    .step-card {
+      position: relative;
+      padding: 40px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(10, 15, 26, 0.5);
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      animation: fade-in-scale 0.8s var(--ease-smooth) forwards;
+      transition: border-color var(--dur-sm) var(--ease-smooth);
+    }
+
+    .step-card:nth-child(1) { animation-delay: 0.2s; }
+    .step-card:nth-child(2) { animation-delay: 0.4s; }
+    .step-card:nth-child(3) { animation-delay: 0.6s; }
+
+    @keyframes fade-in-scale {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .step-card:hover {
+      border-color: var(--violet);
+    }
+
+    .step-icon {
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+    }
+
+    .step-icon.icon-1 { color: var(--teal); }
+    .step-icon.icon-2 { color: var(--violet); }
+    .step-icon.icon-3 { color: var(--pink); }
+
+    .step-card h3 {
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      font-weight: 700;
+      margin-bottom: 16px;
+      text-wrap: balance;
+    }
+
+    .step-card p {
+      color: var(--text-secondary);
+      font-weight: 300;
+      text-wrap: pretty;
+    }
+
+    @media (max-width: 968px) {
+      .act-features {
+        flex-direction: column;
+        gap: 40px;
+      }
+      .feature-rail {
+        width: 100%;
+        position: static;
+      }
+      .rail-dots {
+        flex-direction: row;
+        justify-content: center;
+        margin-bottom: 60px;
+      }
+      .feature-steps {
+        gap: 60px;
+      }
+    }
+
+    /* ===== ACT 4: QUOTE UNDER SPOTLIGHT ===== */
+    .act-quote {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px;
+      overflow: hidden;
+    }
+
+    .spotlight {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(33, 230, 193, 0.15) 0%,
+        transparent 70%
+      );
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      filter: blur(40px);
+      animation: pulse-spotlight 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse-spotlight {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.15);
+        opacity: 0.7;
+      }
+    }
+
+    .quote-content {
+      position: relative;
+      z-index: 10;
+      max-width: 800px;
+      text-align: center;
+      opacity: 0;
+      animation: fade-up 1s var(--ease-smooth) 0.3s forwards;
+    }
+
+    .quote-text {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 32px;
+      text-wrap: pretty;
+      color: var(--text-primary);
+    }
+
+    .quote-mark {
+      color: var(--teal);
+      opacity: 0.5;
+    }
+
+    .quote-author {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    .quote-author strong {
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    /* ===== ACT 5: CTA PORTAL ===== */
+    .act-cta {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 40px;
+      overflow: hidden;
+    }
+
+    .portal-bg {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+    }
+
+    .portal-ring {
+      position: absolute;
+      border-radius: 50%;
+      inset: 0;
+      border: 2px solid;
+      animation: portal-spin 8s linear infinite;
+    }
+
+    .portal-ring:nth-child(1) {
+      border-color: var(--teal);
+      animation: portal-spin 8s linear infinite;
+      inset: 0;
+    }
+
+    .portal-ring:nth-child(2) {
+      border-color: var(--violet);
+      animation: portal-spin 12s linear reverse;
+      inset: 40px;
+    }
+
+    .portal-ring:nth-child(3) {
+      border-color: var(--pink);
+      animation: portal-spin 6s linear infinite;
+      inset: 80px;
+    }
+
+    .portal-core {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(
+        circle at center,
+        rgba(33, 230, 193, 0.2) 0%,
+        transparent 70%
+      );
+      filter: blur(20px);
+    }
+
+    @keyframes portal-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      max-width: 600px;
+      opacity: 0;
+      animation: fade-up 1s var(--ease-smooth) 0.4s forwards;
+    }
+
+    .cta-title {
+      font-size: clamp(2rem, 6vw, 3.6rem);
+      font-weight: 300;
+      margin-bottom: 24px;
+      text-wrap: balance;
+    }
+
+    .cta-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+      font-weight: 300;
+      text-wrap: pretty;
+    }
+
+    .cta-button {
+      display: inline-block;
+      font-size: 1.1rem;
+      padding: 16px 48px;
+      background: linear-gradient(120deg, var(--teal), var(--violet));
+      color: var(--bg-deep);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all var(--dur-sm) var(--ease-spring);
+      box-shadow: 0 8px 24px rgba(33, 230, 193, 0.3);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(33, 230, 193, 0.4);
+    }
+
+    .cta-button:active {
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-family: 'IBM Plex Mono', monospace;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .footer {
+        bottom: 16px;
+        right: 16px;
+        font-size: 0.7rem;
+      }
+    }
+
+    /* Prefers reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .act-hero,
+      .act-stats,
+      .act-features,
+      .act-quote,
+      .act-cta {
+        padding: 60px 20px;
+      }
+      .constellation-wrapper {
+        height: 400px;
+      }
+      .stats-grid {
+        gap: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="back" href="../index.html">← galeria</a>
+
+  <footer class="footer">
+    <span>© 2026 Nimbus</span>
+  </footer>
+
+  <!-- Navigation dots -->
+  <nav class="dot-nav" aria-label="Navegação por secção">
+    <button class="dot active" data-section="0" aria-label="Hero"></button>
+    <button class="dot" data-section="1" aria-label="Stats"></button>
+    <button class="dot" data-section="2" aria-label="Features"></button>
+    <button class="dot" data-section="3" aria-label="Quote"></button>
+    <button class="dot" data-section="4" aria-label="CTA"></button>
+  </nav>
+
+  <main>
+    <!-- ACT 1: HERO -->
+    <section class="act-hero">
+      <div class="hero-mesh"></div>
+      <div class="hero-content">
+        <p class="badge-hero">● Novo · v2.0</p>
+        <h1 class="h1-aurora">Constrói coisas que <em>respiram</em>.</h1>
+        <p class="lead-aurora">A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção. Desenhada para quem não se contenta com o genérico.</p>
+        <div class="buttons-hero">
+          <a href="#" class="btn btn-primary">Começar agora</a>
+          <a href="#" class="btn btn-ghost">Ver demo →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACT 2: CONSTELLATION STATS -->
+    <section class="act-stats">
+      <div class="constellation-wrapper">
+        <canvas class="constellation-canvas" id="constellationCanvas"></canvas>
+        <div class="stats-grid">
+          <div class="stat-point">
+            <div class="stat-dot"></div>
+            <div class="stat-number">12k</div>
+            <div class="stat-label">criadores</div>
+          </div>
+          <div class="stat-point">
+            <div class="stat-dot"></div>
+            <div class="stat-number">99.9%</div>
+            <div class="stat-label">uptime</div>
+          </div>
+          <div class="stat-point">
+            <div class="stat-dot"></div>
+            <div class="stat-number">48ms</div>
+            <div class="stat-label">latência</div>
+          </div>
+          <div class="stat-point">
+            <div class="stat-dot"></div>
+            <div class="stat-number">∞</div>
+            <div class="stat-label">possibilidades</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACT 3: FEATURES WITH RAIL -->
+    <section class="act-features">
+      <div class="feature-rail">
+        <div class="rail-dots">
+          <div class="rail-dot-container">
+            <button class="rail-dot active" data-step="0"></button>
+            <div class="rail-label">Rápido</div>
+          </div>
+          <div class="rail-dot-container">
+            <button class="rail-dot" data-step="1"></button>
+            <div class="rail-label">À medida</div>
+          </div>
+          <div class="rail-dot-container">
+            <button class="rail-dot" data-step="2"></button>
+            <div class="rail-label">Escalável</div>
+          </div>
+        </div>
+      </div>
+      <div class="feature-steps">
+        <article class="step-card">
+          <div class="step-icon icon-1">⚡</div>
+          <h3>Rápido por defeito</h3>
+          <p>Renderização instantânea. Zero espera, zero desculpas. A performance não é um detalhe — é o coração do produto.</p>
+        </article>
+        <article class="step-card">
+          <div class="step-icon icon-2">◆</div>
+          <h3>Feito à medida</h3>
+          <p>Cada peça moldável ao milímetro. O controlo é teu. De cores a comportamentos, nada é genérico.</p>
+        </article>
+        <article class="step-card">
+          <div class="step-icon icon-3">⬆</div>
+          <h3>Escala contigo</h3>
+          <p>De protótipo a produção sem reescrever uma linha. A arquitetura cresce com as tuas ambições.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ACT 4: QUOTE -->
+    <section class="act-quote">
+      <div class="spotlight"></div>
+      <div class="quote-content">
+        <p class="quote-text">
+          <span class="quote-mark">"</span>Nunca um produto me fez sentir tão em casa. Isto não parece software — parece arte que funciona.<span class="quote-mark">"</span>
+        </p>
+        <p class="quote-author">— <strong>Maria L.</strong>, designer</p>
+      </div>
+    </section>
+
+    <!-- ACT 5: CTA PORTAL -->
+    <section class="act-cta">
+      <div class="portal-bg">
+        <div class="portal-ring"></div>
+        <div class="portal-ring"></div>
+        <div class="portal-ring"></div>
+        <div class="portal-core"></div>
+      </div>
+      <div class="cta-content">
+        <h2 class="cta-title">Pronto para começar?</h2>
+        <p class="cta-subtitle">Junta-te a milhares de criadores que já estão a fazer magia.</p>
+        <button class="cta-button">Criar conta grátis</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Dot navigation
+    const sections = document.querySelectorAll('section');
+    const dots = document.querySelectorAll('.dot-nav .dot');
+
+    const updateActiveDot = () => {
+      const scrollPos = window.scrollY + window.innerHeight / 2;
+      sections.forEach((section, idx) => {
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        if (scrollPos >= sectionTop && scrollPos < sectionBottom) {
+          dots.forEach(d => d.classList.remove('active'));
+          dots[idx].classList.add('active');
+        }
+      });
+    };
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const idx = parseInt(dot.dataset.section, 10);
+        sections[idx].scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    window.addEventListener('scroll', updateActiveDot, { passive: true });
+    updateActiveDot();
+
+    // Feature rail sync
+    const railDots = document.querySelectorAll('.rail-dot');
+    const stepCards = document.querySelectorAll('.step-card');
+
+    railDots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        railDots.forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+        stepCards.forEach(card => card.style.opacity = '0.4');
+        stepCards[idx].style.opacity = '1';
+      });
+    });
+
+    // Constellation canvas (simple dots and lines)
+    const canvas = document.getElementById('constellationCanvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
+      const drawConstellation = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Draw connecting lines between stat points
+        const points = [
+          { x: canvas.width * 0.25, y: canvas.height * 0.35 },
+          { x: canvas.width * 0.75, y: canvas.height * 0.35 },
+          { x: canvas.width * 0.25, y: canvas.height * 0.65 },
+          { x: canvas.width * 0.75, y: canvas.height * 0.65 }
+        ];
+
+        ctx.strokeStyle = 'rgba(33, 230, 193, 0.2)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        ctx.lineTo(points[1].x, points[1].y);
+        ctx.lineTo(points[3].x, points[3].y);
+        ctx.lineTo(points[2].x, points[2].y);
+        ctx.closePath();
+        ctx.stroke();
+
+        // Draw diagonal lines
+        ctx.strokeStyle = 'rgba(124, 92, 255, 0.15)';
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        ctx.lineTo(points[3].x, points[3].y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(points[1].x, points[1].y);
+        ctx.lineTo(points[2].x, points[2].y);
+        ctx.stroke();
+      };
+
+      drawConstellation();
+      window.addEventListener('resize', () => {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        drawConstellation();
+      });
+    }
+  </script>
+</body>
+</html>

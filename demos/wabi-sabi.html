@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wabi-Sabi — Style Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&family=Zen+Kaku+Gothic+New:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --washi-bg: #f5f2ed;
+  --sumi-ink: #1a1a1a;
+  --hanko-red: #d73e3e;
+  --accent-gray: #b8b3a8;
+  --dur-reveal: 0.8s;
+  --dur-stagger: 0.12s;
+  --ease-zen: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Shippori Mincho', serif;
+  background: var(--washi-bg);
+  color: var(--sumi-ink);
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+/* Washi paper texture — subtle noise overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 998;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='washi'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' seed='3' result='noise'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23washi)' opacity='0.04'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
+.back {
+  position: fixed;
+  top: 32px;
+  left: 32px;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  text-decoration: none;
+  color: var(--sumi-ink);
+  z-index: 200;
+  opacity: 0;
+  animation: fadeInSlide var(--dur-reveal) var(--ease-zen) 0.1s forwards;
+  letter-spacing: 0.05em;
+  padding: 6px 10px;
+  transition: opacity 0.3s ease;
+}
+
+.back:hover {
+  opacity: 0.6;
+}
+
+main {
+  position: relative;
+  min-height: 100vh;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Vertical thread line — connects all stations */
+.thread {
+  position: fixed;
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent 0%, var(--sumi-ink) 8%, var(--sumi-ink) 92%, transparent 100%);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ========== HERO / VERTICAL HEADLINE ========== */
+.hero {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 80px 60px;
+}
+
+.hero-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: clamp(2.8rem, 8vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--sumi-ink);
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 100px;
+  opacity: 0;
+  animation: fadeIn var(--dur-reveal) var(--ease-zen) 0.2s forwards;
+  text-wrap: balance;
+  letter-spacing: 0.02em;
+}
+
+/* Ink brushstroke SVG crossing center */
+.brushstroke {
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 120px;
+  opacity: 0;
+  animation: fadeIn var(--dur-reveal) var(--ease-zen) 0.3s forwards;
+  z-index: 10;
+  filter: drop-shadow(1px 1px 2px rgba(26, 26, 26, 0.08));
+}
+
+/* Hero lead text — left side, below center */
+.hero-content {
+  position: absolute;
+  left: 60px;
+  bottom: 100px;
+  max-width: 320px;
+  opacity: 0;
+  animation: fadeInUp var(--dur-reveal) var(--ease-zen) 0.4s forwards;
+}
+
+.hero-lead {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--sumi-ink);
+  margin-bottom: 32px;
+  font-weight: 400;
+  text-wrap: pretty;
+}
+
+.hero-cta {
+  position: relative;
+  display: inline-block;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  background: transparent;
+  color: var(--sumi-ink);
+  padding: 12px 0;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.hero-cta::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--hanko-red);
+  transition: width 0.3s ease;
+}
+
+.hero-cta:hover::after {
+  width: 100%;
+}
+
+/* Hanko seal stamp (red square on CTA area) */
+.hanko-seal {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  bottom: 8px;
+  right: -60px;
+  opacity: 0;
+  animation: rotateIn var(--dur-reveal) var(--ease-zen) 0.5s forwards;
+  transform-origin: center;
+  filter: drop-shadow(0px 2px 4px rgba(26, 26, 26, 0.15));
+}
+
+/* ========== FEATURE STATIONS ========== */
+.features {
+  position: relative;
+  min-height: 200vh;
+  padding: 120px 0;
+  z-index: 15;
+}
+
+.station {
+  position: relative;
+  margin-bottom: 240px;
+  opacity: 0;
+  animation: fadeInUp var(--dur-reveal) var(--ease-zen) forwards;
+}
+
+.station:nth-child(1) { animation-delay: calc(0.6s + 0 * var(--dur-stagger)); }
+.station:nth-child(2) { animation-delay: calc(0.6s + 1 * var(--dur-stagger)); }
+.station:nth-child(3) { animation-delay: calc(0.6s + 2 * var(--dur-stagger)); }
+.station:nth-child(4) { animation-delay: calc(0.6s + 3 * var(--dur-stagger)); }
+
+/* Alternating left/right layout */
+.station:nth-child(odd) {
+  margin-left: 80px;
+  text-align: left;
+}
+
+.station:nth-child(even) {
+  margin-left: auto;
+  margin-right: 80px;
+  text-align: right;
+}
+
+.station-num {
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: var(--hanko-red);
+  display: block;
+  line-height: 1;
+  margin-bottom: 8px;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  letter-spacing: 0.15em;
+}
+
+.station-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--sumi-ink);
+  margin-bottom: 12px;
+  line-height: 1.3;
+  text-wrap: balance;
+  max-width: 300px;
+}
+
+.station:nth-child(even) .station-title {
+  margin-left: auto;
+}
+
+.station-desc {
+  font-size: 0.95rem;
+  color: var(--accent-gray);
+  line-height: 1.6;
+  max-width: 280px;
+  font-weight: 400;
+  text-wrap: pretty;
+}
+
+.station:nth-child(even) .station-desc {
+  text-align: right;
+  margin-left: auto;
+}
+
+/* ========== QUOTE SECTION ========== */
+.quote-section {
+  position: relative;
+  margin: 240px auto;
+  max-width: 500px;
+  padding: 60px 40px;
+  text-align: center;
+  z-index: 15;
+  opacity: 0;
+  animation: fadeInUp var(--dur-reveal) var(--ease-zen) 1.1s forwards;
+}
+
+.quote-section blockquote {
+  font-style: italic;
+  font-size: 1.3rem;
+  line-height: 1.8;
+  color: var(--sumi-ink);
+  margin-bottom: 24px;
+  text-wrap: pretty;
+  font-weight: 400;
+}
+
+.quote-section cite {
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-style: normal;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent-gray);
+  display: block;
+  font-weight: 300;
+}
+
+/* ========== CTA SECTION ========== */
+.cta-section {
+  position: relative;
+  margin: 240px 0 120px;
+  padding: 0;
+  z-index: 15;
+  opacity: 0;
+  animation: fadeInUp var(--dur-reveal) var(--ease-zen) 1.2s forwards;
+}
+
+.cta-box {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cta-box h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--sumi-ink);
+  margin-bottom: 16px;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.cta-box p {
+  font-size: 0.95rem;
+  color: var(--accent-gray);
+  margin-bottom: 32px;
+  text-wrap: pretty;
+}
+
+.cta-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: var(--sumi-ink);
+  color: var(--washi-bg);
+  padding: 14px 40px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background: var(--hanko-red);
+  transform: translateY(-2px);
+}
+
+/* Hanko seal stamp on CTA button */
+.cta-hanko {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: -12px;
+  right: -14px;
+  transform: rotate(15deg);
+  opacity: 0.7;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  filter: drop-shadow(0px 2px 4px rgba(26, 26, 26, 0.15));
+}
+
+.cta-button:hover .cta-hanko {
+  opacity: 1;
+  transform: rotate(20deg);
+}
+
+/* ========== FOOTER ========== */
+footer {
+  position: relative;
+  padding: 40px 60px;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: var(--accent-gray);
+  text-align: left;
+  z-index: 15;
+  opacity: 0;
+  animation: fadeIn var(--dur-reveal) var(--ease-zen) 1.35s forwards;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInSlide {
+  0% {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes rotateIn {
+  0% {
+    opacity: 0;
+    transform: rotate(-25deg) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Responsive tweaks */
+@media (max-width: 1000px) {
+  .hero {
+    padding: 60px 40px;
+  }
+
+  .hero-vertical {
+    right: 40px;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    max-width: 80px;
+  }
+
+  .brushstroke {
+    width: 280px;
+    height: 100px;
+  }
+
+  .hero-content {
+    left: 40px;
+    bottom: 60px;
+    max-width: 280px;
+  }
+
+  .station:nth-child(odd) {
+    margin-left: 40px;
+  }
+
+  .station:nth-child(even) {
+    margin-right: 40px;
+  }
+
+  .thread {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    font-size: 0.95rem;
+  }
+
+  .back {
+    top: 20px;
+    left: 20px;
+    font-size: 0.65rem;
+  }
+
+  .hero {
+    padding: 40px 24px;
+    height: auto;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  .hero-vertical {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    writing-mode: horizontal-tb;
+    margin-bottom: 32px;
+    font-size: 2rem;
+    max-width: none;
+  }
+
+  .brushstroke {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    width: 100%;
+    max-width: 240px;
+    height: 80px;
+    margin: 32px auto;
+  }
+
+  .hero-content {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    max-width: 100%;
+    margin-top: 32px;
+  }
+
+  .hanko-seal {
+    position: absolute;
+    bottom: auto;
+    right: auto;
+    top: 12px;
+    left: 12px;
+  }
+
+  .station:nth-child(odd),
+  .station:nth-child(even) {
+    margin-left: 24px;
+    margin-right: 24px;
+    text-align: left;
+  }
+
+  .station:nth-child(even) .station-title,
+  .station:nth-child(even) .station-desc {
+    margin-left: 0;
+    text-align: left;
+  }
+
+  .quote-section {
+    padding: 40px 24px;
+    margin: 120px auto;
+  }
+
+  .cta-box h2 {
+    font-size: 1.4rem;
+  }
+
+  footer {
+    padding: 32px 24px;
+  }
+}
+</style>
+</head>
+<body>
+  <a class="back" href="../index.html">← galeria</a>
+
+  <div class="thread"></div>
+
+  <main>
+    <!-- HERO SECTION: Vertical headline + brushstroke + left content -->
+    <section class="hero">
+      <h1 class="hero-vertical">Constrói coisas que respiram.</h1>
+
+      <svg class="brushstroke" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="dryBrush">
+            <feTurbulence type="fractalNoise" baseFrequency="0.12" numOctaves="4" seed="5" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <linearGradient id="brushGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:0.3" />
+            <stop offset="15%" style="stop-color:#1a1a1a;stop-opacity:0.9" />
+            <stop offset="50%" style="stop-color:#1a1a1a;stop-opacity:1" />
+            <stop offset="85%" style="stop-color:#1a1a1a;stop-opacity:0.6" />
+            <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:0.1" />
+          </linearGradient>
+        </defs>
+        <!-- Variable-width sumi-e brushstroke: thick tapered path -->
+        <path
+          d="M 30 100 Q 120 70 220 85 Q 340 100 480 95 Q 600 90 720 110 L 740 140 Q 620 125 480 130 Q 340 135 220 120 Q 120 110 30 140 Z"
+          fill="url(#brushGrad)"
+          filter="url(#dryBrush)"
+          opacity="0.85"
+        />
+        <!-- Dry-brush broken segments at tail for texture -->
+        <path
+          d="M 720 105 L 750 100 M 725 110 L 755 112 M 722 115 L 748 120"
+          stroke="#1a1a1a"
+          stroke-width="3"
+          stroke-linecap="round"
+          opacity="0.4"
+          filter="url(#dryBrush)"
+        />
+      </svg>
+
+      <div class="hero-content">
+        <p class="hero-lead">A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção.</p>
+        <button class="hero-cta">Explorar</button>
+        <svg class="hanko-seal" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <!-- Filled vermillion rounded square -->
+          <rect x="4" y="4" width="40" height="40" rx="6" ry="6" fill="#d73e3e" opacity="0.95" />
+          <!-- White kanji 創 (create/start) rotated 2.5° with imperfect edges -->
+          <g transform="translate(24, 24) rotate(2.5)">
+            <text x="0" y="10" font-family="serif" font-size="22" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">創</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- FEATURE STATIONS: Sparse, far apart, alternating sides -->
+    <section class="features">
+      <article class="station">
+        <span class="station-num">一</span>
+        <h3 class="station-title">Rápido por defeito</h3>
+        <p class="station-desc">Renderização instantânea. Zero espera.</p>
+      </article>
+
+      <article class="station">
+        <span class="station-num">二</span>
+        <h3 class="station-title">Feito à medida</h3>
+        <p class="station-desc">Controlo ao milímetro. Teu.</p>
+      </article>
+
+      <article class="station">
+        <span class="station-num">三</span>
+        <h3 class="station-title">Escala contigo</h3>
+        <p class="station-desc">De protótipo a produção sem reescrever.</p>
+      </article>
+
+      <article class="station">
+        <span class="station-num">四</span>
+        <h3 class="station-title">Feito para criadores</h3>
+        <p class="station-desc">Ferramenta, não fricção. Liberdade.</p>
+      </article>
+    </section>
+
+    <!-- QUOTE SECTION: Center-aligned, serene -->
+    <section class="quote-section">
+      <blockquote>"Nunca um produto fez tanto sentido. Isto é arte que funciona."</blockquote>
+      <cite>— Maria L., designer</cite>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="cta-section">
+      <div class="cta-box">
+        <h2>Pronto?</h2>
+        <p>Junta-te a criadores que já respiram melhor.</p>
+        <a href="#" class="cta-button">
+          Começar agora
+          <svg class="cta-hanko" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <!-- Filled vermillion rounded square -->
+            <rect x="3" y="3" width="34" height="34" rx="5" ry="5" fill="#d73e3e" opacity="0.9" />
+            <!-- White 'N' monogram rotated 3° -->
+            <g transform="translate(20, 20) rotate(3)">
+              <text x="0" y="9" font-family="serif" font-size="18" font-weight="700" fill="white" text-anchor="middle" opacity="0.95">N</text>
+            </g>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Nimbus
+  </footer>
+
+  <script>
+    // Minimal setup — all animation driven by CSS
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Optional: Log reveal complete at 2.4s mark
+    window.addEventListener('load', () => {
+      const revealComplete = 2400;
+      console.log('Wabi-sabi reveal timeline: page animations fully complete by ' + revealComplete + 'ms');
+    });
+  </script>
+</body>
+</html>

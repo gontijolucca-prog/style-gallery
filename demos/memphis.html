@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Memphis 80s — Style Gallery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;500;700;800&family=Poppins:wght@200;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --pink: #ff6b9d;
+      --teal: #4ecdc4;
+      --yellow: #ffd23f;
+      --purple: #a06cd5;
+      --ink: #2b2b2b;
+      --cream: #fdf6e3;
+      --dur-fast: 0.3s;
+      --dur-med: 0.6s;
+      --dur-slow: 1.2s;
+      --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      color: var(--ink);
+      background: var(--cream);
+      background-image:
+        radial-gradient(circle, var(--teal) 2px, transparent 2px),
+        radial-gradient(circle, var(--pink) 2px, transparent 2px);
+      background-position: 0 0, 40px 40px;
+      background-size: 80px 80px;
+      overflow-x: hidden;
+      font-weight: 400;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* Navigation Back Link */
+    .back {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      z-index: 999;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--purple);
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 rgba(43, 43, 43, 0.2);
+      text-decoration: none;
+      transition: all var(--dur-fast) var(--ease-smooth);
+      cursor: pointer;
+    }
+
+    .back:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 rgba(43, 43, 43, 0.3);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      padding: 120px 20px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      animation: fadeInUp var(--dur-slow) var(--ease-smooth) 0.1s both;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-badge {
+      position: absolute;
+      top: -40px;
+      left: 60px;
+      display: inline-block;
+      background: var(--yellow);
+      color: var(--ink);
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 10px 20px;
+      border-radius: 999px;
+      border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--pink);
+      transform: rotate(-8deg);
+      letter-spacing: 1px;
+      animation: wobble var(--dur-med) var(--ease-bounce) infinite;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-8deg) translateY(0); }
+      50% { transform: rotate(-8deg) translateY(-4px); }
+    }
+
+    .hero-content {
+      position: relative;
+      animation: slideInLeft var(--dur-slow) var(--ease-smooth) 0.3s both;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .h1 {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      line-height: 1.1;
+      margin: 0 0 20px 0;
+      text-wrap: balance;
+      letter-spacing: -1px;
+    }
+
+    .h1 em {
+      font-style: normal;
+      color: var(--pink);
+      text-shadow: 3px 3px 0 var(--teal), 6px 6px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .hero-description {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--ink);
+      text-wrap: pretty;
+      margin-bottom: 30px;
+      font-weight: 400;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 14px 28px;
+      border: 3px solid var(--ink);
+      border-radius: 999px;
+      background: var(--pink);
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all var(--dur-fast) var(--ease-smooth);
+      box-shadow: 4px 4px 0 var(--ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn:hover {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .btn-secondary {
+      background: var(--teal);
+      color: var(--ink);
+    }
+
+    .hero-visual {
+      position: relative;
+      height: 400px;
+      animation: slideInRight var(--dur-slow) var(--ease-smooth) 0.3s both;
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .floating-shape {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--purple);
+      opacity: 0.85;
+      animation: float var(--dur-slow) ease-in-out infinite;
+    }
+
+    .shape-1 {
+      width: 180px;
+      height: 180px;
+      top: 20px;
+      right: 60px;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .shape-2 {
+      width: 120px;
+      height: 120px;
+      top: 240px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--yellow), var(--pink));
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      animation: float 5s ease-in-out infinite 0.3s;
+    }
+
+    .shape-3 {
+      width: 90px;
+      height: 90px;
+      top: 140px;
+      left: 40px;
+      background: var(--teal);
+      border-radius: 0% 100% 0% 100%;
+      animation: float 4.5s ease-in-out infinite 0.6s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    /* Squiggle Dividers */
+    .divider-zigzag {
+      margin: 80px 0 60px;
+      padding: 0;
+      border: none;
+      height: 60px;
+      background: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .divider-zigzag svg {
+      width: 100%;
+      max-width: 1200px;
+      height: 60px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.05));
+    }
+
+    /* Stats Section */
+    .stats {
+      max-width: 1200px;
+      margin: 80px auto 0;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 30px;
+      animation: fadeInUp var(--dur-slow) var(--ease-smooth) 0.5s both;
+    }
+
+    .stat {
+      position: relative;
+      background: white;
+      border: 3px solid var(--ink);
+      border-radius: 50%;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 6px 6px 0 var(--ink);
+      transition: all var(--dur-fast) var(--ease-smooth);
+      margin: 0 auto;
+    }
+
+    .stat:nth-child(1) {
+      box-shadow: 6px 6px 0 var(--pink);
+      animation: popIn var(--dur-slow) var(--ease-bounce) 0.6s both;
+    }
+
+    .stat:nth-child(2) {
+      box-shadow: 6px 6px 0 var(--teal);
+      animation: popIn var(--dur-slow) var(--ease-bounce) 0.75s both;
+    }
+
+    .stat:nth-child(3) {
+      box-shadow: 6px 6px 0 var(--yellow);
+      animation: popIn var(--dur-slow) var(--ease-bounce) 0.9s both;
+    }
+
+    @keyframes popIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.3);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .stat:hover {
+      transform: scale(1.08) rotate(2deg);
+    }
+
+    .stat-num {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 800;
+      font-size: 2.8rem;
+      color: var(--purple);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--ink);
+      text-wrap: pretty;
+    }
+
+    /* Features Section */
+    .features {
+      max-width: 1200px;
+      margin: 120px auto 80px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+    }
+
+    .feature-card {
+      position: relative;
+      background: white;
+      border: 3px solid var(--ink);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 6px 6px 0 var(--ink);
+      transition: all var(--dur-fast) var(--ease-smooth);
+      animation: fadeInUp var(--dur-slow) var(--ease-smooth) both;
+    }
+
+    .feature-card:nth-child(1) {
+      animation-delay: 0.7s;
+      box-shadow: 6px 6px 0 var(--pink);
+      transform: rotate(-3deg);
+    }
+
+    .feature-card:nth-child(2) {
+      animation-delay: 0.85s;
+      box-shadow: 6px 6px 0 var(--teal);
+      transform: rotate(2deg) translateY(-20px);
+    }
+
+    .feature-card:nth-child(3) {
+      animation-delay: 1s;
+      box-shadow: 6px 6px 0 var(--yellow);
+      transform: rotate(-2deg);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px) rotate(0deg);
+      box-shadow: 8px 8px 0 var(--ink);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    .feature-card h3 {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin: 0 0 12px 0;
+      color: var(--ink);
+    }
+
+    .feature-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--ink);
+      margin: 0;
+      text-wrap: pretty;
+      font-weight: 400;
+    }
+
+    /* Pattern Fills */
+    .terrazzo-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.08;
+      background-image:
+        radial-gradient(circle, var(--pink) 1px, transparent 1px),
+        radial-gradient(circle, var(--teal) 1px, transparent 1px);
+      background-position: 0 0, 20px 20px;
+      background-size: 40px 40px;
+      border-radius: 24px;
+      pointer-events: none;
+    }
+
+    /* Quote Section */
+    .quote-container {
+      max-width: 900px;
+      margin: 120px auto 80px;
+      padding: 0 20px;
+      animation: fadeInUp var(--dur-slow) var(--ease-smooth) 1.15s both;
+    }
+
+    .quote {
+      position: relative;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      color: white;
+      border: 4px solid var(--ink);
+      border-radius: 36px;
+      padding: 60px 48px;
+      box-shadow: 8px 8px 0 var(--ink);
+      text-align: center;
+    }
+
+    .quote::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: 30px;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 800;
+      font-size: 6rem;
+      color: var(--yellow);
+      opacity: 0.3;
+    }
+
+    .quote blockquote {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      font-size: 1.5rem;
+      line-height: 1.6;
+      margin: 0 0 20px 0;
+      text-wrap: balance;
+    }
+
+    .quote cite {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--yellow);
+      display: block;
+      font-size: 1rem;
+    }
+
+    /* CTA Section */
+    .cta-container {
+      max-width: 1200px;
+      margin: 120px auto 100px;
+      padding: 0 20px;
+      animation: fadeInUp var(--dur-slow) var(--ease-smooth) 1.3s both;
+    }
+
+    .cta {
+      position: relative;
+      background: linear-gradient(135deg, var(--teal), var(--purple));
+      color: white;
+      border: 4px solid var(--ink);
+      border-radius: 40px;
+      padding: 80px 40px;
+      text-align: center;
+      box-shadow: 10px 10px 0 var(--ink);
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        radial-gradient(circle, rgba(255, 107, 157, 0.1) 2px, transparent 2px),
+        radial-gradient(circle, rgba(255, 211, 63, 0.1) 2px, transparent 2px);
+      background-position: 0 0, 30px 30px;
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .cta h2 {
+      position: relative;
+      z-index: 1;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      margin: 0 0 20px 0;
+      text-wrap: balance;
+    }
+
+    .cta p {
+      position: relative;
+      z-index: 1;
+      font-size: 1.15rem;
+      margin-bottom: 40px;
+      font-weight: 400;
+      text-wrap: pretty;
+    }
+
+    .cta .btn {
+      position: relative;
+      z-index: 1;
+      background: var(--yellow);
+      color: var(--ink);
+      box-shadow: 6px 6px 0 rgba(43, 43, 43, 0.3);
+      font-size: 1.1rem;
+      padding: 16px 36px;
+    }
+
+    .cta .btn:hover {
+      background: #ffde7c;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    footer span {
+      display: inline-block;
+      margin: 0 16px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 100px 20px 60px;
+      }
+
+      .hero-visual {
+        height: 300px;
+      }
+
+      .shape-1 {
+        width: 140px;
+        height: 140px;
+      }
+
+      .shape-2 {
+        width: 100px;
+        height: 100px;
+      }
+
+      .stats {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 20px;
+      }
+
+      .stat {
+        width: 160px;
+        height: 160px;
+      }
+
+      .stat-num {
+        font-size: 2.2rem;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .feature-card {
+        transform: rotate(0deg) !important;
+      }
+
+      .feature-card:nth-child(2) {
+        transform: translateY(0) !important;
+      }
+
+      .quote blockquote {
+        font-size: 1.3rem;
+      }
+
+      .cta {
+        padding: 60px 30px;
+      }
+
+      .cta h2 {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 80px 16px 40px;
+      }
+
+      .hero-badge {
+        top: -30px;
+        left: 20px;
+        font-size: 0.75rem;
+        padding: 8px 16px;
+      }
+
+      .h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero-visual {
+        height: 250px;
+      }
+
+      .shape-1 {
+        width: 100px;
+        height: 100px;
+        top: 40px;
+      }
+
+      .shape-2 {
+        width: 70px;
+        height: 70px;
+        bottom: 80px;
+      }
+
+      .stat {
+        width: 140px;
+        height: 140px;
+      }
+
+      .stat-num {
+        font-size: 1.8rem;
+      }
+
+      .stat-label {
+        font-size: 0.85rem;
+      }
+
+      .feature-card {
+        padding: 24px;
+      }
+
+      .feature-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .quote {
+        padding: 40px 24px;
+      }
+
+      .quote blockquote {
+        font-size: 1.1rem;
+      }
+
+      .cta {
+        padding: 50px 20px;
+      }
+
+      .cta h2 {
+        font-size: 1.8rem;
+      }
+
+      .btn {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="back" href="../index.html">← galeria</a>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-badge">NOVO · v2.0</div>
+      <div class="hero-content">
+        <h1 class="h1">Constrói coisas que <em>respiram</em>.</h1>
+        <p class="hero-description">A plataforma onde as tuas ideias ganham forma — rápida, bonita e sem fricção. Desenhada para quem não se contenta com o genérico.</p>
+        <div class="hero-cta">
+          <a href="#" class="btn">Começar agora</a>
+          <a href="#" class="btn btn-secondary">Ver demo →</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+      </div>
+    </section>
+
+    <!-- Zigzag Divider -->
+    <svg class="divider-zigzag" viewBox="0 0 1200 60" preserveAspectRatio="none">
+      <path d="M 0 30 L 60 10 L 120 30 L 180 10 L 240 30 L 300 10 L 360 30 L 420 10 L 480 30 L 540 10 L 600 30 L 660 10 L 720 30 L 780 10 L 840 30 L 900 10 L 960 30 L 1020 10 L 1080 30 L 1140 10 L 1200 30"
+            stroke="#ff6b9d" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+
+    <!-- Stats Section -->
+    <section class="stats">
+      <div class="stat">
+        <div class="stat-num">12k</div>
+        <div class="stat-label">criadores</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">99.9%</div>
+        <div class="stat-label">uptime</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">48ms</div>
+        <div class="stat-label">latência</div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <article class="feature-card">
+        <div class="terrazzo-bg"></div>
+        <div class="feature-icon">⚡</div>
+        <h3>Rápido por defeito</h3>
+        <p>Renderização instantânea. Zero espera, zero desculpas.</p>
+      </article>
+      <article class="feature-card">
+        <div class="terrazzo-bg"></div>
+        <div class="feature-icon">✨</div>
+        <h3>Feito à medida</h3>
+        <p>Cada peça moldável ao milímetro. O controlo é teu.</p>
+      </article>
+      <article class="feature-card">
+        <div class="terrazzo-bg"></div>
+        <div class="feature-icon">🚀</div>
+        <h3>Escala contigo</h3>
+        <p>De protótipo a produção sem reescrever uma linha.</p>
+      </article>
+    </section>
+
+    <!-- Squiggle Divider -->
+    <svg class="divider-zigzag" viewBox="0 0 1200 60" preserveAspectRatio="none">
+      <path d="M 0 30 Q 60 10 120 30 T 240 30 T 360 30 T 480 30 T 600 30 T 720 30 T 840 30 T 960 30 T 1080 30 T 1200 30"
+            stroke="#4ecdc4" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </svg>
+
+    <!-- Quote Section -->
+    <section class="quote-container">
+      <div class="quote">
+        <blockquote>Nunca um produto me fez sentir tão em casa. Isto não parece software — parece arte que funciona.</blockquote>
+        <cite>— Maria L., designer</cite>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-container">
+      <div class="cta">
+        <h2>Pronto para começar?</h2>
+        <p>Junta-te a milhares de criadores hoje.</p>
+        <a href="#" class="btn">Criar conta grátis</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>© 2026 Nimbus</span>
+    <span>Memphis 80s</span>
+  </footer>
+</body>
+</html>
